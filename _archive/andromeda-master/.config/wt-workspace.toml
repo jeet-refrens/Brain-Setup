@@ -1,0 +1,7 @@
+# worktrunk config for andromeda multi-repo workspaces, passed via `wt --config`.
+# Sets the worktree-path template (only honored as user config, hence this file rather
+# than per-repo project config). The template is {{ repo_path }}-relative, so each repo's
+# worktree lands under <that-repo>/../.workspaces/<branch>/<repo> = andromeda/.workspaces/...
+# Per-repo bootstrap (config link, port, install) stays in each repo's own .config/wt.toml.
+
+worktree-path = "{{ repo_path }}/../.workspaces/{{ branch | sanitize }}/{{ repo }}"

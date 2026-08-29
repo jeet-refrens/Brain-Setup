@@ -1,0 +1,823 @@
+{
+  "order": {
+    "id": 6740752695478,
+    "admin_graphql_api_id": "gid://shopify/Order/6740752695478",
+    "app_id": 334380892161,
+    "browser_ip": null,
+    "buyer_accepts_marketing": true,
+    "cancel_reason": null,
+    "cancelled_at": null,
+    "cart_token": null,
+    "checkout_id": null,
+    "checkout_token": null,
+    "client_details": null,
+    "closed_at": "2026-08-25T12:29:25+05:30",
+    "company": null,
+    "confirmation_number": "QGP8V1308",
+    "confirmed": true,
+    "contact_email": "nileshfulfagar01@gmail.com",
+    "created_at": "2026-08-24T17:38:02+05:30",
+    "currency": "INR",
+    "current_subtotal_price": "1898.00",
+    "current_subtotal_price_set": {
+      "shop_money": {
+        "amount": "1898.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "1898.00",
+        "currency_code": "INR"
+      }
+    },
+    "current_total_additional_fees_set": null,
+    "current_total_discounts": "100.00",
+    "current_total_discounts_set": {
+      "shop_money": {
+        "amount": "100.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "100.00",
+        "currency_code": "INR"
+      }
+    },
+    "current_total_duties_set": null,
+    "current_total_price": "1898.00",
+    "current_total_price_set": {
+      "shop_money": {
+        "amount": "1898.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "1898.00",
+        "currency_code": "INR"
+      }
+    },
+    "current_total_tax": "90.38",
+    "current_total_tax_set": {
+      "shop_money": {
+        "amount": "90.38",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "90.38",
+        "currency_code": "INR"
+      }
+    },
+    "customer_locale": null,
+    "device_id": null,
+    "discount_codes": [
+      {
+        "code": "PrepaidDiscount",
+        "amount": "100.00",
+        "type": "fixed_amount"
+      }
+    ],
+    "duties_included": false,
+    "email": "nileshfulfagar01@gmail.com",
+    "estimated_taxes": false,
+    "financial_status": "paid",
+    "fulfillment_status": "fulfilled",
+    "landing_site": null,
+    "landing_site_ref": null,
+    "location_id": null,
+    "merchant_business_entity_id": "21537947830",
+    "merchant_of_record_app_id": null,
+    "name": "#INVHA1816",
+    "note": null,
+    "note_attributes": [
+      {
+        "name": "additional_charge",
+        "value": "0.0"
+      },
+      {
+        "name": "user_agent",
+        "value": "Mozilla/5.0 (Linux; Android 17; SM-F976B Build/CP2A.260605.016; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/151.0.7922.85 Mobile Safari/537.36 Instagram 443.0.0.48.82 Android (37/17; 420dpi; 1080x2520; samsung; SM-F976B; q8q; qcom; en_IN; 1043215449; IABMV/1)"
+      },
+      {
+        "name": "utm_source",
+        "value": "facebook"
+      },
+      {
+        "name": "utm_medium",
+        "value": "paid"
+      },
+      {
+        "name": "utm_campaign",
+        "value": "120251975217350359"
+      },
+      {
+        "name": "utm_term",
+        "value": "120251975217330359"
+      },
+      {
+        "name": "utm_content",
+        "value": "120251975375580359"
+      },
+      {
+        "name": "Razorpay_txn_id",
+        "value": "order_TTbL2gY9KoZSB1"
+      },
+      {
+        "name": "shopifyCartToken",
+        "value": "hWNG1YeLqZAv12Vgo2Ulsgp2?key=656760bdf379e50d224d123ab58c0534"
+      },
+      {
+        "name": "landing_page_url",
+        "value": "https://hiddenapple.in/collections/not-that-deep?utm_medium=paid&utm_id=120251975217350359&utm_content=120251975375580359&utm_term=120251975217330359&utm_campaign=120251975217350359&fbclid=PAcGRvZgJleHRuA2FlbQEwAGFkaWQBqzl1k2JOh3NydGMGYXBwX2lkDzU2NzA2NzM0MzM1MjQyNwABpxiH7HanhjcFGNsEDch9rS6-09pAKsh00LJtyN5rk-DHGczhZkup5dEv-T15_aem_hUU9fQbJYabrEcy-542yPA&utm_source=facebook&campaign_id=120251975217350359&ad_id=120251975375580359"
+      },
+      {
+        "name": "ipv4_address",
+        "value": "223.184.77.122"
+      }
+    ],
+    "number": 816,
+    "order_number": 1816,
+    "order_status_url": "https://hiddenapple.in/71999291574/orders/18a5e168a45dc2e50518c35a994cfe68/authenticate?key=ef64de8e44056dfe43fe58a1d91a2b1d",
+    "original_total_additional_fees_set": null,
+    "original_total_duties_set": null,
+    "payment_gateway_names": [
+      "Razorpay"
+    ],
+    "phone": "+919030840011",
+    "po_number": null,
+    "presentment_currency": "INR",
+    "processed_at": "2026-08-24T17:38:02+05:30",
+    "reference": null,
+    "referring_site": null,
+    "source_identifier": "6a8c3406597e0a2da7cbec30",
+    "source_name": "334380892161",
+    "source_url": null,
+    "subtotal_price": "1898.00",
+    "subtotal_price_set": {
+      "shop_money": {
+        "amount": "1898.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "1898.00",
+        "currency_code": "INR"
+      }
+    },
+    "tags": "fastrr, low, SR_STANDARD, Standard",
+    "tax_exempt": false,
+    "tax_lines": [
+      {
+        "price": "90.38",
+        "rate": 0.05,
+        "title": "IGST",
+        "price_set": {
+          "shop_money": {
+            "amount": "90.38",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "90.38",
+            "currency_code": "INR"
+          }
+        },
+        "channel_liable": false
+      }
+    ],
+    "taxes_included": true,
+    "test": false,
+    "token": "18a5e168a45dc2e50518c35a994cfe68",
+    "total_cash_rounding_payment_adjustment_set": {
+      "shop_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_cash_rounding_refund_adjustment_set": {
+      "shop_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_discounts": "100.00",
+    "total_discounts_set": {
+      "shop_money": {
+        "amount": "100.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "100.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_line_items_price": "1998.00",
+    "total_line_items_price_set": {
+      "shop_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_outstanding": "0.00",
+    "total_price": "1898.00",
+    "total_price_set": {
+      "shop_money": {
+        "amount": "1898.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "1898.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_shipping_price_set": {
+      "shop_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_tax": "90.38",
+    "total_tax_set": {
+      "shop_money": {
+        "amount": "90.38",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "90.38",
+        "currency_code": "INR"
+      }
+    },
+    "total_tip_received": "0.00",
+    "total_weight": 0,
+    "updated_at": "2026-08-25T12:29:25+05:30",
+    "user_id": null,
+    "billing_address": {
+      "first_name": "NILESH",
+      "address1": "JAIN VILLA, 4TH FLOOR, BESIDES SOUTHERN GEM HOSPITAL, BASHEERBAGH, HILL FORT ROAD",
+      "phone": "9030840011",
+      "city": "Hyderabad",
+      "zip": "500063",
+      "province": "Telangana",
+      "country": "India",
+      "last_name": "FULFAGAR",
+      "address2": "",
+      "company": null,
+      "latitude": 17.4058452,
+      "longitude": 78.4754575,
+      "name": "NILESH FULFAGAR",
+      "country_code": "IN",
+      "province_code": "TS"
+    },
+    "customer": {
+      "id": 9532282568886,
+      "created_at": "2026-08-24T17:38:02+05:30",
+      "updated_at": "2026-08-24T17:38:02+05:30",
+      "first_name": "NILESH",
+      "last_name": "FULFAGAR",
+      "state": "disabled",
+      "note": null,
+      "verified_email": true,
+      "multipass_identifier": null,
+      "tax_exempt": false,
+      "email_marketing_consent": {
+        "state": "not_subscribed",
+        "opt_in_level": "single_opt_in",
+        "consent_updated_at": null
+      },
+      "sms_marketing_consent": {
+        "state": "not_subscribed",
+        "opt_in_level": "single_opt_in",
+        "consent_updated_at": null,
+        "consent_collected_from": null
+      },
+      "tags": "",
+      "email": "nileshfulfagar01@gmail.com",
+      "phone": "+919030840011",
+      "currency": "INR",
+      "tax_exemptions": [],
+      "admin_graphql_api_id": "gid://shopify/Customer/9532282568886",
+      "default_address": {
+        "id": 10957921091766,
+        "customer_id": 9532282568886,
+        "first_name": "NILESH",
+        "last_name": "FULFAGAR",
+        "company": null,
+        "address1": "JAIN VILLA, 4TH FLOOR, BESIDES SOUTHERN GEM HOSPITAL, BASHEERBAGH, HILL FORT ROAD",
+        "address2": null,
+        "city": "Hyderabad",
+        "province": "Telangana",
+        "country": "India",
+        "zip": "500063",
+        "phone": "9030840011",
+        "name": "NILESH FULFAGAR",
+        "province_code": "TS",
+        "country_code": "IN",
+        "country_name": "India",
+        "default": true
+      }
+    },
+    "discount_applications": [
+      {
+        "target_type": "line_item",
+        "type": "manual",
+        "value": "100.0",
+        "value_type": "fixed_amount",
+        "allocation_method": "across",
+        "target_selection": "all",
+        "title": "PrepaidDiscount",
+        "description": "PrepaidDiscount"
+      }
+    ],
+    "fulfillments": [
+      {
+        "id": 6189139394742,
+        "admin_graphql_api_id": "gid://shopify/Fulfillment/6189139394742",
+        "created_at": "2026-08-25T12:29:24+05:30",
+        "location_id": 80026042550,
+        "name": "#INVHA1816.1",
+        "order_id": 6740752695478,
+        "origin_address": {
+          "address1": "vpo mangla",
+          "address2": "near tehsildar office",
+          "city": "Chamba",
+          "zip": "176310",
+          "province_code": "HP",
+          "country_code": "IN"
+        },
+        "receipt": {
+
+        },
+        "service": "manual",
+        "shipment_status": null,
+        "status": "success",
+        "tracking_company": "DTDC",
+        "tracking_number": "7D138757103",
+        "tracking_numbers": [
+          "7D138757103"
+        ],
+        "tracking_url": "https://www.dtdc.com/track-your-shipment/?awb=7D138757103",
+        "tracking_urls": [
+          "https://www.dtdc.com/track-your-shipment/?awb=7D138757103"
+        ],
+        "updated_at": "2026-08-25T12:29:24+05:30",
+        "line_items": [
+          {
+            "id": 16083584483510,
+            "admin_graphql_api_id": "gid://shopify/LineItem/16083584483510",
+            "attributed_staffs": [],
+            "current_quantity": 1,
+            "fulfillable_quantity": 0,
+            "fulfillment_service": "manual",
+            "fulfillment_status": "fulfilled",
+            "gift_card": false,
+            "grams": 0,
+            "name": "Flirting Disabled Tee - L",
+            "price": "999.00",
+            "price_set": {
+              "shop_money": {
+                "amount": "999.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "999.00",
+                "currency_code": "INR"
+              }
+            },
+            "product_exists": true,
+            "product_id": 8821907882166,
+            "properties": [],
+            "quantity": 1,
+            "requires_shipping": true,
+            "sku": null,
+            "taxable": true,
+            "title": "Flirting Disabled Tee",
+            "total_discount": "0.00",
+            "total_discount_set": {
+              "shop_money": {
+                "amount": "0.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "0.00",
+                "currency_code": "INR"
+              }
+            },
+            "variant_id": 45224100135094,
+            "variant_inventory_management": "shopify",
+            "variant_title": "L",
+            "vendor": "My Store",
+            "tax_lines": [
+              {
+                "channel_liable": false,
+                "price": "22.60",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "22.60",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "22.60",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              },
+              {
+                "channel_liable": false,
+                "price": "22.60",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "22.60",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "22.60",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              }
+            ],
+            "duties": [],
+            "discount_allocations": [
+              {
+                "amount": "50.00",
+                "amount_set": {
+                  "shop_money": {
+                    "amount": "50.00",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "50.00",
+                    "currency_code": "INR"
+                  }
+                },
+                "discount_application_index": 0
+              }
+            ]
+          },
+          {
+            "id": 16083584516278,
+            "admin_graphql_api_id": "gid://shopify/LineItem/16083584516278",
+            "attributed_staffs": [],
+            "current_quantity": 1,
+            "fulfillable_quantity": 0,
+            "fulfillment_service": "manual",
+            "fulfillment_status": "fulfilled",
+            "gift_card": false,
+            "grams": 0,
+            "name": "First Move Syndrome Tee - L",
+            "price": "999.00",
+            "price_set": {
+              "shop_money": {
+                "amount": "999.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "999.00",
+                "currency_code": "INR"
+              }
+            },
+            "product_exists": true,
+            "product_id": 8821906931894,
+            "properties": [],
+            "quantity": 1,
+            "requires_shipping": true,
+            "sku": null,
+            "taxable": true,
+            "title": "First Move Syndrome Tee",
+            "total_discount": "0.00",
+            "total_discount_set": {
+              "shop_money": {
+                "amount": "0.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "0.00",
+                "currency_code": "INR"
+              }
+            },
+            "variant_id": 45224097743030,
+            "variant_inventory_management": "shopify",
+            "variant_title": "L",
+            "vendor": "My Store",
+            "tax_lines": [
+              {
+                "channel_liable": false,
+                "price": "22.59",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "22.59",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "22.59",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              },
+              {
+                "channel_liable": false,
+                "price": "22.59",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "22.59",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "22.59",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              }
+            ],
+            "duties": [],
+            "discount_allocations": [
+              {
+                "amount": "50.00",
+                "amount_set": {
+                  "shop_money": {
+                    "amount": "50.00",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "50.00",
+                    "currency_code": "INR"
+                  }
+                },
+                "discount_application_index": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "line_items": [
+      {
+        "id": 16083584483510,
+        "admin_graphql_api_id": "gid://shopify/LineItem/16083584483510",
+        "attributed_staffs": [],
+        "current_quantity": 1,
+        "fulfillable_quantity": 0,
+        "fulfillment_service": "manual",
+        "fulfillment_status": "fulfilled",
+        "gift_card": false,
+        "grams": 0,
+        "name": "Flirting Disabled Tee - L",
+        "price": "999.00",
+        "price_set": {
+          "shop_money": {
+            "amount": "999.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "999.00",
+            "currency_code": "INR"
+          }
+        },
+        "product_exists": true,
+        "product_id": 8821907882166,
+        "properties": [],
+        "quantity": 1,
+        "requires_shipping": true,
+        "sku": null,
+        "taxable": true,
+        "title": "Flirting Disabled Tee",
+        "total_discount": "0.00",
+        "total_discount_set": {
+          "shop_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          }
+        },
+        "variant_id": 45224100135094,
+        "variant_inventory_management": "shopify",
+        "variant_title": "L",
+        "vendor": "My Store",
+        "tax_lines": [
+          {
+            "channel_liable": false,
+            "price": "22.60",
+            "price_set": {
+              "shop_money": {
+                "amount": "22.60",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "22.60",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          },
+          {
+            "channel_liable": false,
+            "price": "22.60",
+            "price_set": {
+              "shop_money": {
+                "amount": "22.60",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "22.60",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          }
+        ],
+        "duties": [],
+        "discount_allocations": [
+          {
+            "amount": "50.00",
+            "amount_set": {
+              "shop_money": {
+                "amount": "50.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "50.00",
+                "currency_code": "INR"
+              }
+            },
+            "discount_application_index": 0
+          }
+        ]
+      },
+      {
+        "id": 16083584516278,
+        "admin_graphql_api_id": "gid://shopify/LineItem/16083584516278",
+        "attributed_staffs": [],
+        "current_quantity": 1,
+        "fulfillable_quantity": 0,
+        "fulfillment_service": "manual",
+        "fulfillment_status": "fulfilled",
+        "gift_card": false,
+        "grams": 0,
+        "name": "First Move Syndrome Tee - L",
+        "price": "999.00",
+        "price_set": {
+          "shop_money": {
+            "amount": "999.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "999.00",
+            "currency_code": "INR"
+          }
+        },
+        "product_exists": true,
+        "product_id": 8821906931894,
+        "properties": [],
+        "quantity": 1,
+        "requires_shipping": true,
+        "sku": null,
+        "taxable": true,
+        "title": "First Move Syndrome Tee",
+        "total_discount": "0.00",
+        "total_discount_set": {
+          "shop_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          }
+        },
+        "variant_id": 45224097743030,
+        "variant_inventory_management": "shopify",
+        "variant_title": "L",
+        "vendor": "My Store",
+        "tax_lines": [
+          {
+            "channel_liable": false,
+            "price": "22.59",
+            "price_set": {
+              "shop_money": {
+                "amount": "22.59",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "22.59",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          },
+          {
+            "channel_liable": false,
+            "price": "22.59",
+            "price_set": {
+              "shop_money": {
+                "amount": "22.59",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "22.59",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          }
+        ],
+        "duties": [],
+        "discount_allocations": [
+          {
+            "amount": "50.00",
+            "amount_set": {
+              "shop_money": {
+                "amount": "50.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "50.00",
+                "currency_code": "INR"
+              }
+            },
+            "discount_application_index": 0
+          }
+        ]
+      }
+    ],
+    "payment_terms": null,
+    "refunds": [],
+    "shipping_address": {
+      "first_name": "NILESH",
+      "address1": "JAIN VILLA, 4TH FLOOR, BESIDES SOUTHERN GEM HOSPITAL, BASHEERBAGH, HILL FORT ROAD",
+      "phone": "9030840011",
+      "city": "Hyderabad",
+      "zip": "500063",
+      "province": "Telangana",
+      "country": "India",
+      "last_name": "FULFAGAR",
+      "address2": "",
+      "company": null,
+      "latitude": 17.4058452,
+      "longitude": 78.4754575,
+      "name": "NILESH FULFAGAR",
+      "country_code": "IN",
+      "province_code": "TS"
+    },
+    "shipping_lines": [
+      {
+        "id": 5603583557814,
+        "carrier_identifier": null,
+        "code": "SR_STANDARD",
+        "discounted_price": "0.00",
+        "discounted_price_set": {
+          "shop_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          }
+        },
+        "is_removed": false,
+        "phone": null,
+        "price": "0.00",
+        "price_set": {
+          "shop_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          }
+        },
+        "requested_fulfillment_service_id": null,
+        "source": null,
+        "title": "Standard (Prepaid)",
+        "tax_lines": [],
+        "discount_allocations": []
+      }
+    ]
+  }
+}

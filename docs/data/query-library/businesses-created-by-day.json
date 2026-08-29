@@ -1,0 +1,35 @@
+[
+  {
+    "$match": {
+      "createdAt": { "$gte": ISODate("2026-08-12T18:30:00Z") },
+      "isRemoved": { "$ne": true },
+      "isHardRemoved": { "$ne": true }
+    }
+  },
+  {
+    "$addFields": {
+      "isInternal": { "$regexMatch": { "input": { "$ifNull": ["$urlKey", ""] }, "regex": "test|demo", "options": "i" } }
+    }
+  },
+  {
+    "$facet": {
+      "totals": [ { "$group": { "_id": "$isInternal", "businesses": { "$sum": 1 } } } ],
+      "byDay": [
+        { "$match": { "isInternal": false } },
+        { "$group": { "_id": { "$dateToString": { "date": "$createdAt", "format": "%Y-%m-%d", "timezone": "Asia/Kolkata" } }, "businesses": { "$sum": 1 } } },
+        { "$sort": { "_id": 1 } }
+      ],
+      "byCountry": [
+        { "$match": { "isInternal": false } },
+        { "$group": { "_id": "$country", "businesses": { "$sum": 1 } } },
+        { "$sort": { "businesses": -1 } },
+        { "$limit": 12 }
+      ],
+      "excludedSample": [
+        { "$match": { "isInternal": true } },
+        { "$project": { "_id": 0, "urlKey": 1 } },
+        { "$limit": 60 }
+      ]
+    }
+  }
+]

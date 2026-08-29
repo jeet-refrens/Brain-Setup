@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "inventory-valuation-lab",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "features/inventory-valuation/valuation-prototype", "run", "dev:client"],
+      "port": 5173
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+# Secrets - never commit
+.env
+_tmp_we2_.env.example
+features/shopify-revamp/shopifyApp/.env.example
+
+# Generated Metabase field index. Rebuild with: python scripts/mb.py sync
+docs/data/cache/
+
+# Scratch
+_tmp_*
+
+# Prototype build/dependency/data artifacts
+node_modules/
+.mongo-data/
+dist/
+.next/
+.cache/
+
+# Nested checkouts with their own remote repo - already backed up there,
+# and shopifyApp is the production codebase, not backup content.
+/features/inventory-valuation/prototype/
+/features/inventory-valuation/valuation-prototype/
+/features/shopify-revamp/shopifyApp/

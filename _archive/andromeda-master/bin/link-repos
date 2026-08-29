@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+# link-repos <source-dir>
+#
+# Symlinks pre-existing repo clones into andromeda (flat layout) instead of
+# re-cloning. Repo names come from mani.yaml. Skips repos already present.
+#
+# Example:
+#   ./bin/link-repos ~/code/refrens
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+MANI_FILE="$REPO_DIR/mani.yaml"
+
+SOURCE_DIR="${1:-}"
+
+if [[ -z "$SOURCE_DIR" || "$SOURCE_DIR" == "--help" || "$SOURCE_DIR" == "-h" ]]; then
+  echo "Usage: $(basename "$0") <source-directory>"
+  echo ""
+  echo "Symlinks existing repo clones from <source-directory> into andromeda,"
+  echo "for each repo defined in mani.yaml. Already-present repos are skipped."
+  echo ""
+  echo "Output per repo:  link (created) / skip (exists) / miss (not in source)"
+  echo ""
+  echo "Example:"
+  echo "  ./bin/link-repos ~/code/refrens"
+  [[ "$SOURCE_DIR" == "--help" || "$SOURCE_DIR" == "-h" ]] && exit 0 || exit 1
+fi
+
+if [[ ! -d "$SOURCE_DIR" ]]; then
+  echo "Error: '$SOURCE_DIR' is not a directory" >&2
+  exit 1
+fi
+
+if [[ ! -f "$MANI_FILE" ]]; then
+  echo "Error: mani.yaml not found at $MANI_FILE" >&2
+  exit 1
+fi
+
+SOURCE_DIR="$(cd "$SOURCE_DIR" && pwd)"
+
+# Project names = the 2-space-indented keys under `projects:` in mani.yaml.
+PROJECTS=$(awk '
+  /^[[:space:]]*#/ { next }
+  /^projects:/ { in_projects = 1; next }
+  /^[^[:space:]]/ { in_projects = 0 }
+  in_projects && /^  [A-Za-z0-9_-]+:$/ {
+    gsub(/[: ]/, ""); print
+  }
+' "$MANI_FILE")
+
+linked=0; skipped=0; missing=0
+
+for name in $PROJECTS; do
+  src="$SOURCE_DIR/$name"
+  dest="$REPO_DIR/$name"
+
+  if [[ ! -d "$src" ]]; then
+    echo "  miss  $name"
+    missing=$((missing + 1)); continue
+  fi
+
+  if [[ -e "$dest" || -L "$dest" ]]; then
+    echo "  skip  $name"
+    skipped=$((skipped + 1)); continue
+  fi
+
+  ln -s "$src" "$dest"
+  echo "  link  $name  ->  $src"
+  linked=$((linked + 1))
+done
+
+echo ""
+echo "$linked linked, $skipped already present, $missing not found in source"

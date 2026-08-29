@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventory Valuation — Flow Explorer</title>
+<style>
+  :root{
+    --purple:#5B2A9D;
+    --purple-dark:#3F1D72;
+    --purple-light:#F1EAFB;
+    --pink:#E91E8C;
+    --pink-dark:#B31567;
+    --pink-light:#FDEAF3;
+    --orange:#FF6B6B;
+    --orange2:#F5484B;
+    --bg:#F7F5FA;
+    --card:#FFFFFF;
+    --text:#241F33;
+    --text-secondary:#6B6478;
+    --text-muted:#948C9E;
+    --border:#E4DEF0;
+    --amber:#8A5A00;
+    --amber-bg:#FFF6E1;
+    --amber-border:#F0CA6B;
+    --asset:#0F7A66;
+    --asset-bg:#E4F5F0;
+    --expense:#B3401A;
+    --expense-bg:#FBEAE2;
+    --liability:#1B5FA8;
+    --liability-bg:#E7F1FB;
+    --income:#3B7D1D;
+    --income-bg:#EDF6E4;
+    --radius:12px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.5;
+  }
+  .header{
+    background:linear-gradient(100deg,var(--purple) 0%,var(--purple-dark) 100%);
+    padding:0;
+    color:#fff;
+  }
+  .header-hairline{
+    height:4px;
+    background:linear-gradient(90deg,var(--orange) 0%,var(--orange2) 60%,var(--pink) 100%);
+  }
+  .header-inner{
+    max-width:980px;
+    margin:0 auto;
+    padding:22px 24px 26px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .header-mark{
+    width:40px;height:40px;border-radius:10px;
+    background:rgba(255,255,255,0.15);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .header-title{
+    font-size:20px;font-weight:600;margin:0;
+  }
+  .header-sub{
+    margin:2px 0 0;font-size:13.5px;color:rgba(255,255,255,0.75);
+  }
+  .wrap{
+    max-width:980px;
+    margin:0 auto;
+    padding:28px 24px 60px;
+  }
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);}
+
+  /* Intro */
+  .intro{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:20px 22px;
+    margin-bottom:20px;
+  }
+  .intro p{margin:0 0 14px;font-size:15px;color:var(--text-secondary);}
+  .legend-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .legend-chip{
+    display:flex;align-items:center;gap:8px;
+    background:var(--purple-light);
+    border-radius:999px;
+    padding:7px 14px 7px 8px;
+    font-size:13px;font-weight:600;color:var(--purple-dark);
+    cursor:pointer;border:1px solid transparent;
+    transition:border-color .15s;
+  }
+  .legend-chip:hover{border-color:var(--purple);}
+  .legend-icon{
+    width:24px;height:24px;border-radius:50%;
+    background:#fff;display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .legend-icon svg{width:14px;height:14px;stroke:var(--purple);}
+  .legend-detail{
+    display:none;font-size:12.5px;color:var(--text-secondary);
+    margin-top:8px;padding:10px 12px;background:var(--bg);border-radius:8px;
+  }
+  .legend-detail.open{display:block;}
+
+  /* Controls */
+  .controls{
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:14px;
+    margin-bottom:18px;
+  }
+  .method-toggle{
+    display:inline-flex;background:var(--card);border:1px solid var(--border);
+    border-radius:999px;padding:4px;
+  }
+  .method-btn{
+    border:none;background:transparent;padding:8px 18px;border-radius:999px;
+    font-size:13.5px;font-weight:600;color:var(--text-secondary);cursor:pointer;
+  }
+  .method-btn.active{background:var(--purple);color:#fff;}
+  .state-card{
+    background:var(--card);border:1px solid var(--border);border-radius:10px;
+    padding:8px 14px;font-size:12.5px;color:var(--text-secondary);
+    display:flex;align-items:center;gap:10px;
+  }
+  .state-card b{color:var(--text);font-weight:600;}
+  .layer-chip{
+    display:inline-block;background:var(--purple-light);color:var(--purple-dark);
+    border-radius:5px;padding:1px 7px;font-weight:600;font-size:11.5px;margin-left:3px;
+  }
+
+  /* Flow pills */
+  .pills{
+    display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px;
+  }
+  .pill{
+    border:1px solid var(--border);background:var(--card);color:var(--text);
+    padding:9px 16px;border-radius:999px;font-size:13.5px;font-weight:600;
+    cursor:pointer;display:flex;align-items:center;gap:6px;
+    transition:all .15s;
+  }
+  .pill:hover{border-color:var(--pink);}
+  .pill.active{background:var(--pink);border-color:var(--pink);color:#fff;}
+  .pill .flag-dot{
+    width:7px;height:7px;border-radius:50%;background:var(--amber-border);
+    display:inline-block;
+  }
+  .pill.active .flag-dot{background:#fff;}
+
+  /* Diagram */
+  .diagram{
+    display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;
+    align-items:stretch;gap:0;margin-bottom:20px;
+  }
+  .node{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:16px 16px;min-height:150px;
+    opacity:0;transform:translateY(6px);
+    animation:nodeIn .35s ease forwards;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .node:nth-of-type(1){animation-delay:.02s;}
+  .node:nth-of-type(2){animation-delay:.12s;}
+  .node:nth-of-type(3){animation-delay:.22s;}
+  .node:nth-of-type(4){animation-delay:.32s;}
+  @keyframes nodeIn{to{opacity:1;transform:translateY(0);}}
+  .node-label{
+    font-size:11px;text-transform:uppercase;letter-spacing:.04em;font-weight:700;
+    color:var(--text-muted);display:flex;align-items:center;gap:6px;
+  }
+  .node-label svg{width:14px;height:14px;stroke:var(--text-muted);flex-shrink:0;}
+  .node-title{font-size:14.5px;font-weight:600;color:var(--text);}
+  .node-body{font-size:12.5px;color:var(--text-secondary);flex:1;}
+  .connector{
+    display:flex;align-items:center;justify-content:center;
+    color:var(--border);opacity:0;
+    animation:fadeIn .3s ease forwards;animation-delay:.4s;
+  }
+  @keyframes fadeIn{to{opacity:1;}}
+  .connector svg{width:20px;height:20px;stroke:var(--pink);}
+  .doc-node{background:var(--purple-light);border-color:var(--purple-light);}
+  .doc-node .node-label{color:var(--purple-dark);}
+  .doc-node .node-label svg{stroke:var(--purple-dark);}
+  .ledger-node{padding:12px;}
+  .ledger-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 10px;border-radius:8px;font-size:12.5px;margin-bottom:6px;
+  }
+  .ledger-row:last-child{margin-bottom:0;}
+  .ledger-row .who{font-weight:600;}
+  .ledger-row .amt{font-weight:700;font-variant-numeric:tabular-nums;}
+  .dr-row{background:var(--pink-light);}
+  .dr-row .who,.dr-row .amt{color:var(--pink-dark);}
+  .cr-row{background:var(--purple-light);}
+  .cr-row .who,.cr-row .amt{color:var(--purple-dark);}
+  .dr-tag,.cr-tag{font-size:10px;font-weight:700;text-transform:uppercase;margin-right:6px;opacity:.8;}
+  .acct-type-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px;}
+
+  @media (max-width:800px){
+    .diagram{grid-template-columns:1fr;}
+    .connector{transform:rotate(90deg);height:24px;}
+  }
+
+  /* Rules panel */
+  .rules-panel{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:18px 20px;margin-bottom:18px;
+  }
+  .rules-title{font-size:13px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.03em;margin:0 0 12px;}
+  .rule-chip{
+    display:inline-flex;align-items:center;gap:6px;background:var(--purple-light);
+    color:var(--purple-dark);font-size:12.5px;font-weight:600;padding:6px 12px;
+    border-radius:999px;margin:0 8px 8px 0;
+  }
+  .subtoggle{display:flex;align-items:center;gap:10px;margin:6px 0 14px;flex-wrap:wrap;}
+  .subtoggle-label{font-size:13px;color:var(--text-secondary);}
+  .switch{
+    position:relative;width:104px;height:32px;background:var(--bg);border:1px solid var(--border);
+    border-radius:999px;cursor:pointer;display:flex;align-items:center;padding:2px;
+  }
+  .switch .thumb{
+    position:absolute;top:2px;left:2px;width:50px;height:26px;background:var(--pink);
+    border-radius:999px;transition:transform .2s ease;
+  }
+  .switch.on .thumb{transform:translateX(50px);}
+  .switch .opt{
+    flex:1;text-align:center;font-size:11px;font-weight:700;z-index:1;color:var(--text-secondary);
+  }
+  .switch.off .opt.left,.switch.on .opt.right{color:#fff;}
+  .explain-line{font-size:13px;color:var(--text-secondary);margin:4px 0 0;}
+  .explain-line b{color:var(--text);}
+
+  .flag-callout{
+    background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:10px;
+    padding:12px 14px;margin-top:12px;
+  }
+  .flag-head{
+    display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;font-weight:700;color:var(--amber);
+  }
+  .flag-head svg{width:16px;height:16px;stroke:var(--amber);flex-shrink:0;}
+  .flag-body{display:none;font-size:12.5px;color:#6B4E00;margin-top:8px;line-height:1.6;}
+  .flag-body.open{display:block;}
+  .flag-chevron{margin-left:auto;transition:transform .2s;}
+  .flag-chevron.open{transform:rotate(180deg);}
+
+  details.side-note{
+    background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+    padding:14px 18px;margin-bottom:18px;
+  }
+  details.side-note summary{
+    cursor:pointer;font-weight:600;font-size:14px;color:var(--purple-dark);list-style:none;
+    display:flex;align-items:center;gap:8px;
+  }
+  details.side-note summary::-webkit-details-marker{display:none;}
+  details.side-note summary svg{width:15px;height:15px;stroke:var(--purple-dark);transition:transform .2s;}
+  details.side-note[open] summary svg{transform:rotate(90deg);}
+  .side-note-body{margin-top:12px;font-size:13px;color:var(--text-secondary);}
+  .side-note-body h4{font-size:12.5px;color:var(--text);margin:12px 0 4px;}
+  .side-note-body h4:first-child{margin-top:0;}
+  .side-note-body ul{margin:4px 0;padding-left:18px;}
+  .mini-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px;}
+  .mini-compare .box{background:var(--bg);border-radius:8px;padding:10px 12px;font-size:12px;}
+  .mini-compare .box b{display:block;margin-bottom:4px;color:var(--text);}
+
+  .footer{
+    border-top:1px solid var(--border);padding-top:18px;margin-top:8px;
+    font-size:12px;color:var(--text-muted);
+  }
+  .footer-legend{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:10px;}
+  .footer-legend span{display:flex;align-items:center;gap:6px;}
+  .footer-legend .sw{width:10px;height:10px;border-radius:3px;display:inline-block;}
+  .footer a{color:var(--pink-dark);}
+
+  /* View switcher */
+  .view-switch{display:flex;gap:8px;margin-bottom:22px;}
+  .view-tab{
+    flex:1;text-align:center;padding:12px 16px;border-radius:10px;border:1px solid var(--border);
+    background:var(--card);font-size:14px;font-weight:600;color:var(--text-secondary);cursor:pointer;
+  }
+  .view-tab.active{background:var(--purple);border-color:var(--purple);color:#fff;}
+
+  /* Activation & Paywall view */
+  .section-block{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:18px;}
+  .block-title{font-size:15px;font-weight:700;color:var(--text);margin:0 0 14px;}
+  .paywall-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:12px;}
+  .path-card{background:var(--bg);border-radius:10px;padding:14px;}
+  .path-label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;color:var(--text-muted);margin-bottom:10px;}
+  .path-step{border-radius:8px;padding:9px 12px;font-size:12.5px;font-weight:600;margin-bottom:4px;}
+  .path-step.ok{background:var(--purple-light);color:var(--purple-dark);}
+  .path-step.locked{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border);}
+  .path-arrow{text-align:center;color:var(--text-muted);font-size:13px;padding:2px 0;}
+  .static-diagram{margin-bottom:14px;}
+  .static-diagram .node{animation:none;opacity:1;transform:none;}
+
+  .mockup-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:18px 20px;}
+  .mockup-title{font-size:15px;font-weight:700;color:var(--text);margin:0 0 4px;}
+  .mockup-sub{font-size:12.5px;color:var(--text-secondary);margin:0 0 16px;}
+  .mockup-field{margin-bottom:14px;}
+  .mockup-field label{display:block;font-size:12px;font-weight:600;color:var(--text-secondary);margin-bottom:6px;}
+  .mockup-field select{width:100%;max-width:320px;padding:9px 12px;border-radius:8px;border:1px solid var(--border);font-size:13px;background:#fff;color:var(--text);}
+  .mockup-summary{background:#fff;border-radius:8px;padding:12px 14px;margin-bottom:14px;font-size:13px;}
+  .mockup-summary .mockup-warn{color:var(--amber);margin-top:6px;font-size:12.5px;}
+  .mockup-csv-row{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+  .mockup-btn-outline{background:#fff;border:1px solid var(--border);border-radius:8px;padding:9px 14px;font-size:12.5px;font-weight:600;color:var(--purple-dark);cursor:pointer;}
+  .mockup-btn-primary{background:var(--pink);color:#fff;border:none;border-radius:8px;padding:11px 20px;font-size:13.5px;font-weight:700;cursor:pointer;}
+  .mockup-dashboard{margin-top:16px;padding-top:16px;border-top:1px dashed var(--border);}
+  .mockup-dashboard-msg{font-size:13.5px;font-weight:600;color:var(--purple-dark);margin-bottom:12px;}
+  .mockup-pushed-msg{font-size:13px;font-weight:600;color:var(--asset);margin-top:10px;}
+
+  .special-case-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  .special-case{background:var(--bg);border-radius:10px;padding:14px;}
+  .special-case-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px;}
+  .special-case-body{font-size:12px;color:var(--text-secondary);line-height:1.6;}
+
+  @media (max-width:800px){
+    .paywall-grid{grid-template-columns:1fr;}
+    .special-case-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-hairline"></div>
+  <div class="header-inner">
+    <div class="header-mark">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
+    </div>
+    <div>
+      <p class="header-title">Inventory Valuation — Flow Explorer</p>
+      <p class="header-sub">How stock moves between Inventory, Voucher Books &amp; Ledgers</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <h2 class="sr-only">Interactive explainer showing, for each inventory document flow (purchase, sale, credit note, debit note, manual adjustments, FY rollover), how the inventory chain, voucher book, and ledger accounts are updated under WAC vs FIFO valuation.</h2>
+
+  <div class="intro">
+    <p>Stock is an <b style="color:var(--text)">asset</b> until it's sold. This shows exactly how that asset moves between three entities every time a document is created — click a flow below to watch it happen.</p>
+    <div class="legend-row">
+      <div class="legend-chip" data-legend="inv">
+        <span class="legend-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/></svg></span>
+        Inventory chain
+      </div>
+      <div class="legend-chip" data-legend="voucher">
+        <span class="legend-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 012-2h9l5 5v11a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M14 3v5h5"/></svg></span>
+        Voucher book
+      </div>
+      <div class="legend-chip" data-legend="ledger">
+        <span class="legend-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8l-3 6a4 4 0 008 0l-3-6zM19 8l-3 6a4 4 0 008 0l-3-6zM5 8h14"/></svg></span>
+        Ledger accounts
+      </div>
+    </div>
+    <div class="legend-detail" id="legend-inv">The ordered sequence of stock movements for one item, with running state — a single average cost (WAC) or a stack of purchase-cost layers (FIFO). Every IN event records a cost; every OUT event consumes one.</div>
+    <div class="legend-detail" id="legend-voucher">Where the journal entry lives. Document-driven flows reuse Refrens' existing books (Invoice, Expenditure, Credit Note, Debit Note); manual adjustments use a new, narrowly-scoped Inventory Adjustment book.</div>
+    <div class="legend-detail" id="legend-ledger">The actual accounts debited and credited — always in equal, balanced pairs, per double-entry bookkeeping.</div>
+  </div>
+
+  <div class="view-switch">
+    <div class="view-tab active" data-view="flows">Document flows</div>
+    <div class="view-tab" data-view="activation">Activation &amp; paywall</div>
+  </div>
+
+  <div id="view-flows">
+  <div class="controls">
+    <div class="method-toggle" role="group" aria-label="Valuation method">
+      <button class="method-btn active" data-method="wac">Weighted average (WAC)</button>
+      <button class="method-btn" data-method="fifo">FIFO</button>
+    </div>
+    <div class="state-card" id="state-card"></div>
+  </div>
+
+  <div class="pills" id="pills"></div>
+
+  <div class="diagram" id="diagram"></div>
+
+  <div class="rules-panel" id="rules-panel"></div>
+
+  <details class="side-note">
+    <summary><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>Valuation method change policy &amp; FY lock</summary>
+    <div class="side-note-body">
+      <h4>Changing an item's method</h4>
+      <ul>
+        <li>Locked within a financial year — no unbounded mid-year changes.</li>
+        <li><b style="color:var(--text)">Schedule ahead</b> during the current FY to take effect automatically at next FY start — zero recompute, the primary encouraged path.</li>
+        <li><b style="color:var(--text)">Apply within a 7-day grace window</b> from FY start — triggers a bounded recompute of that week's transactions only. Hard-blocked after day 7, no exceptions.</li>
+        <li>Not permanently locked for life — Ind AS 2 / IAS 2 permit a cost-formula change when applied consistently and disclosed.</li>
+      </ul>
+      <h4>FY lock</h4>
+      <ul>
+        <li>Previous-FY documents are read-only once locked — they can't be edited.</li>
+        <li>The current FY can still <i>read</i> prior-FY chain state (FIFO's surviving layers, or WAC's closing average) to carry forward — but can never modify it.</li>
+      </ul>
+      <h4>How the opening balance carries across the FY boundary</h4>
+      <div class="mini-compare">
+        <div class="box"><b>WAC</b>A single number — closing qty @ closing weighted-average cost.</div>
+        <div class="box"><b>FIFO</b>A set of layers, each keeping its own original rate and date — not collapsed into one blended number.</div>
+      </div>
+    </div>
+  </details>
+  </div>
+
+  <div id="view-activation" style="display:none">
+
+    <div class="section-block">
+      <p class="block-title">Paywall model</p>
+      <div class="paywall-grid">
+        <div class="path-card">
+          <div class="path-label">New business</div>
+          <div class="path-step ok">Per-item valuation method field — <b>ungated</b></div>
+          <div class="path-arrow">&darr;</div>
+          <div class="path-step ok">Silent background staging from transaction one</div>
+          <div class="path-arrow">&darr;</div>
+          <div class="path-step locked">&#128274; Dashboard / Push / Vouchers — Accounting plan only</div>
+        </div>
+        <div class="path-card">
+          <div class="path-label">Existing business</div>
+          <div class="path-step locked">&#128274; Entire activation flow — Accounting plan required upfront</div>
+          <div class="path-arrow">&darr;</div>
+          <div class="path-step ok">Same staging + push pipeline, once enabled</div>
+          <div class="path-arrow">&darr;</div>
+          <div class="path-step locked">&#128274; Dashboard / Push / Vouchers — Accounting plan only</div>
+        </div>
+      </div>
+      <p class="explain-line">Both paths converge on the same gate — voucher/ledger/report viewing, and the Valuation Dashboard itself, are always Accounting-plan-gated. Only how a business gets there differs. Exposing the Dashboard on Inventory-only plans would give away the feature's real value (COGS, asset value) for free, undercutting the same upsell the voucher/report gate protects.</p>
+    </div>
+
+    <div class="section-block">
+      <p class="block-title">Staging + push architecture</p>
+      <div class="diagram static-diagram">
+        <div class="node doc-node"><span class="node-label">DOCUMENT</span><span class="node-title">Any UPDATE-configured document</span></div>
+        <div class="connector">&rarr;</div>
+        <div class="node"><span class="node-label">STAGING COLLECTION</span><span class="node-body">Layer/WAC math + cascade-on-edit computed here — always correct, never touches real vouchers.</span></div>
+        <div class="connector">&rarr;</div>
+        <div class="node"><span class="node-label">MANUAL PUSH</span><span class="node-body">"Push to vouchers" — bulk, on-demand only. Never scheduled, never selective.</span></div>
+        <div class="connector">&rarr;</div>
+        <div class="node ledger-node"><span class="node-label">REAL VOUCHER / LEDGER</span><span class="node-body">Materialized entries — now visible in reports.</span></div>
+      </div>
+      <div class="mini-compare">
+        <div class="box"><b>Edit before push</b>Just updates the staged transaction directly — cheap, no voucher reversal needed.</div>
+        <div class="box"><b>Edit after push</b>Triggers reverse/remove/re-add of the already-created voucher entries, via the existing <code>reverse-entries</code> service.</div>
+      </div>
+    </div>
+
+    <div class="section-block">
+      <p class="block-title">Existing-business activation — one low-friction screen</p>
+      <div class="mockup-card">
+        <div id="mockup-form">
+          <p class="mockup-title">Enable Inventory Valuation</p>
+          <p class="mockup-sub">Track what your stock is worth and see COGS on every sale — automatically.</p>
+          <div class="mockup-field">
+            <label>Default valuation method</label>
+            <select><option>Weighted Average (WAC) — Recommended</option><option>FIFO</option></select>
+          </div>
+          <div class="mockup-summary">
+            <div><b>247</b> items ready &middot; <b>&#8377;4,73,200</b> opening stock value</div>
+            <div class="mockup-warn">12 items missing a cost price — fixable anytime, before or after enabling</div>
+          </div>
+          <div class="mockup-csv-row">
+            <button class="mockup-btn-outline">&#8595; Download item costs (CSV)</button>
+            <button class="mockup-btn-outline">&#8593; Upload updated costs (CSV)</button>
+          </div>
+          <button class="mockup-btn-primary" id="mockup-enable-btn">Enable Inventory Valuation</button>
+        </div>
+        <div class="mockup-dashboard" id="mockup-dashboard" style="display:none">
+          <div class="mockup-dashboard-msg">&#10003; You're set. 247 opening entries are staged.</div>
+          <button class="mockup-btn-primary" id="mockup-push-btn">Push to Vouchers</button>
+          <div class="mockup-pushed-msg" id="mockup-pushed-msg" style="display:none">&#10003; Pushed — voucher entries created.</div>
+        </div>
+      </div>
+      <p class="explain-line" style="margin-top:12px;">One decision (method, pre-selected), no forced per-item review, no confirmation dialog — nothing is pushed yet, so there's nothing destructive to confirm. Missing cost is informational only, never blocking.</p>
+    </div>
+
+    <div class="section-block">
+      <p class="block-title">Opening entry: why the credit side must be source-split</p>
+      <p class="explain-line">Item on WAC. Before activation: 20 units bought via Purchase Bill @ &#8377;100 &rarr; <code>Dr Purchase Ledger &#8377;2,000, Cr AP &#8377;2,000</code> already posted historically. No sales yet. Then 12 units sell post-activation (<code>Dr COGS Ledger &#8377;1,200, Cr Stock in Hand &#8377;1,200</code>).</p>
+      <div class="subtoggle">
+        <span class="subtoggle-label">Uniform credit (wrong)</span>
+        <div class="switch on" id="sw-split"><span class="opt left"></span><span class="opt right"></span><div class="thumb"></div></div>
+        <span class="subtoggle-label">Source-split (correct)</span>
+      </div>
+      <div id="split-result"></div>
+    </div>
+
+    <div class="section-block">
+      <p class="block-title">Special cases resolved this session</p>
+      <div class="special-case-grid">
+        <div class="special-case">
+          <div class="special-case-title">Package / composite items</div>
+          <div class="special-case-body">No independent ledger or valuation identity. A sale/purchase line explodes into one event per child item (package qty &times; child qty) — each hits that child's own chain and ledgers.</div>
+        </div>
+        <div class="special-case">
+          <div class="special-case-title">Warehouse transfers</div>
+          <div class="special-case-body">No ledger entry in Phase 1 — Stock in Hand is a single global account, not per-warehouse. Still needs a chain-only tracking node (warehouse re-tag; FIFO layers may split) so per-warehouse reporting stays possible later.</div>
+        </div>
+        <div class="special-case">
+          <div class="special-case-title">Stock reconciliation</div>
+          <div class="special-case-body">Same mechanics as Manual Adjustment IN/OUT. Direction is derived (counted vs expected qty), always no-party, and a count <i>gain</i> defaults to current average cost.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-legend">
+      <span><span class="sw" style="background:var(--pink-light);border:1px solid var(--pink-dark)"></span>Debit (Dr)</span>
+      <span><span class="sw" style="background:var(--purple-light);border:1px solid var(--purple-dark)"></span>Credit (Cr)</span>
+      <span><span class="sw" style="background:var(--amber-bg);border:1px solid var(--amber-border)"></span>Still under team discussion</span>
+      <span><span class="acct-type-dot" style="background:var(--asset)"></span>Asset</span>
+      <span><span class="acct-type-dot" style="background:var(--expense)"></span>Expense</span>
+      <span><span class="acct-type-dot" style="background:var(--liability)"></span>Liability</span>
+      <span><span class="acct-type-dot" style="background:var(--income)"></span>Income</span>
+    </div>
+    <p style="margin:0">Full detail lives in the companion PRD refinement doc (Sections 1–7 + Parts A–D). This page is a visual companion, not a replacement.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var state = { flow: 'purchase', method: 'wac', sub: {} };
+
+  var ICON = {
+    doc: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v5h5"/><path d="M6 3h8l5 5v13a1 1 0 01-1 1H6a1 1 0 01-1-1V4a1 1 0 011-1z"/></svg>',
+    inv: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/></svg>',
+    voucher: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 012-2h9l5 5v11a2 2 0 01-2 2H6a2 2 0 01-2-2z"/><path d="M14 3v5h5"/></svg>',
+    ledger: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M5 8l-3 6a4 4 0 008 0l-3-6zM19 8l-3 6a4 4 0 008 0l-3-6zM5 8h14"/></svg>',
+    arrow: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+    flag: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V4s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22V4"/></svg>',
+    chevron: '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>'
+  };
+
+  function fmt(n){ return '₹' + Math.round(n).toLocaleString('en-IN'); }
+
+  var ACCT_DOT = {
+    asset: 'var(--asset)', expense: 'var(--expense)', liability: 'var(--liability)', income: 'var(--income)'
+  };
+
+  // ---- Flow definitions -------------------------------------------------
+  var FLOWS = [
+    { id:'purchase', label:'Purchase', hasFlag:false },
+    { id:'sale', label:'Sale', hasFlag:true },
+    { id:'creditNote', label:'Credit note', hasFlag:false },
+    { id:'debitNote', label:'Debit note', hasFlag:true },
+    { id:'adjIn', label:'Adjustment IN', hasFlag:false },
+    { id:'adjOut', label:'Adjustment OUT', hasFlag:false },
+    { id:'fyRollover', label:'FY rollover', hasFlag:false }
+  ];
+
+  function buildFlow(id, method, sub){
+    // returns { document, invText, voucher, entries:[{dr,cr,amt,drType,crType}], note, ruleChips:[], subtoggle:null, flag:null }
+    if(id === 'purchase'){
+      var inv = method==='wac'
+        ? 'Existing 10 units @ ₹100 blend with the new 10 @ ₹120 → new weighted average ₹110/unit.'
+        : 'A new, separate layer is created: 10 units @ ₹120 — kept apart from the existing 10 @ ₹100 layer.';
+      return {
+        document:'PO / Purchase Bill — whichever is configured UPDATE',
+        invText: inv,
+        voucher:'Existing Expenditure voucher book — lines added within this document’s own entry.',
+        entries:[{dr:'Stock in Hand A/c',drType:'asset',cr:'Vendor A/c',crType:'liability',amt:1200}],
+        note:'Replaces today’s "Dr Purchase A/c" — a purchase becomes an asset, not an expense, until it’s sold.',
+        ruleChips:['update-rule'],
+        subtoggle:null, flag:null
+      };
+    }
+    if(id === 'sale'){
+      var amt = method==='wac' ? 1650 : 1600;
+      var inv = method==='wac'
+        ? 'COGS = current average (₹110) × 15 units sold = '+fmt(1650)+'.'
+        : 'Walk the oldest layers first: 10 units @ ₹100 + 5 units @ ₹120 = '+fmt(1600)+'. Layer [10@120] has 5 units left.';
+      return {
+        document:'Invoice / PI / Quotation / DC / SO — whichever is configured UPDATE',
+        invText: inv,
+        voucher:'Existing Invoice voucher book — lines added within this document’s own entry.',
+        entries:[{dr:'COGS Ledger',drType:'expense',cr:'Stock in Hand A/c',crType:'asset',amt:amt}],
+        note:'COGS posts to a dedicated COGS ledger (account group: Cost Of Goods Sold), not the item’s Purchase Ledger — they’re separate accounts in the real chart of accounts. Existing financial lines are unchanged: Dr Accounts Receivable, Cr Sales A/c, Cr Output GST.',
+        ruleChips:['update-rule'],
+        subtoggle:null,
+        flag:{
+          title:'Under discussion — COGS-before-revenue timing',
+          body:'If a non-Invoice document (e.g. a Delivery Challan or Sales Order) is the one configured UPDATE, this COGS entry can post before revenue is recognised at Invoice — breaking the usual matching principle. The team is deciding whether an interim "Goods Dispatched, Not Invoiced" account is needed, or whether this is accepted as-is for Phase 1.'
+        }
+      };
+    }
+    if(id === 'creditNote'){
+      var linked = sub.linked !== false;
+      var lineOn = sub.lineOn !== false;
+      if(!lineOn){
+        return {
+          document:'Credit Note — line item NOT marked "update stock"',
+          invText:'No chain node is created for this line — it never touched inventory.',
+          voucher:'Existing Credit Note voucher book — financial reversal only.',
+          entries:[],
+          note:'Only the revenue reversal happens: Dr Sales A/c, adjust GST, Cr Accounts Receivable. No stock or valuation impact.',
+          ruleChips:[], subtoggle:'cnLine', flag:null
+        };
+      }
+      var amt = linked ? (method==='wac' ? 550 : 533) : (method==='wac' ? 550 : 550);
+      var inv = linked
+        ? (method==='wac' ? 'New stock re-enters at the original sale’s average cost: 5 units @ ₹110 = '+fmt(550)+'.'
+                           : 'A new layer is created at the original sale’s blended cost (₹1,600 ÷ 15) ≈ ₹106.67/unit × 5 ≈ '+fmt(533)+'.')
+        : (method==='wac' ? 'New stock re-enters at the current average cost: 5 units @ ₹110 = '+fmt(550)+'.'
+                           : 'A new layer is created at the current average cost (no specific layer to restore): 5 @ ₹110 = '+fmt(550)+'.');
+      return {
+        document:'Credit Note — line item marked "update stock" ('+(linked?'linked to the original invoice':'not linked to any invoice')+')',
+        invText: inv,
+        voucher:'Existing Credit Note voucher book — lines added within this document’s own entry.',
+        entries:[{dr:'Stock in Hand A/c',drType:'asset',cr:'COGS Ledger',crType:'expense',amt:amt}],
+        note:'Reverses the same dedicated COGS ledger the original sale posted to. A Credit Note is always inbound — it creates a new layer under FIFO, so there’s no "which layer to consume" question, only "what cost does the new layer carry".',
+        ruleChips:[], subtoggle:'cnLine', flag:null
+      };
+    }
+    if(id === 'debitNote'){
+      var linked2 = sub.linked !== false;
+      var lineOn2 = sub.lineOn !== false;
+      if(!lineOn2){
+        return {
+          document:'Debit Note — line item NOT marked "update stock"',
+          invText:'No chain node is created for this line — it never touched inventory.',
+          voucher:'Existing Debit Note voucher book — financial reversal only.',
+          entries:[],
+          note:'Only the accounts-payable adjustment happens. No stock or valuation impact.',
+          ruleChips:[], subtoggle:'dnLine', flag:null
+        };
+      }
+      var amt2 = linked2 ? 500 : (method==='wac' ? 550 : 500);
+      var inv2 = linked2
+        ? 'Consumes exactly the linked purchase layer at its original rate: 5 units @ ₹100 = '+fmt(500)+'.'
+        : (method==='wac' ? 'Consumed at the current average cost: 5 units @ ₹110 = '+fmt(550)+'.'
+                           : 'Consumed oldest-layer-first (same rule as a sale): 5 units @ ₹100 = '+fmt(500)+'.');
+      return {
+        document:'Debit Note — line item marked "update stock" ('+(linked2?'linked to the original bill':'not linked to any bill')+')',
+        invText: inv2,
+        voucher:'Existing Debit Note voucher book — lines added within this document’s own entry.',
+        entries:[{dr:'Vendor A/c',drType:'liability',cr:'Stock in Hand A/c',crType:'asset',amt:amt2}],
+        note:'Unlinked FIFO returns consume the oldest layer first — one consistent rule for every outgoing event, not a special "return" exception.',
+        ruleChips:[], subtoggle:'dnLine',
+        flag:{
+          title:'Under discussion — rate-vs-cost variance',
+          body:'The vendor’s agreed return rate (driving the Dr Vendor A/c amount) can differ from the inventory cost basis being relieved (the Cr Stock in Hand amount) — e.g. vendor credits ₹130/unit while the cost basis is ₹100/unit. When they differ, the two legs don’t naturally balance. Options being discussed: post the gap to a dedicated "suspense" account (Refrens already has a Suspense A/c group in its chart of accounts — leaning direction), absorb it into the COGS ledger (rejected — pollutes COGS), or force the cost basis to match the return rate (rejected — corrupts the valuation chain). No variance arises in the linked-at-original-rate case shown here.'
+        }
+      };
+    }
+    if(id === 'adjIn'){
+      var party = sub.party === true;
+      return {
+        document:'Manual Stock Adjustment IN (e.g. stock count finds 3 extra units @ ₹110/unit)',
+        invText: method==='wac' ? 'Blends the entered cost into the running average.' : 'Creates a new layer at the entered cost: 3 @ ₹110.',
+        voucher:'New Inventory Adjustment Voucher Book — implemented as Refrens’ existing "stockJournal" voucher type, kept separate from the general Journal book.',
+        entries: party
+          ? [{dr:'Stock in Hand A/c',drType:'asset',cr:'Vendor A/c',crType:'liability',amt:330}]
+          : [{dr:'Stock in Hand A/c',drType:'asset',cr:'Inventory Adjustment A/c',crType:'expense',amt:330}],
+        note: party ? 'A vendor was tagged on this adjustment — routes to that vendor’s own AP ledger, same as any other party ledger in Refrens.'
+                    : 'No party tagged — routes to a single, dedicated "Inventory Adjustment A/c" (Expense type, bidirectional) instead of Purchase A/c, so COGS stays uncontaminated by count-correction noise.',
+        ruleChips:[], subtoggle:'party', flag:null
+      };
+    }
+    if(id === 'adjOut'){
+      var party2 = sub.party === true;
+      var amt3 = method==='wac' ? 220 : 200;
+      return {
+        document:'Manual Stock Adjustment OUT (e.g. 2 units damaged / written off)',
+        invText: method==='wac' ? 'Consumed at the current average: 2 @ ₹110 = '+fmt(220)+'.' : 'Consumed from the oldest layer: 2 @ ₹100 = '+fmt(200)+'.',
+        voucher:'New Inventory Adjustment Voucher Book — implemented as Refrens’ existing "stockJournal" voucher type, kept separate from the general Journal book.',
+        entries: party2
+          ? [{dr:'Client A/c',drType:'asset',cr:'Stock in Hand A/c',crType:'asset',amt:amt3}]
+          : [{dr:'Inventory Adjustment A/c',drType:'expense',cr:'Stock in Hand A/c',crType:'asset',amt:amt3}],
+        note: party2 ? 'A client was tagged — routes to that client’s own AR ledger.'
+                     : 'No party tagged — routes to the single combined Inventory Adjustment A/c, debited this time (a loss), keeping shrinkage/wastage out of Purchase A/c.',
+        ruleChips:[], subtoggle:'party', flag:null
+      };
+    }
+    if(id === 'fyRollover'){
+      return {
+        document:'Automatic, at financial-year boundary — no source document',
+        invText: method==='wac'
+          ? 'Carries forward a single number: closing 20 units @ ₹110 average — the new FY simply continues averaging from there.'
+          : 'Carries forward the full set of surviving layers intact: [10 @ ₹100] + [10 @ ₹120]. The FY boundary is a reporting line, not an inventory reset.',
+        voucher:'None — bookkeeping only, Stock-in-Hand balance is unchanged across the boundary.',
+        entries:[],
+        note: method==='wac'
+          ? 'A new-FY sale of 15 units simply costs 15 × ₹110 = '+fmt(1650)+'.'
+          : 'A new-FY sale of 15 units costs 10×100 + 5×120 = '+fmt(1600)+' — NOT a blended 15×110 = ₹1,650. Collapsing FIFO layers at year-end would silently turn FIFO into WAC every year.',
+        ruleChips:[], subtoggle:null, flag:null
+      };
+    }
+  }
+
+  // ---- Rendering ----------------------------------------------------------
+  function renderPills(){
+    var el = document.getElementById('pills');
+    el.innerHTML = '';
+    FLOWS.forEach(function(f){
+      var btn = document.createElement('button');
+      btn.className = 'pill' + (state.flow===f.id ? ' active':'');
+      btn.setAttribute('data-flow', f.id);
+      btn.innerHTML = (f.hasFlag ? '<span class="flag-dot"></span>' : '') + f.label;
+      btn.addEventListener('click', function(){
+        state.flow = f.id;
+        state.sub = {};
+        renderAll();
+      });
+      el.appendChild(btn);
+    });
+  }
+
+  function ledgerRowHtml(entry){
+    if(!entry) return '';
+    var rows = '';
+    rows += '<div class="ledger-row dr-row"><span class="who"><span class="dr-tag">Dr</span><span class="acct-type-dot" style="background:'+ACCT_DOT[entry.drType]+'"></span>'+entry.dr+'</span><span class="amt">'+fmt(entry.amt)+'</span></div>';
+    rows += '<div class="ledger-row cr-row"><span class="who"><span class="cr-tag">Cr</span><span class="acct-type-dot" style="background:'+ACCT_DOT[entry.crType]+'"></span>'+entry.cr+'</span><span class="amt">'+fmt(entry.amt)+'</span></div>';
+    return rows;
+  }
+
+  function renderDiagram(data){
+    var el = document.getElementById('diagram');
+    var ledgerHtml = data.entries.length
+      ? data.entries.map(ledgerRowHtml).join('')
+      : '<p style="font-size:12.5px;color:var(--text-secondary);margin:0;">No valuation ledger entry for this case.</p>';
+
+    el.innerHTML =
+      '<div class="node doc-node">'+
+        '<span class="node-label">'+ICON.doc+'Document</span>'+
+        '<span class="node-title">'+data.document+'</span>'+
+      '</div>'+
+      '<div class="connector">'+ICON.arrow+'</div>'+
+      '<div class="node">'+
+        '<span class="node-label">'+ICON.inv+'Inventory chain</span>'+
+        '<span class="node-body">'+data.invText+'</span>'+
+      '</div>'+
+      '<div class="connector">'+ICON.arrow+'</div>'+
+      '<div class="node">'+
+        '<span class="node-label">'+ICON.voucher+'Voucher book</span>'+
+        '<span class="node-body">'+data.voucher+'</span>'+
+      '</div>'+
+      '<div class="connector">'+ICON.arrow+'</div>'+
+      '<div class="node ledger-node">'+
+        '<span class="node-label">'+ICON.ledger+'Ledger accounts</span>'+
+        ledgerHtml+
+      '</div>';
+  }
+
+  function ruleChipHtml(key){
+    if(key==='update-rule'){
+      return '<span class="rule-chip">Only a document configured "UPDATE" creates this entry — BLOCK / IGNORE documents never do</span>';
+    }
+    return '';
+  }
+
+  function switchHtml(id, leftLabel, rightLabel, isOn){
+    return '<div class="subtoggle">'+
+      '<span class="subtoggle-label">'+leftLabel+'</span>'+
+      '<div class="switch '+(isOn?'on':'off')+'" id="'+id+'"><span class="opt left"></span><span class="opt right"></span><div class="thumb"></div></div>'+
+      '<span class="subtoggle-label">'+rightLabel+'</span>'+
+    '</div>';
+  }
+
+  function renderRulesPanel(data){
+    var el = document.getElementById('rules-panel');
+    var html = '<p class="rules-title">Rules for this flow</p>';
+    html += data.ruleChips.map(ruleChipHtml).join('');
+
+    if(data.subtoggle === 'cnLine'){
+      html += switchHtml('sw-cnLine','Update stock: off','on', state.sub.lineOn !== false);
+      html += switchHtml('sw-cnLinked','Unlinked','Linked to invoice', state.sub.linked !== false);
+    }
+    if(data.subtoggle === 'dnLine'){
+      html += switchHtml('sw-dnLine','Update stock: off','on', state.sub.lineOn !== false);
+      html += switchHtml('sw-dnLinked','Unlinked','Linked to bill', state.sub.linked !== false);
+    }
+    if(data.subtoggle === 'party'){
+      html += switchHtml('sw-party','No party','Party selected', state.sub.party === true);
+    }
+
+    html += '<p class="explain-line">'+data.note+'</p>';
+
+    if(data.flag){
+      html += '<div class="flag-callout">'+
+        '<div class="flag-head" id="flag-toggle">'+ICON.flag+'<span>'+data.flag.title+'</span><span class="flag-chevron" id="flag-chevron">'+ICON.chevron+'</span></div>'+
+        '<div class="flag-body" id="flag-body">'+data.flag.body+'</div>'+
+      '</div>';
+    }
+
+    el.innerHTML = html;
+
+    // wire up switches
+    ['sw-cnLine','sw-cnLinked','sw-dnLine','sw-dnLinked','sw-party'].forEach(function(id){
+      var node = document.getElementById(id);
+      if(!node) return;
+      node.addEventListener('click', function(){
+        if(id==='sw-cnLine' || id==='sw-dnLine'){ state.sub.lineOn = !(state.sub.lineOn !== false); }
+        if(id==='sw-cnLinked' || id==='sw-dnLinked'){ state.sub.linked = !(state.sub.linked !== false); }
+        if(id==='sw-party'){ state.sub.party = !(state.sub.party === true); }
+        renderAll();
+      });
+    });
+
+    var flagToggle = document.getElementById('flag-toggle');
+    if(flagToggle){
+      flagToggle.addEventListener('click', function(){
+        document.getElementById('flag-body').classList.toggle('open');
+        document.getElementById('flag-chevron').classList.toggle('open');
+      });
+    }
+  }
+
+  function renderStateCard(){
+    var el = document.getElementById('state-card');
+    if(state.method === 'wac'){
+      el.innerHTML = 'Example item on hand: <b>20 units</b> · weighted average <b>₹110/unit</b>';
+    } else {
+      el.innerHTML = 'Example item on hand: <b>20 units</b> across layers <span class="layer-chip">10 @ ₹100</span><span class="layer-chip">10 @ ₹120</span>';
+    }
+  }
+
+  function renderAll(){
+    renderPills();
+    renderStateCard();
+    var data = buildFlow(state.flow, state.method, state.sub);
+    renderDiagram(data);
+    renderRulesPanel(data);
+  }
+
+  document.querySelectorAll('.method-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.method-btn').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      state.method = btn.getAttribute('data-method');
+      renderAll();
+    });
+  });
+
+  document.querySelectorAll('.legend-chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      var key = chip.getAttribute('data-legend');
+      document.getElementById('legend-'+key).classList.toggle('open');
+    });
+  });
+
+  // ---- View switcher (Document flows <-> Activation & paywall) ----
+  document.querySelectorAll('.view-tab').forEach(function(tab){
+    tab.addEventListener('click', function(){
+      document.querySelectorAll('.view-tab').forEach(function(t){ t.classList.remove('active'); });
+      tab.classList.add('active');
+      var view = tab.getAttribute('data-view');
+      document.getElementById('view-flows').style.display = (view === 'flows') ? '' : 'none';
+      document.getElementById('view-activation').style.display = (view === 'activation') ? '' : 'none';
+    });
+  });
+
+  // ---- Activation mockup interactivity ----
+  var enableBtn = document.getElementById('mockup-enable-btn');
+  if(enableBtn){
+    enableBtn.addEventListener('click', function(){
+      document.getElementById('mockup-form').style.display = 'none';
+      document.getElementById('mockup-dashboard').style.display = 'block';
+    });
+  }
+  var pushBtn = document.getElementById('mockup-push-btn');
+  if(pushBtn){
+    pushBtn.addEventListener('click', function(){
+      document.getElementById('mockup-pushed-msg').style.display = 'block';
+      pushBtn.style.display = 'none';
+    });
+  }
+
+  // ---- Opening entry source-split toggle ----
+  var splitOn = true; // true = source-split (correct)
+  function renderSplit(){
+    var el = document.getElementById('split-result');
+    if(!el) return;
+    var rows;
+    if(splitOn){
+      rows =
+        '<div class="ledger-row dr-row"><span class="who"><span class="dr-tag">Dr</span>Stock in Hand A/c</span><span class="amt">'+fmt(2000)+'</span></div>'+
+        '<div class="ledger-row cr-row"><span class="who"><span class="cr-tag">Cr</span>Purchase Ledger (reverses the stale historical bill)</span><span class="amt">'+fmt(2000)+'</span></div>'+
+        '<p class="explain-line" style="margin-top:10px;"><b style="color:var(--text)">After the 12-unit sale:</b> Purchase Ledger = '+fmt(2000)+' &minus; '+fmt(2000)+' = <b>'+fmt(0)+'</b> (clean, untouched going forward). COGS Ledger = '+fmt(0)+' + '+fmt(1200)+' = <b>'+fmt(1200)+'</b> — exactly the 12 units actually sold, since COGS Ledger is brand-new and was never touched by the opening entry at all. Stock in Hand = '+fmt(2000)+' &minus; '+fmt(1200)+' = <b>'+fmt(800)+'</b> — exactly the 8 remaining units.</p>';
+    } else {
+      rows =
+        '<div class="ledger-row dr-row"><span class="who"><span class="dr-tag">Dr</span>Stock in Hand A/c</span><span class="amt">'+fmt(2000)+'</span></div>'+
+        '<div class="ledger-row cr-row"><span class="who"><span class="cr-tag">Cr</span>Inventory Adjustment A/c (generic, uniform)</span><span class="amt">'+fmt(2000)+'</span></div>'+
+        '<p class="explain-line" style="margin-top:10px;"><b style="color:var(--text)">After the 12-unit sale:</b> Purchase Ledger still shows the stale '+fmt(2000)+' from the old bill, untouched. COGS Ledger = '+fmt(1200)+' (only the new sale). To see the true combined cost picture for this item, an accountant now has to manually net Purchase Ledger and COGS Ledger together — neither account reads correctly on its own. <b style="color:var(--amber)">This is why source-split is the correct design.</b></p>';
+    }
+    el.innerHTML = rows;
+  }
+  var splitSwitch = document.getElementById('sw-split');
+  if(splitSwitch){
+    splitSwitch.addEventListener('click', function(){
+      splitOn = !splitOn;
+      splitSwitch.classList.toggle('on', splitOn);
+      splitSwitch.classList.toggle('off', !splitOn);
+      renderSplit();
+    });
+    renderSplit();
+  }
+
+  renderAll();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+_default:
+    @just --list
+
+# One-command setup: install deps (mac: Brewfile, linux: apt script), then clone repos
+setup:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [[ "$(uname)" == "Darwin" ]]; then
+        echo "==> Installing macOS dependencies (brew bundle)"
+        brew bundle
+    else
+        echo "==> Installing Linux dependencies"
+        ./scripts/setup-linux.sh
+    fi
+    echo "==> Cloning repos (mani sync)"
+    mani sync
+
+# Clone/update repos. Optional tag filters a subset: `just sync frontend-web`
+sync tag="":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [[ -n "{{ tag }}" ]]; then
+        mani sync --parallel --tags "{{ tag }}"
+    else
+        mani sync --parallel
+    fi
+
+# Link pre-existing clones from <dir> instead of re-cloning
+link dir:
+    ./bin/link-repos "{{ dir }}"
+
+# Start local infra (Mongo :27017, Elasticsearch :9200, Redis :6379)
+infra-up:
+    docker compose up -d
+
+# Stop local infra
+infra-down:
+    docker compose down
+
+# List all repos
+repos:
+    mani list projects
+
+# List all tags and their repos
+tags:
+    mani list tags
+
+# ── Multi-repo worktree workspaces ───────────────────────────────────────────
+# Thin wrappers over bin/workspace.ts. A workspace groups per-repo worktrees that
+# share one feature branch under <andromeda>/.workspaces/<branch>/<repo>. worktrunk
+# owns per-repo creation + bootstrap; this only orchestrates across repos.
+
+# Create worktrees on <branch> for each repo (or a mani tag), in parallel
+wt branch +repos:
+    @bin/workspace.ts create "{{ branch }}" {{ repos }}
+
+# Run a command across every repo in a workspace: `just exec feat/REF-1 -- git log -1`
+exec branch="" +cmd="":
+    @bin/workspace.ts exec "{{ branch }}" {{ cmd }}
+
+# git status -sb across the workspace (+ which repos are in it)
+status branch="":
+    @bin/workspace.ts status "{{ branch }}"
+
+# git diff across the workspace
+diff branch="":
+    @bin/workspace.ts diff "{{ branch }}"
+
+# Run each repo's test script, skipping no-test stubs
+test branch="":
+    @bin/workspace.ts test "{{ branch }}"
+
+# Run each repo's lint script
+lint branch="":
+    @bin/workspace.ts lint "{{ branch }}"
+
+# List every service → port in a workspace
+ports branch="":
+    @bin/workspace.ts ports "{{ branch }}"
+
+# Print one service's port in a workspace
+port service branch="":
+    @bin/workspace.ts port "{{ service }}" "{{ branch }}"
+
+# Rebuild changed @refrens libs and copy them into consumers' node_modules
+sync-deps branch="" *flags="":
+    @bin/workspace.ts sync-deps "{{ branch }}" {{ flags }}
+
+# Sync dependencies, then run serana and lydia in the foreground (--watch keeps libs live)
+up branch="" *flags="":
+    @bin/workspace.ts up "{{ branch }}" {{ flags }}
+
+# Remove all worktrees in a workspace
+rm branch:
+    @bin/workspace.ts rm "{{ branch }}"

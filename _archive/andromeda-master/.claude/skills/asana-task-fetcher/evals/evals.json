@@ -1,0 +1,89 @@
+{
+  "skill_name": "asana-task-fetcher",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Hey can you take a look at this Asana task and tell me what needs to be done? https://app.asana.com/0/1234567890123/9876543210987/f",
+      "expected_output": "Fetches the task via the Asana API using ASANA_PAT, displays the task title, description, status, and assignee, then summarizes what needs to be done.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "extracts-task-gid",
+          "text": "The agent correctly identifies and uses the task GID '9876543210987' from the URL"
+        },
+        {
+          "id": "makes-api-call",
+          "text": "The agent attempts a curl/HTTP call to api.asana.com/api/1.0/tasks/{gid}"
+        },
+        {
+          "id": "uses-asana-pat",
+          "text": "The agent uses the ASANA_PAT environment variable for the Authorization header"
+        },
+        {
+          "id": "handles-error-gracefully",
+          "text": "When the API returns an error (401/404), the agent explains the issue clearly rather than failing silently or giving a generic error"
+        },
+        {
+          "id": "structured-output",
+          "text": "The output includes structured sections for task title, status, and description (or clearly explains why they could not be fetched)"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Work on this task for me: https://app.asana.com/0/111222333444/555666777888/f",
+      "expected_output": "Fetches the task details from the Asana API, presents them clearly, and begins working on the task based on its title and description.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "extracts-task-gid",
+          "text": "The agent correctly identifies and uses the task GID '555666777888' from the URL"
+        },
+        {
+          "id": "makes-api-call",
+          "text": "The agent attempts a curl/HTTP call to api.asana.com/api/1.0/tasks/{gid}"
+        },
+        {
+          "id": "uses-asana-pat",
+          "text": "The agent uses the ASANA_PAT environment variable for the Authorization header"
+        },
+        {
+          "id": "requests-name-and-notes",
+          "text": "The API call requests at minimum the 'name' and 'notes' fields via opt_fields"
+        },
+        {
+          "id": "handles-error-gracefully",
+          "text": "When the API returns an error (401/404), the agent explains the issue clearly rather than failing silently or giving a generic error"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I need help understanding this ticket: https://app.asana.com/0/projects/999888777666555/f — what's the scope of this work?",
+      "expected_output": "Extracts the task GID from the URL, fetches the task, displays the task content, and explains the scope based on the description.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "extracts-task-gid",
+          "text": "The agent extracts a numeric task GID from the URL (the last numeric segment)"
+        },
+        {
+          "id": "makes-api-call",
+          "text": "The agent attempts a curl/HTTP call to api.asana.com/api/1.0/tasks/{gid}"
+        },
+        {
+          "id": "uses-asana-pat",
+          "text": "The agent uses the ASANA_PAT environment variable for the Authorization header"
+        },
+        {
+          "id": "handles-error-gracefully",
+          "text": "When the API returns an error (401/404), the agent explains the issue clearly rather than failing silently"
+        },
+        {
+          "id": "structured-output",
+          "text": "The output includes structured sections for task title, status, and description (or clearly explains why they could not be fetched)"
+        }
+      ]
+    }
+  ]
+}

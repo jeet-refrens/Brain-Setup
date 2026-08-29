@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scout Escalate"
+  short_description: "Escalate a Scout decision packet to Fable"
+  default_prompt: "Run /scout-escalate with a Scout decision packet."

@@ -1,0 +1,1101 @@
+{
+  "order": {
+    "id": 6652736536758,
+    "admin_graphql_api_id": "gid://shopify/Order/6652736536758",
+    "app_id": 334380892161,
+    "browser_ip": null,
+    "buyer_accepts_marketing": true,
+    "cancel_reason": null,
+    "cancelled_at": null,
+    "cart_token": null,
+    "checkout_id": null,
+    "checkout_token": null,
+    "client_details": null,
+    "closed_at": "2026-07-14T12:20:10+05:30",
+    "company": null,
+    "confirmation_number": "DC0H4UFDP",
+    "confirmed": true,
+    "contact_email": "ravikumar9111998@gmail.com",
+    "created_at": "2026-07-11T08:29:32+05:30",
+    "currency": "INR",
+    "current_subtotal_price": "1998.00",
+    "current_subtotal_price_set": {
+      "shop_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      }
+    },
+    "current_total_additional_fees_set": null,
+    "current_total_discounts": "999.00",
+    "current_total_discounts_set": {
+      "shop_money": {
+        "amount": "999.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "999.00",
+        "currency_code": "INR"
+      }
+    },
+    "current_total_duties_set": null,
+    "current_total_price": "1998.00",
+    "current_total_price_set": {
+      "shop_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      }
+    },
+    "current_total_tax": "95.13",
+    "current_total_tax_set": {
+      "shop_money": {
+        "amount": "95.13",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "95.13",
+        "currency_code": "INR"
+      }
+    },
+    "customer_locale": null,
+    "device_id": null,
+    "discount_codes": [
+      {
+        "code": "BUY 2 GET 1",
+        "amount": "999.00",
+        "type": "fixed_amount"
+      }
+    ],
+    "duties_included": false,
+    "email": "ravikumar9111998@gmail.com",
+    "estimated_taxes": false,
+    "financial_status": "paid",
+    "fulfillment_status": "fulfilled",
+    "landing_site": null,
+    "landing_site_ref": null,
+    "location_id": null,
+    "merchant_business_entity_id": "21537947830",
+    "merchant_of_record_app_id": null,
+    "name": "#INVHA1291",
+    "note": null,
+    "note_attributes": [
+      {
+        "name": "additional_charge",
+        "value": "0.0"
+      },
+      {
+        "name": "Razorpay_txn_id",
+        "value": "order_TC2T07XH0EQVIr"
+      },
+      {
+        "name": "shopifyCartToken",
+        "value": "hWNDaYUg2KyZu7gq5M8xAcT4?key=8a797cf226758b57e593658151e2e60e"
+      },
+      {
+        "name": "landing_page_url",
+        "value": "https://hiddenapple.in/collections/all?page=2"
+      },
+      {
+        "name": "ipv4_address",
+        "value": "122.167.119.46"
+      },
+      {
+        "name": "Free Item",
+        "value": "[{qty=1, price=999.0, productId=8752920101046, variantId=44945843683510, customAttributes={freeItem=true}}]"
+      }
+    ],
+    "number": 291,
+    "order_number": 1291,
+    "order_status_url": "https://hiddenapple.in/71999291574/orders/f957f77adb73efc72d6675c18772d85b/authenticate?key=04b8d5f4639eb767e0a7d4df97fcfe10",
+    "original_total_additional_fees_set": null,
+    "original_total_duties_set": null,
+    "payment_gateway_names": [
+      "Razorpay"
+    ],
+    "phone": "+918531972760",
+    "po_number": null,
+    "presentment_currency": "INR",
+    "processed_at": "2026-07-11T08:29:32+05:30",
+    "reference": null,
+    "referring_site": null,
+    "source_identifier": "6a51b0f50ca16d06717b4332",
+    "source_name": "334380892161",
+    "source_url": null,
+    "subtotal_price": "1998.00",
+    "subtotal_price_set": {
+      "shop_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      }
+    },
+    "tags": "fastrr, high, SR_STANDARD, Standard",
+    "tax_exempt": false,
+    "tax_lines": [
+      {
+        "price": "95.13",
+        "rate": 0.05,
+        "title": "IGST",
+        "price_set": {
+          "shop_money": {
+            "amount": "95.13",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "95.13",
+            "currency_code": "INR"
+          }
+        },
+        "channel_liable": false
+      }
+    ],
+    "taxes_included": true,
+    "test": false,
+    "token": "f957f77adb73efc72d6675c18772d85b",
+    "total_cash_rounding_payment_adjustment_set": {
+      "shop_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_cash_rounding_refund_adjustment_set": {
+      "shop_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_discounts": "999.00",
+    "total_discounts_set": {
+      "shop_money": {
+        "amount": "999.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "999.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_line_items_price": "2997.00",
+    "total_line_items_price_set": {
+      "shop_money": {
+        "amount": "2997.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "2997.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_outstanding": "0.00",
+    "total_price": "1998.00",
+    "total_price_set": {
+      "shop_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_shipping_price_set": {
+      "shop_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_tax": "95.14",
+    "total_tax_set": {
+      "shop_money": {
+        "amount": "95.14",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "95.14",
+        "currency_code": "INR"
+      }
+    },
+    "total_tip_received": "0.00",
+    "total_weight": 0,
+    "updated_at": "2026-07-14T12:20:10+05:30",
+    "user_id": null,
+    "billing_address": {
+      "first_name": "Ravikumar",
+      "address1": "Tower 12 Magarpatta Inner Circle Magarpatta Hadapsar 5th floor",
+      "phone": "8531972760",
+      "city": "Pune",
+      "zip": "411013",
+      "province": "Maharashtra",
+      "country": "India",
+      "last_name": ".",
+      "address2": "",
+      "company": null,
+      "latitude": 18.5153259,
+      "longitude": 73.9285824,
+      "name": "Ravikumar .",
+      "country_code": "IN",
+      "province_code": "MH"
+    },
+    "customer": {
+      "id": 9330890539190,
+      "created_at": "2026-07-11T08:29:32+05:30",
+      "updated_at": "2026-07-15T10:13:37+05:30",
+      "first_name": "Ravikumar",
+      "last_name": ".",
+      "state": "disabled",
+      "note": null,
+      "verified_email": true,
+      "multipass_identifier": null,
+      "tax_exempt": false,
+      "email_marketing_consent": {
+        "state": "not_subscribed",
+        "opt_in_level": "single_opt_in",
+        "consent_updated_at": null
+      },
+      "sms_marketing_consent": {
+        "state": "not_subscribed",
+        "opt_in_level": "single_opt_in",
+        "consent_updated_at": null,
+        "consent_collected_from": null
+      },
+      "tags": "",
+      "email": "ravikumar9111998@gmail.com",
+      "phone": "+918531972760",
+      "currency": "INR",
+      "tax_exemptions": [],
+      "admin_graphql_api_id": "gid://shopify/Customer/9330890539190",
+      "default_address": {
+        "id": 10863347499190,
+        "customer_id": 9330890539190,
+        "first_name": "Ravikumar",
+        "last_name": ".",
+        "company": null,
+        "address1": "Tower 12 Magarpatta Inner Circle Magarpatta Hadapsar 5th floor",
+        "address2": null,
+        "city": "Pune",
+        "province": "Maharashtra",
+        "country": "India",
+        "zip": "411013",
+        "phone": "8531972760",
+        "name": "Ravikumar .",
+        "province_code": "MH",
+        "country_code": "IN",
+        "country_name": "India",
+        "default": true
+      }
+    },
+    "discount_applications": [
+      {
+        "target_type": "line_item",
+        "type": "manual",
+        "value": "999.0",
+        "value_type": "fixed_amount",
+        "allocation_method": "across",
+        "target_selection": "all",
+        "title": "BUY 2 GET 1",
+        "description": "BUY 2 GET 1"
+      }
+    ],
+    "fulfillments": [
+      {
+        "id": 6100272316598,
+        "admin_graphql_api_id": "gid://shopify/Fulfillment/6100272316598",
+        "created_at": "2026-07-14T12:20:10+05:30",
+        "location_id": 80026042550,
+        "name": "#INVHA1291.1",
+        "order_id": 6652736536758,
+        "origin_address": {
+          "address1": "vpo mangla",
+          "address2": "near tehsildar office",
+          "city": "Chamba",
+          "zip": "176310",
+          "province_code": "HP",
+          "country_code": "IN"
+        },
+        "receipt": {},
+        "service": "manual",
+        "shipment_status": null,
+        "status": "success",
+        "tracking_company": "DTDC",
+        "tracking_number": "7X117762518",
+        "tracking_numbers": [
+          "7X117762518"
+        ],
+        "tracking_url": "https://www.dtdc.com/track-your-shipment/?awb=7X117762518",
+        "tracking_urls": [
+          "https://www.dtdc.com/track-your-shipment/?awb=7X117762518"
+        ],
+        "updated_at": "2026-07-14T12:20:10+05:30",
+        "line_items": [
+          {
+            "id": 15896382341302,
+            "admin_graphql_api_id": "gid://shopify/LineItem/15896382341302",
+            "attributed_staffs": [],
+            "current_quantity": 1,
+            "fulfillable_quantity": 0,
+            "fulfillment_service": "manual",
+            "fulfillment_status": "fulfilled",
+            "gift_card": false,
+            "grams": 0,
+            "name": "Hidden Anatomy Tees - M",
+            "price": "999.00",
+            "price_set": {
+              "shop_money": {
+                "amount": "999.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "999.00",
+                "currency_code": "INR"
+              }
+            },
+            "product_exists": true,
+            "product_id": 8752920101046,
+            "properties": [
+              {
+                "name": "freeItem",
+                "value": "true"
+              }
+            ],
+            "quantity": 1,
+            "requires_shipping": true,
+            "sku": null,
+            "taxable": true,
+            "title": "Hidden Anatomy Tees",
+            "total_discount": "0.00",
+            "total_discount_set": {
+              "shop_money": {
+                "amount": "0.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "0.00",
+                "currency_code": "INR"
+              }
+            },
+            "variant_id": 44945843683510,
+            "variant_inventory_management": "shopify",
+            "variant_title": "M",
+            "vendor": "My Store",
+            "tax_lines": [
+              {
+                "channel_liable": false,
+                "price": "10.57",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              },
+              {
+                "channel_liable": false,
+                "price": "10.57",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              },
+              {
+                "channel_liable": false,
+                "price": "10.57",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              }
+            ],
+            "duties": [],
+            "discount_allocations": [
+              {
+                "amount": "333.00",
+                "amount_set": {
+                  "shop_money": {
+                    "amount": "333.00",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "333.00",
+                    "currency_code": "INR"
+                  }
+                },
+                "discount_application_index": 0
+              }
+            ]
+          },
+          {
+            "id": 15896382374070,
+            "admin_graphql_api_id": "gid://shopify/LineItem/15896382374070",
+            "attributed_staffs": [],
+            "current_quantity": 1,
+            "fulfillable_quantity": 0,
+            "fulfillment_service": "manual",
+            "fulfillment_status": "fulfilled",
+            "gift_card": false,
+            "grams": 0,
+            "name": "Blame Tees - M",
+            "price": "999.00",
+            "price_set": {
+              "shop_money": {
+                "amount": "999.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "999.00",
+                "currency_code": "INR"
+              }
+            },
+            "product_exists": true,
+            "product_id": 8751544369334,
+            "properties": [],
+            "quantity": 1,
+            "requires_shipping": true,
+            "sku": null,
+            "taxable": true,
+            "title": "Blame Tees",
+            "total_discount": "0.00",
+            "total_discount_set": {
+              "shop_money": {
+                "amount": "0.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "0.00",
+                "currency_code": "INR"
+              }
+            },
+            "variant_id": 44941616939190,
+            "variant_inventory_management": "shopify",
+            "variant_title": "M",
+            "vendor": "My Store",
+            "tax_lines": [
+              {
+                "channel_liable": false,
+                "price": "10.57",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              },
+              {
+                "channel_liable": false,
+                "price": "10.57",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              },
+              {
+                "channel_liable": false,
+                "price": "10.57",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              }
+            ],
+            "duties": [],
+            "discount_allocations": [
+              {
+                "amount": "333.00",
+                "amount_set": {
+                  "shop_money": {
+                    "amount": "333.00",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "333.00",
+                    "currency_code": "INR"
+                  }
+                },
+                "discount_application_index": 0
+              }
+            ]
+          },
+          {
+            "id": 15896382406838,
+            "admin_graphql_api_id": "gid://shopify/LineItem/15896382406838",
+            "attributed_staffs": [],
+            "current_quantity": 1,
+            "fulfillable_quantity": 0,
+            "fulfillment_service": "manual",
+            "fulfillment_status": "fulfilled",
+            "gift_card": false,
+            "grams": 0,
+            "name": "Hidden Horsie Tees - M",
+            "price": "999.00",
+            "price_set": {
+              "shop_money": {
+                "amount": "999.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "999.00",
+                "currency_code": "INR"
+              }
+            },
+            "product_exists": true,
+            "product_id": 8751563604150,
+            "properties": [],
+            "quantity": 1,
+            "requires_shipping": true,
+            "sku": null,
+            "taxable": true,
+            "title": "Hidden Horsie Tees",
+            "total_discount": "0.00",
+            "total_discount_set": {
+              "shop_money": {
+                "amount": "0.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "0.00",
+                "currency_code": "INR"
+              }
+            },
+            "variant_id": 44941661372598,
+            "variant_inventory_management": "shopify",
+            "variant_title": "M",
+            "vendor": "My Store",
+            "tax_lines": [
+              {
+                "channel_liable": false,
+                "price": "10.57",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              },
+              {
+                "channel_liable": false,
+                "price": "10.57",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              },
+              {
+                "channel_liable": false,
+                "price": "10.57",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "10.57",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              }
+            ],
+            "duties": [],
+            "discount_allocations": [
+              {
+                "amount": "333.00",
+                "amount_set": {
+                  "shop_money": {
+                    "amount": "333.00",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "333.00",
+                    "currency_code": "INR"
+                  }
+                },
+                "discount_application_index": 0
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "line_items": [
+      {
+        "id": 15896382341302,
+        "admin_graphql_api_id": "gid://shopify/LineItem/15896382341302",
+        "attributed_staffs": [],
+        "current_quantity": 1,
+        "fulfillable_quantity": 0,
+        "fulfillment_service": "manual",
+        "fulfillment_status": "fulfilled",
+        "gift_card": false,
+        "grams": 0,
+        "name": "Hidden Anatomy Tees - M",
+        "price": "999.00",
+        "price_set": {
+          "shop_money": {
+            "amount": "999.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "999.00",
+            "currency_code": "INR"
+          }
+        },
+        "product_exists": true,
+        "product_id": 8752920101046,
+        "properties": [
+          {
+            "name": "freeItem",
+            "value": "true"
+          }
+        ],
+        "quantity": 1,
+        "requires_shipping": true,
+        "sku": null,
+        "taxable": true,
+        "title": "Hidden Anatomy Tees",
+        "total_discount": "0.00",
+        "total_discount_set": {
+          "shop_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          }
+        },
+        "variant_id": 44945843683510,
+        "variant_inventory_management": "shopify",
+        "variant_title": "M",
+        "vendor": "My Store",
+        "tax_lines": [
+          {
+            "channel_liable": false,
+            "price": "10.57",
+            "price_set": {
+              "shop_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          },
+          {
+            "channel_liable": false,
+            "price": "10.57",
+            "price_set": {
+              "shop_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          },
+          {
+            "channel_liable": false,
+            "price": "10.57",
+            "price_set": {
+              "shop_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          }
+        ],
+        "duties": [],
+        "discount_allocations": [
+          {
+            "amount": "333.00",
+            "amount_set": {
+              "shop_money": {
+                "amount": "333.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "333.00",
+                "currency_code": "INR"
+              }
+            },
+            "discount_application_index": 0
+          }
+        ]
+      },
+      {
+        "id": 15896382374070,
+        "admin_graphql_api_id": "gid://shopify/LineItem/15896382374070",
+        "attributed_staffs": [],
+        "current_quantity": 1,
+        "fulfillable_quantity": 0,
+        "fulfillment_service": "manual",
+        "fulfillment_status": "fulfilled",
+        "gift_card": false,
+        "grams": 0,
+        "name": "Blame Tees - M",
+        "price": "999.00",
+        "price_set": {
+          "shop_money": {
+            "amount": "999.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "999.00",
+            "currency_code": "INR"
+          }
+        },
+        "product_exists": true,
+        "product_id": 8751544369334,
+        "properties": [],
+        "quantity": 1,
+        "requires_shipping": true,
+        "sku": null,
+        "taxable": true,
+        "title": "Blame Tees",
+        "total_discount": "0.00",
+        "total_discount_set": {
+          "shop_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          }
+        },
+        "variant_id": 44941616939190,
+        "variant_inventory_management": "shopify",
+        "variant_title": "M",
+        "vendor": "My Store",
+        "tax_lines": [
+          {
+            "channel_liable": false,
+            "price": "10.57",
+            "price_set": {
+              "shop_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          },
+          {
+            "channel_liable": false,
+            "price": "10.57",
+            "price_set": {
+              "shop_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          },
+          {
+            "channel_liable": false,
+            "price": "10.57",
+            "price_set": {
+              "shop_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          }
+        ],
+        "duties": [],
+        "discount_allocations": [
+          {
+            "amount": "333.00",
+            "amount_set": {
+              "shop_money": {
+                "amount": "333.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "333.00",
+                "currency_code": "INR"
+              }
+            },
+            "discount_application_index": 0
+          }
+        ]
+      },
+      {
+        "id": 15896382406838,
+        "admin_graphql_api_id": "gid://shopify/LineItem/15896382406838",
+        "attributed_staffs": [],
+        "current_quantity": 1,
+        "fulfillable_quantity": 0,
+        "fulfillment_service": "manual",
+        "fulfillment_status": "fulfilled",
+        "gift_card": false,
+        "grams": 0,
+        "name": "Hidden Horsie Tees - M",
+        "price": "999.00",
+        "price_set": {
+          "shop_money": {
+            "amount": "999.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "999.00",
+            "currency_code": "INR"
+          }
+        },
+        "product_exists": true,
+        "product_id": 8751563604150,
+        "properties": [],
+        "quantity": 1,
+        "requires_shipping": true,
+        "sku": null,
+        "taxable": true,
+        "title": "Hidden Horsie Tees",
+        "total_discount": "0.00",
+        "total_discount_set": {
+          "shop_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          }
+        },
+        "variant_id": 44941661372598,
+        "variant_inventory_management": "shopify",
+        "variant_title": "M",
+        "vendor": "My Store",
+        "tax_lines": [
+          {
+            "channel_liable": false,
+            "price": "10.57",
+            "price_set": {
+              "shop_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          },
+          {
+            "channel_liable": false,
+            "price": "10.57",
+            "price_set": {
+              "shop_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          },
+          {
+            "channel_liable": false,
+            "price": "10.57",
+            "price_set": {
+              "shop_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "10.57",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          }
+        ],
+        "duties": [],
+        "discount_allocations": [
+          {
+            "amount": "333.00",
+            "amount_set": {
+              "shop_money": {
+                "amount": "333.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "333.00",
+                "currency_code": "INR"
+              }
+            },
+            "discount_application_index": 0
+          }
+        ]
+      }
+    ],
+    "payment_terms": null,
+    "refunds": [],
+    "shipping_address": {
+      "first_name": "Ravikumar",
+      "address1": "Tower 12 Magarpatta Inner Circle Magarpatta Hadapsar 5th floor",
+      "phone": "8531972760",
+      "city": "Pune",
+      "zip": "411013",
+      "province": "Maharashtra",
+      "country": "India",
+      "last_name": ".",
+      "address2": "",
+      "company": null,
+      "latitude": 18.5153259,
+      "longitude": 73.9285824,
+      "name": "Ravikumar .",
+      "country_code": "IN",
+      "province_code": "MH"
+    },
+    "shipping_lines": [
+      {
+        "id": 5530724565174,
+        "carrier_identifier": null,
+        "code": "SR_STANDARD",
+        "discounted_price": "0.00",
+        "discounted_price_set": {
+          "shop_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          }
+        },
+        "is_removed": false,
+        "phone": null,
+        "price": "0.00",
+        "price_set": {
+          "shop_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          }
+        },
+        "requested_fulfillment_service_id": null,
+        "source": null,
+        "title": "Standard (Prepaid)",
+        "tax_lines": [],
+        "discount_allocations": []
+      }
+    ]
+  }
+}

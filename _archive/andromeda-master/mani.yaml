@@ -1,0 +1,146 @@
+# mani config — Refrens meta-repo. Manages all Refrens repos via the mani CLI.
+# Repos are cloned as flat siblings of this file. `mani sync` clones; `--tags <t>` filters.
+
+projects:
+  serana:
+    url: git@github.com:refrens/serana.git
+    desc: Core backend API (Feathers.js, MongoDB, Elasticsearch, S3)
+    tags: [backend, backend-core, backend-ai, full-stack]
+  astrid:
+    url: git@github.com:refrens/astrid.git
+    desc: Secondary backend (Feathers.js, MongoDB)
+    tags: [backend]
+  marika:
+    url: git@github.com:refrens/marika.git
+    desc: Subscription management (Feathers v5, PostgreSQL, Knex, BullMQ)
+    tags: [backend]
+  saturn:
+    url: git@github.com:refrens/saturn.git
+    desc: Payments/billing (Feathers v5, PostgreSQL, Knex)
+    tags: [backend, backend-core, full-stack]
+  courier:
+    url: git@github.com:refrens/courier.git
+    desc: Email/messaging (Feathers.js, Nodemailer, AWS SES, MJML)
+    tags: [backend, backend-core, full-stack]
+  riften:
+    url: git@github.com:refrens/riften.git
+    desc: Auth + WebSocket backend (Feathers.js, Socket.io)
+    tags: [backend]
+  stella:
+    url: git@github.com:refrens/stella.git
+    desc: AI-powered service (Fastify, LangChain, OpenAI, Neo4j)
+    tags: [backend, backend-ai]
+  dibella:
+    url: git@github.com:refrens/dibella.git
+    desc: Serverless image/PDF generation (Azure Functions, Puppeteer, Sharp)
+    tags: [backend]
+  shopifyApp:
+    url: git@github.com:refrens/shopifyApp.git
+    desc: Shopify integration (React, GraphQL, Prisma, Vite)
+    tags: [backend]
+  lydia:
+    url: git@github.com:refrens/lydia.git
+    desc: Main web app (Next.js 16, MobX, Socket.io, Konva)
+    tags: [frontend, frontend-web, full-stack]
+  elisif:
+    url: git@github.com:refrens/elisif.git
+    desc: Web portal (Next.js 16, Styled Components)
+    tags: [frontend, frontend-web]
+  phobos:
+    url: git@github.com:refrens/phobos.git
+    desc: Alternate portal (Next.js 16, Styled Components)
+    tags: [frontend]
+  sithis:
+    url: git@github.com:refrens/sithis.git
+    desc: Admin panel (Next.js 13, Ant Design)
+    tags: [frontend]
+  aurora:
+    url: git@github.com:refrens/aurora.git
+    desc: Mobile app (React Native, Expo, Firebase)
+    tags: [frontend, frontend-mobile]
+  kherpa-welcome-space:
+    url: git@github.com:refrens/kherpa-welcome-space.git
+    desc: Starter template (Vite, React, Shadcn/UI, Tailwind)
+    tags: [frontend]
+  whiterun:
+    url: git@github.com:refrens/whiterun.git
+    desc: CMS (Strapi 3, MongoDB)
+    tags: [frontend]
+  ceres:
+    url: git@github.com:refrens/ceres.git
+    desc: Static template renderer (TypeScript, Webpack, Handlebars)
+    tags: [frontend]
+  disco:
+    url: git@github.com:refrens/disco.git
+    desc: Refrens component library (React 18, TypeScript, Storybook)
+    tags: [packages, frontend-web, full-stack]
+  jupiter:
+    url: git@github.com:refrens/jupiter.git
+    desc: Utility component library (React 18, TypeScript, Vitest)
+    tags: [packages, frontend-web, full-stack]
+  birds:
+    url: git@github.com:refrens/birds.git
+    desc: Feathers.js extensions/utilities (TypeScript, Feathers v4, MongoDB, Redis)
+    tags: [packages, backend-core, backend-ai, full-stack]
+  fence:
+    url: git@github.com:refrens/fence.git
+    desc: Config/constants library (TypeScript)
+    tags: [packages, backend-core, backend-ai, full-stack]
+  mudra:
+    url: git@github.com:refrens/mudra.git
+    desc: Number/numeric utilities (JS, written-number, lodash)
+    tags: [packages]
+  talos:
+    url: git@github.com:refrens/talos.git
+    desc: Mongoose validation helpers (TypeScript, Mongoose, validator.js)
+    tags: [packages, backend-core, full-stack]
+  venus:
+    url: git@github.com:refrens/venus.git
+    desc: Cross-platform utility lib (TypeScript, Preact, AJV, Rollup)
+    tags: [packages]
+  gst-states:
+    url: git@github.com:refrens/gst-states.git
+    desc: India GST state codes data (JSON + TypeScript types)
+    tags: [packages]
+  azure:
+    url: git@github.com:refrens/azure.git
+    desc: Infrastructure as code (Pulumi, TypeScript)
+    tags: [tools, devops]
+  nebula:
+    url: git@github.com:refrens/nebula.git
+    desc: Ops/devops orchestration (Node.js, PM2)
+    tags: [tools, devops]
+  kuiper:
+    url: git@github.com:refrens/kuiper.git
+    desc: CLI repo bootstrapper (Node.js)
+    tags: [tools]
+  mercury:
+    url: git@github.com:refrens/mercury.git
+    desc: API docs (Retype static generator)
+    tags: [tools]
+  github-deploy:
+    url: git@github.com:refrens/github-deploy.git
+    desc: GitHub deployment CLI (Node.js, Octokit)
+    tags: [tools]
+  seeds:
+    url: git@github.com:refrens/seeds.git
+    desc: Data seeding/migration (Node.js, MongoDB, CSV)
+    tags: [tools]
+  eslint-config:
+    url: git@github.com:refrens/eslint-config.git
+    desc: Shared ESLint config (ESLint, TypeScript, Prettier)
+    tags: [packages]
+
+tasks:
+  status:
+    desc: git status across selected repos
+    cmd: git status -sb
+  pull:
+    desc: git pull (fast-forward only) across selected repos
+    cmd: git pull --ff-only
+  install:
+    desc: npm install across selected repos
+    cmd: npm install
+  build:
+    desc: npm run build across selected repos
+    cmd: npm run build

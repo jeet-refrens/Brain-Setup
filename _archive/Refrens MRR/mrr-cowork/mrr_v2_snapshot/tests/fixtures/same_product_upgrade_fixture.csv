@@ -1,0 +1,3 @@
+ID,ClientProfile,Product,Amount,InvoiceDate,Period,Product → Name,SubscriptionStart,SubscriptionEnd
+u1,C_UPSELL,prod-shared,1200,2024-01-01,YEARLY,Plan Base,2024-01-01,2025-01-01
+u2,C_UPSELL,prod-shared,1800,2024-07-01,YEARLY,Plan Pro,2024-07-01,2025-07-01

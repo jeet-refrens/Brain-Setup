@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Field Mappings – Invoicing & Billing-Refrens</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f1f2f4;
+    --surface: #ffffff;
+    --border: #e1e3e5;
+    --border-strong: #c9cccf;
+    --text: #202223;
+    --text-sub: #6d7175;
+    --text-soft: #8c9196;
+    --primary: #008060;
+    --primary-hover: #006e52;
+    --primary-disabled: #b3d4c7;
+    --critical: #d72c0d;
+    --warning-bg: #fff5ea;
+    --warning-border: #ffd79d;
+    --info-bg: #ebf5ff;
+    --info-border: #b3d4ff;
+    --code-bg: #f6f6f7;
+    --hover: #f6f6f7;
+    --shadow-card: 0 0 0 1px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.06);
+    --radius: 8px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 14px; line-height: 1.4; }
+
+  /* Layout: simulate Shopify admin chrome lightly so it feels real */
+  .shell { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+  .sidebar { background: #1a1a1a; color: #d1d3d5; padding: 16px 0; font-size: 13px; }
+  .sidebar .brand { display: flex; align-items: center; gap: 8px; padding: 4px 16px 16px; color: #fff; font-weight: 600; }
+  .sidebar .brand-icon { width: 22px; height: 22px; border-radius: 4px; background: linear-gradient(135deg, #5e8e3e, #95bf47); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 700; }
+  .sidebar .group { padding: 4px 8px; }
+  .sidebar .nav-item { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 6px; cursor: pointer; color: #d1d3d5; }
+  .sidebar .nav-item:hover { background: #2a2a2a; }
+  .sidebar .nav-item.active { background: #303030; color: #fff; }
+  .sidebar .nav-item.sub { padding-left: 30px; font-size: 13px; }
+  .sidebar .nav-divider { font-size: 11px; text-transform: none; padding: 14px 16px 6px; color: #8c9196; letter-spacing: .02em; }
+
+  .main { padding: 24px 32px 80px; max-width: 1200px; }
+
+  /* Page header */
+  .page-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+  .page-title-row { display: flex; align-items: center; gap: 10px; }
+  .app-icon { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #7c5cff, #5b3df0); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 14px; }
+  h1 { font-size: 20px; font-weight: 600; margin: 0; }
+  .page-sub { color: var(--text-sub); margin-top: 4px; font-size: 13px; }
+
+  /* Buttons */
+  .btn { font-family: inherit; font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border-strong); background: #fff; color: var(--text); cursor: pointer; transition: background .12s; }
+  .btn:hover { background: var(--hover); }
+  .btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .btn-primary:hover { background: var(--primary-hover); }
+  .btn-primary:disabled { background: var(--primary-disabled); border-color: var(--primary-disabled); cursor: not-allowed; }
+  .btn-ghost { background: transparent; border-color: transparent; color: var(--primary); padding: 6px 8px; }
+  .btn-ghost:hover { background: rgba(0,128,96,.08); }
+  .btn-link { background: transparent; border: 0; color: var(--primary); cursor: pointer; padding: 0; font-size: 13px; }
+  .btn-link:hover { text-decoration: underline; }
+
+  /* Card */
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-card); margin-bottom: 16px; }
+  .card-head { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .card-title { font-size: 15px; font-weight: 600; }
+  .card-sub { color: var(--text-sub); font-size: 13px; margin-top: 2px; }
+  .card-body { padding: 20px; }
+  .card-foot { padding: 12px 20px; border-top: 1px solid var(--border); background: #fafbfb; display: flex; justify-content: space-between; align-items: center; gap: 12px; border-radius: 0 0 var(--radius) var(--radius); }
+
+  /* Form */
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+  .field-label { display: block; font-weight: 500; margin-bottom: 6px; font-size: 13px; color: var(--text); }
+  .field-help { color: var(--text-sub); font-size: 12px; margin-top: 4px; }
+  .input, .select { width: 100%; font-family: inherit; font-size: 14px; padding: 8px 12px; border: 1px solid var(--border-strong); border-radius: 8px; background: #fff; color: var(--text); transition: border-color .12s, box-shadow .12s; }
+  .input:focus, .select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 2px rgba(0,128,96,.2); }
+  .input.mono { font-family: 'SF Mono', 'Monaco', 'Menlo', monospace; font-size: 13px; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  /* Source-specific reveal */
+  .conditional { display: none; }
+  .conditional.shown { display: block; }
+
+  /* Tags / chips */
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 500; }
+  .badge-default { background: #e4e5e7; color: var(--text); }
+  .badge-success { background: #aee9d1; color: #0f5132; }
+  .badge-warning { background: #ffd79d; color: #5b3500; }
+  .badge-info { background: #b3d4ff; color: #003d99; }
+  .badge-critical { background: #fdd; color: #842029; }
+
+  /* Banner */
+  .banner { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; border-radius: 8px; border: 1px solid; margin-bottom: 16px; font-size: 13px; }
+  .banner-info { background: var(--info-bg); border-color: var(--info-border); color: #003d99; }
+  .banner-warning { background: var(--warning-bg); border-color: var(--warning-border); color: #5b3500; }
+  .banner .icon { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* Preview panel */
+  .preview { margin-top: 12px; padding: 14px 16px; background: var(--code-bg); border: 1px dashed var(--border-strong); border-radius: 8px; }
+  .preview-title { font-weight: 600; font-size: 13px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .preview-row { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px dashed var(--border); font-size: 13px; }
+  .preview-row:last-child { border-bottom: 0; }
+  .preview-row .k { color: var(--text-sub); }
+  .preview-row .v { font-family: 'SF Mono', monospace; font-size: 12px; color: var(--text); text-align: right; max-width: 60%; word-break: break-all; }
+  .preview-row .v.unmapped { color: var(--critical); font-style: italic; }
+  .preview-row .v.default { color: var(--text-sub); font-style: italic; }
+
+  /* Save bar (sticky bottom) */
+  .save-bar { position: fixed; bottom: 0; left: 240px; right: 0; background: #1a1a1a; color: #fff; padding: 14px 32px; display: none; justify-content: space-between; align-items: center; gap: 16px; transform: translateY(100%); transition: transform .25s; z-index: 50; }
+  .save-bar.shown { display: flex; transform: translateY(0); }
+  .save-bar .msg { font-size: 13px; }
+  .save-bar .btn-primary { background: #00a47c; border-color: #00a47c; }
+  .save-bar .btn { background: transparent; border-color: #444; color: #fff; }
+  .save-bar .btn:hover { background: #2a2a2a; }
+
+  /* Top page save (mimics screenshot) */
+  .top-save { display: flex; gap: 8px; }
+
+  /* small */
+  .muted { color: var(--text-sub); }
+  .mt-12 { margin-top: 12px; }
+  .mt-8 { margin-top: 8px; }
+  .mb-4 { margin-bottom: 4px; }
+  hr.soft { border: 0; border-top: 1px solid var(--border); margin: 16px 0; }
+
+  /* (fetch-note class kept unused for now in case metafield support returns) */
+  .fetch-note { display: none; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <!-- Sidebar (decorative) -->
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-icon">S</div> Shopify</div>
+    <div class="group">
+      <div class="nav-item">🏠 Home</div>
+      <div class="nav-item">📦 Orders</div>
+      <div class="nav-item">🏷️ Products</div>
+      <div class="nav-item">👤 Customers</div>
+      <div class="nav-item">📣 Marketing</div>
+      <div class="nav-item">💸 Discounts</div>
+      <div class="nav-item">📝 Content</div>
+      <div class="nav-item">🛍️ Markets</div>
+      <div class="nav-item">📈 Analytics</div>
+    </div>
+    <div class="nav-divider">Apps</div>
+    <div class="group">
+      <div class="nav-item active">▲ Invoicing & Billing-Ref...</div>
+      <div class="nav-item sub">Configurations</div>
+      <div class="nav-item sub active" style="background:#303030;color:#fff;">Field Mappings</div>
+    </div>
+    <div style="position:absolute;bottom:16px;left:8px;right:8px;">
+      <div class="nav-item" style="padding-left:16px;">⚙️ Settings</div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+
+    <div class="page-head">
+      <div>
+        <div class="page-title-row">
+          <div class="app-icon">▲</div>
+          <h1>Field Mappings</h1>
+        </div>
+        <div class="page-sub">Map Shopify fields to Refrens invoice fields. Required for GST-compliant invoices in India.</div>
+      </div>
+      <div class="top-save">
+        <button class="btn" id="discardTop" disabled>Discard</button>
+        <button class="btn btn-primary" id="saveTop" disabled>Save Changes</button>
+      </div>
+    </div>
+
+    <div class="banner banner-info">
+      <span class="icon">ℹ️</span>
+      <div>
+        <strong>How this works.</strong> Shopify doesn't have native HSN or GSTIN fields. We read them from data Shopify already includes on the order webhook — line item properties, SKU patterns, tags, or note attributes. Pick the source for each field below, and we'll pull it into every Refrens invoice. If the source is empty for a given order, the default value is used.
+        <div class="mt-8" style="font-size:12px; opacity:.85;">
+          <strong>Coming later:</strong> reading HSN/GSTIN from product, variant, or customer <em>metafields</em> (e.g. existing GST plugins). Not supported in v1.
+        </div>
+      </div>
+    </div>
+
+    <!-- HSN Card -->
+    <div class="card" data-mapping="hsn">
+      <div class="card-head">
+        <div>
+          <div class="card-title">HSN Code <span class="badge badge-default">Per line item</span></div>
+          <div class="card-sub">Harmonized System Nomenclature — applied to each product on the invoice.</div>
+        </div>
+        <span class="badge badge-success" id="hsnStatus">Mapped</span>
+      </div>
+      <div class="card-body">
+
+        <div class="field">
+          <label class="field-label" for="hsnSource">Source</label>
+          <select class="select source-select" id="hsnSource" data-target="hsn">
+            <option value="">— Select where HSN comes from —</option>
+            <option value="line_item_property" selected>Line item property</option>
+            <option value="sku_prefix">SKU prefix</option>
+            <option value="order_tag">Order tag prefix</option>
+            <option value="constant">Same value for all items</option>
+          </select>
+          <div class="field-help">All sources read directly from the order webhook — no extra Shopify API calls.</div>
+        </div>
+
+        <!-- line_item_property -->
+        <div class="conditional shown" data-source="line_item_property" data-target="hsn">
+          <div class="field">
+            <label class="field-label">Property name (case-sensitive)</label>
+            <input class="input mono" type="text" value="HSN" placeholder="e.g. HSN" />
+            <div class="field-help">Reads from <code>line_items[].properties[]</code>. Typically populated by a custom cart/checkout field per item.</div>
+          </div>
+        </div>
+
+        <!-- sku_prefix -->
+        <div class="conditional" data-source="sku_prefix" data-target="hsn">
+          <div class="row">
+            <div class="field">
+              <label class="field-label">Separator</label>
+              <input class="input mono" type="text" value="-" placeholder="e.g. -" />
+              <div class="field-help">SKU <code>6109-TSHIRT-L</code> with separator <code>-</code> contributes HSN <code>6109</code>.</div>
+            </div>
+            <div class="field">
+              <label class="field-label">Position</label>
+              <select class="select">
+                <option value="first" selected>First segment</option>
+                <option value="last">Last segment</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- order_tag -->
+        <div class="conditional" data-source="order_tag" data-target="hsn">
+          <div class="field">
+            <label class="field-label">Tag prefix</label>
+            <input class="input mono" type="text" value="hsn:" placeholder="e.g. hsn:" />
+            <div class="field-help">An order tagged <code>hsn:6109</code> contributes <code>6109</code> to every line item on that order. Works best for single-category orders.</div>
+          </div>
+        </div>
+
+        <!-- constant -->
+        <div class="conditional" data-source="constant" data-target="hsn">
+          <div class="field">
+            <label class="field-label">HSN value</label>
+            <input class="input mono" type="text" value="9999" placeholder="e.g. 9999" />
+            <div class="field-help">Same HSN applied to every line item across all orders. Use only if you sell one category.</div>
+          </div>
+        </div>
+
+        <hr class="soft" />
+
+        <div class="row">
+          <div class="field">
+            <label class="field-label">Default if missing</label>
+            <input class="input mono" type="text" value="9999" placeholder="e.g. 9999" />
+            <div class="field-help">Used when the source field is empty for a given line item.</div>
+          </div>
+          <div class="field">
+            <label class="field-label">If default also missing</label>
+            <select class="select">
+              <option value="skip">Send invoice without HSN</option>
+              <option value="fail" selected>Block invoice (flag for review)</option>
+            </select>
+            <div class="field-help">Recommended: block, so you can fix the source before the invoice goes out.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- GSTIN Card -->
+    <div class="card" data-mapping="gstin">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Customer GSTIN <span class="badge badge-default">Per order</span></div>
+          <div class="card-sub">B2B customer GST number — added to the bill-to address on the Refrens invoice.</div>
+        </div>
+        <span class="badge badge-warning" id="gstinStatus">Optional</span>
+      </div>
+      <div class="card-body">
+
+        <div class="field">
+          <label class="field-label" for="gstinSource">Source</label>
+          <select class="select source-select" id="gstinSource" data-target="gstin">
+            <option value="">— Select where GSTIN comes from —</option>
+            <option value="order_note_attribute" selected>Order note attribute (collected at checkout)</option>
+            <option value="customer_tag">Customer tag prefix</option>
+            <option value="order_tag">Order tag prefix</option>
+            <option value="line_item_property">Line item property</option>
+            <option value="none">None (skip GSTIN)</option>
+          </select>
+          <div class="field-help">Most B2B stores ask for GSTIN at checkout via a Cart Attribute. All sources here read directly from the order webhook.</div>
+        </div>
+
+        <!-- order_note_attribute -->
+        <div class="conditional shown" data-source="order_note_attribute" data-target="gstin">
+          <div class="field">
+            <label class="field-label">Attribute name (case-sensitive)</label>
+            <input class="input mono" type="text" value="GSTIN" placeholder="e.g. GSTIN" />
+            <div class="field-help">Looks for <code>note_attributes[].name === "GSTIN"</code> on the order.</div>
+          </div>
+        </div>
+
+        <!-- customer_tag -->
+        <div class="conditional" data-source="customer_tag" data-target="gstin">
+          <div class="field">
+            <label class="field-label">Tag prefix</label>
+            <input class="input mono" type="text" value="gstin:" placeholder="e.g. gstin:" />
+            <div class="field-help">A customer tagged <code>gstin:27ABCDE1234F1Z5</code> contributes <code>27ABCDE1234F1Z5</code>. <code>customer.tags</code> is included in the order webhook payload.</div>
+          </div>
+        </div>
+
+        <!-- order_tag -->
+        <div class="conditional" data-source="order_tag" data-target="gstin">
+          <div class="field">
+            <label class="field-label">Tag prefix</label>
+            <input class="input mono" type="text" value="gstin:" placeholder="e.g. gstin:" />
+            <div class="field-help">An order tagged <code>gstin:27ABCDE1234F1Z5</code> contributes <code>27ABCDE1234F1Z5</code>. Useful if your ops team tags orders post-facto.</div>
+          </div>
+        </div>
+
+        <!-- line_item_property (for B2B carts using custom checkout fields) -->
+        <div class="conditional" data-source="line_item_property" data-target="gstin">
+          <div class="field">
+            <label class="field-label">Property name</label>
+            <input class="input mono" type="text" placeholder="e.g. GSTIN" />
+            <div class="field-help">First non-empty value across line items wins.</div>
+          </div>
+        </div>
+
+        <hr class="soft" />
+
+        <div class="row">
+          <div class="field">
+            <label class="field-label">Validation</label>
+            <select class="select">
+              <option value="format" selected>Validate GSTIN format (15 chars, alphanumeric)</option>
+              <option value="checksum">Validate format + checksum</option>
+              <option value="none">No validation</option>
+            </select>
+            <div class="field-help">Invalid GSTINs are skipped (treated as B2C); merchant is alerted in the Sync Status page.</div>
+          </div>
+          <div class="field">
+            <label class="field-label">If missing</label>
+            <select class="select">
+              <option value="b2c" selected>Treat order as B2C</option>
+              <option value="hold">Hold invoice for manual review</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Preview Card -->
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <div class="card-title">Preview with recent order</div>
+          <div class="card-sub">See what will be extracted from your last 5 orders before committing the mapping.</div>
+        </div>
+        <button class="btn" id="previewBtn">Run preview</button>
+      </div>
+      <div class="card-body">
+        <div class="muted" id="previewEmpty">Click <strong>Run preview</strong> to fetch your last 5 orders and show what HSN + GSTIN would be extracted with the current mapping. No changes are saved.</div>
+
+        <div id="previewResults" style="display:none;">
+          <div class="preview">
+            <div class="preview-title">Order #1042 <span class="badge badge-info">3 line items</span> <span class="badge badge-success">All mapped</span></div>
+            <div class="preview-row"><span class="k">Customer GSTIN <span class="muted">(note_attributes[GSTIN])</span></span><span class="v">27ABCDE1234F1Z5</span></div>
+            <div class="preview-row"><span class="k">Line 1 — Premium Tee (L, Black) <span class="muted">SKU 6109-TEE-LB</span> → HSN</span><span class="v">6109</span></div>
+            <div class="preview-row"><span class="k">Line 2 — Premium Tee (M, Blue) <span class="muted">SKU 6109-TEE-MB</span> → HSN</span><span class="v">6109</span></div>
+            <div class="preview-row"><span class="k">Line 3 — Shipping → HSN</span><span class="v default">9999 (default)</span></div>
+          </div>
+
+          <div class="preview">
+            <div class="preview-title">Order #1041 <span class="badge badge-info">1 line item</span> <span class="badge badge-warning">Missing GSTIN — fell back to B2C</span></div>
+            <div class="preview-row"><span class="k">Customer GSTIN <span class="muted">(note_attributes[GSTIN])</span></span><span class="v default">(empty → B2C)</span></div>
+            <div class="preview-row"><span class="k">Line 1 — Notebook A5 <span class="muted">SKU 4820-NB-A5</span> → HSN</span><span class="v">4820</span></div>
+          </div>
+
+          <div class="preview">
+            <div class="preview-title">Order #1040 <span class="badge badge-info">2 line items</span> <span class="badge badge-critical">Blocked — HSN missing, no default</span></div>
+            <div class="preview-row"><span class="k">Customer GSTIN</span><span class="v">29XYZAB5678C1Z3</span></div>
+            <div class="preview-row"><span class="k">Line 1 — Mystery Box <span class="muted">SKU MYSTERY-001</span> → HSN</span><span class="v unmapped">No digits before separator in SKU</span></div>
+            <div class="preview-row"><span class="k">Line 2 — Custom T-shirt <span class="muted">SKU 6109-CST-01</span> → HSN</span><span class="v">6109</span></div>
+          </div>
+
+          <div class="banner banner-warning mt-12">
+            <span class="icon">⚠️</span>
+            <div>
+              <strong>1 of 5 recent orders would be blocked.</strong> Mystery Box (SKU <code>MYSTERY-001</code>) doesn't start with digits. Either rename the SKU to include the HSN prefix, change the default-if-missing policy below, or use the Constant source.
+              <div class="mt-8"><button class="btn-link">View affected product in Shopify ↗</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex; justify-content:flex-end; gap:8px; padding-top:8px;">
+      <button class="btn" id="discardBottom" disabled>Discard</button>
+      <button class="btn btn-primary" id="saveBottom" disabled>Save Changes</button>
+    </div>
+
+  </main>
+</div>
+
+<!-- Sticky save bar -->
+<div class="save-bar" id="saveBar">
+  <div class="msg">Unsaved changes</div>
+  <div style="display:flex; gap:8px;">
+    <button class="btn" id="discardSticky">Discard</button>
+    <button class="btn btn-primary" id="saveSticky">Save</button>
+  </div>
+</div>
+
+<script>
+  // Source-dependent reveal
+  document.querySelectorAll('.source-select').forEach(sel => {
+    sel.addEventListener('change', e => {
+      const target = sel.dataset.target;
+      const value = sel.value;
+      document.querySelectorAll(`.conditional[data-target="${target}"]`).forEach(div => {
+        const sources = div.dataset.source.split(',');
+        div.classList.toggle('shown', sources.includes(value));
+      });
+      markDirty();
+    });
+  });
+
+  // Generic dirty tracking
+  document.querySelectorAll('.input, .select').forEach(el => {
+    el.addEventListener('input', markDirty);
+    el.addEventListener('change', markDirty);
+  });
+
+  function markDirty() {
+    ['saveTop','saveBottom','discardTop','discardBottom'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.disabled = false;
+    });
+    document.getElementById('saveBar').classList.add('shown');
+  }
+
+  function markClean() {
+    ['saveTop','saveBottom','discardTop','discardBottom'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.disabled = true;
+    });
+    document.getElementById('saveBar').classList.remove('shown');
+  }
+
+  // Save handlers (all the same)
+  ['saveTop','saveBottom','saveSticky'].forEach(id => {
+    document.getElementById(id).addEventListener('click', () => {
+      // simulate save
+      const btn = document.getElementById(id);
+      const orig = btn.textContent;
+      btn.textContent = 'Saving…';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = orig;
+        markClean();
+        toast('Field mappings saved');
+      }, 600);
+    });
+  });
+
+  ['discardTop','discardBottom','discardSticky'].forEach(id => {
+    document.getElementById(id).addEventListener('click', () => {
+      markClean();
+      toast('Changes discarded');
+    });
+  });
+
+  // Preview
+  document.getElementById('previewBtn').addEventListener('click', e => {
+    const btn = e.currentTarget;
+    btn.textContent = 'Fetching…';
+    btn.disabled = true;
+    setTimeout(() => {
+      document.getElementById('previewEmpty').style.display = 'none';
+      document.getElementById('previewResults').style.display = 'block';
+      btn.textContent = 'Re-run preview';
+      btn.disabled = false;
+    }, 800);
+  });
+
+  // Toast
+  function toast(msg) {
+    const t = document.createElement('div');
+    t.textContent = msg;
+    t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;z-index:100;box-shadow:0 4px 12px rgba(0,0,0,.2);opacity:0;transition:opacity .2s;';
+    document.body.appendChild(t);
+    requestAnimationFrame(() => t.style.opacity = '1');
+    setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 250); }, 1800);
+  }
+</script>
+
+</body>
+</html>

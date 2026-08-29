@@ -1,0 +1,7 @@
+# Refrens andromeda — macOS dependencies. Install with: brew bundle  (or: just setup)
+# MongoDB is not here — run it via docker (`docker compose up -d`, Mongo :27017).
+
+brew "mani"               # multi-repo manager (manicli.com)
+brew "just"               # command runner
+brew "worktrunk"          # git worktree manager for parallel agent workflows
+brew "oven-sh/bun/bun"    # runtime for bin/workspace.ts

@@ -1,0 +1,819 @@
+{
+  "cache_invalidated_at": null,
+  "description": null,
+  "archived": false,
+  "view_count": 17,
+  "collection_position": null,
+  "source_card_id": null,
+  "table_id": null,
+  "result_metadata": [
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Customer",
+      "lib/original-name": "Customer",
+      "name": "Customer",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Customer",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Customer",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Text",
+      "lib/desired-column-alias": "Customer",
+      "display_name": "Customer",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 3,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Text"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Customer Name",
+      "lib/original-name": "Customer Name",
+      "name": "Customer Name",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Customer Name",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Customer Name",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Text",
+      "lib/desired-column-alias": "Customer Name",
+      "display_name": "Customer Name",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 3,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Text"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "SO Number",
+      "lib/original-name": "SO Number",
+      "name": "SO Number",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "SO Number",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "SO Number",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Text",
+      "lib/desired-column-alias": "SO Number",
+      "display_name": "SO Number",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 3,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Text"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Custom PO No",
+      "lib/original-name": "Custom PO No",
+      "name": "Custom PO No",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Custom PO No",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Custom PO No",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Text",
+      "lib/desired-column-alias": "Custom PO No",
+      "display_name": "Custom PO No",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 3,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Text"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Sales Person",
+      "lib/original-name": "Sales Person",
+      "name": "Sales Person",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Sales Person",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Sales Person",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Text",
+      "lib/desired-column-alias": "Sales Person",
+      "display_name": "Sales Person",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 3,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Text"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "PO Date",
+      "lib/original-name": "PO Date",
+      "name": "PO Date",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "PO Date",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "PO Date",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Instant",
+      "lib/desired-column-alias": "PO Date",
+      "display_name": "PO Date",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 3,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Instant"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "SO Date",
+      "lib/original-name": "SO Date",
+      "name": "SO Date",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "SO Date",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "SO Date",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Instant",
+      "lib/desired-column-alias": "SO Date",
+      "display_name": "SO Date",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 3,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Instant"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Currency",
+      "lib/original-name": "Currency",
+      "name": "Currency",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Currency",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Currency",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Text",
+      "lib/desired-column-alias": "Currency",
+      "display_name": "Currency",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 1,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Text"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Category",
+      "lib/original-name": "Category",
+      "name": "Category",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Category",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Category",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Text",
+      "lib/desired-column-alias": "Category",
+      "display_name": "Category",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 1,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Text"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "SKU",
+      "lib/original-name": "SKU",
+      "name": "SKU",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "SKU",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "SKU",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Text",
+      "lib/desired-column-alias": "SKU",
+      "display_name": "SKU",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 1,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Text"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Item Name",
+      "lib/original-name": "Item Name",
+      "name": "Item Name",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Item Name",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Item Name",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Text",
+      "lib/desired-column-alias": "Item Name",
+      "display_name": "Item Name",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 1,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Text"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Qty",
+      "lib/original-name": "Qty",
+      "name": "Qty",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Qty",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Qty",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Integer",
+      "lib/desired-column-alias": "Qty",
+      "display_name": "Qty",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 1,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Integer"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Unit",
+      "lib/original-name": "Unit",
+      "name": "Unit",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Unit",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Unit",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Text",
+      "lib/desired-column-alias": "Unit",
+      "display_name": "Unit",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 1,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Text"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Rate",
+      "lib/original-name": "Rate",
+      "name": "Rate",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Rate",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Rate",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Integer",
+      "lib/desired-column-alias": "Rate",
+      "display_name": "Rate",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 1,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Integer"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Discount %",
+      "lib/original-name": "Discount %",
+      "name": "Discount %",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Discount %",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Discount %",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Integer",
+      "lib/desired-column-alias": "Discount %",
+      "display_name": "Discount %",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 1,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Integer"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Discount Amount",
+      "lib/original-name": "Discount Amount",
+      "name": "Discount Amount",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Discount Amount",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Discount Amount",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Float",
+      "lib/desired-column-alias": "Discount Amount",
+      "display_name": "Discount Amount",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 1,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Float"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Gross Value",
+      "lib/original-name": "Gross Value",
+      "name": "Gross Value",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Gross Value",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Gross Value",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Integer",
+      "lib/desired-column-alias": "Gross Value",
+      "display_name": "Gross Value",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 1,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Integer"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Tax Value",
+      "lib/original-name": "Tax Value",
+      "name": "Tax Value",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Tax Value",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Tax Value",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Integer",
+      "lib/desired-column-alias": "Tax Value",
+      "display_name": "Tax Value",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 1,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Integer"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Total Value",
+      "lib/original-name": "Total Value",
+      "name": "Total Value",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Total Value",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Total Value",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Integer",
+      "lib/desired-column-alias": "Total Value",
+      "display_name": "Total Value",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 1,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Integer"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Invoiced Qty",
+      "lib/original-name": "Invoiced Qty",
+      "name": "Invoiced Qty",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Invoiced Qty",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Invoiced Qty",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Float",
+      "lib/desired-column-alias": "Invoiced Qty",
+      "display_name": "Invoiced Qty",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 2,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Float"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Invoiced Gross Value",
+      "lib/original-name": "Invoiced Gross Value",
+      "name": "Invoiced Gross Value",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Invoiced Gross Value",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Invoiced Gross Value",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Float",
+      "lib/desired-column-alias": "Invoiced Gross Value",
+      "display_name": "Invoiced Gross Value",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 2,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Float"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Invoiced Tax Value",
+      "lib/original-name": "Invoiced Tax Value",
+      "name": "Invoiced Tax Value",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Invoiced Tax Value",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Invoiced Tax Value",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Float",
+      "lib/desired-column-alias": "Invoiced Tax Value",
+      "display_name": "Invoiced Tax Value",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 2,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Float"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Invoiced Total Value",
+      "lib/original-name": "Invoiced Total Value",
+      "name": "Invoiced Total Value",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Invoiced Total Value",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Invoiced Total Value",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Float",
+      "lib/desired-column-alias": "Invoiced Total Value",
+      "display_name": "Invoiced Total Value",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 2,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Float"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Qty Balance",
+      "lib/original-name": "Qty Balance",
+      "name": "Qty Balance",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Qty Balance",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Qty Balance",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Float",
+      "lib/desired-column-alias": "Qty Balance",
+      "display_name": "Qty Balance",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 2,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Float"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Gross Balance",
+      "lib/original-name": "Gross Balance",
+      "name": "Gross Balance",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Gross Balance",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Gross Balance",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Float",
+      "lib/desired-column-alias": "Gross Balance",
+      "display_name": "Gross Balance",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 2,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Float"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Tax Balance",
+      "lib/original-name": "Tax Balance",
+      "name": "Tax Balance",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Tax Balance",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Tax Balance",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Float",
+      "lib/desired-column-alias": "Tax Balance",
+      "display_name": "Tax Balance",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 2,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Float"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Balance Value",
+      "lib/original-name": "Balance Value",
+      "name": "Balance Value",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Balance Value",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Balance Value",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Float",
+      "lib/desired-column-alias": "Balance Value",
+      "display_name": "Balance Value",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 2,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Float"
+    },
+    {
+      "semantic_type": null,
+      "lib/deduplicated-name": "Estimate",
+      "lib/original-name": "Estimate",
+      "name": "Estimate",
+      "lib/source": "source/native",
+      "lib/source-column-alias": "Estimate",
+      "source": "native",
+      "field_ref": [
+        "field",
+        "Estimate",
+        {
+          "base-type": "type/*"
+        }
+      ],
+      "effective_type": "type/Integer",
+      "lib/desired-column-alias": "Estimate",
+      "display_name": "Estimate",
+      "fingerprint": {
+        "global": {
+          "distinct-count": 3,
+          "nil%": 0.0
+        }
+      },
+      "base_type": "type/Integer"
+    }
+  ],
+  "embedding_type": null,
+  "creator": {
+    "id": 47,
+    "first_name": "Jeet",
+    "last_name": "Soni",
+    "email": "jeet.soni@refrens.com",
+    "common_name": "Jeet Soni"
+  },
+  "initially_published_at": null,
+  "can_write": true,
+  "card_schema": 23,
+  "database_id": 2,
+  "enable_embedding": false,
+  "collection_id": null,
+  "query_type": "native",
+  "name": "[BEP] Order Management",
+  "last_query_start": "2026-08-21T12:42:27.604166Z",
+  "is_remote_synced": false,
+  "dashboard_count": 0,
+  "document_id": null,
+  "last_used_at": "2026-08-21T12:42:27.668557Z",
+  "dashboard": null,
+  "type": "question",
+  "dimensions": null,
+  "average_query_time": 326.52941176470586,
+  "creator_id": 47,
+  "can_restore": false,
+  "moderation_reviews": [],
+  "updated_at": "2026-08-21T10:36:26.862218Z",
+  "made_public_by_id": 13,
+  "embedding_params": null,
+  "cache_ttl": null,
+  "dataset_query": {
+    "database": 2,
+    "lib/type": "mbql/query",
+    "stages": [
+      {
+        "lib/type": "mbql.stage/native",
+        "native": "[{\"$match\":{\"owner\":ObjectId(\"6a8444b1b7fa0c0025af333e\"),\"billType\":\"SALESORDER\",\"isRemoved\":false,\"isHardRemoved\":false,\"isExpenditure\":false,\"status\":{\"$nin\":[\"DRAFT\",\"CANCELED\"]}}},{\"$project\":{\"customer\":\"$billedTo.name\",\"soNumber\":\"$invoiceNumber\",\"soDate\":\"$invoiceDate\",\"currency\":1,\"vf\":\"$vendorFields\",\"items\":{\"$filter\":{\"input\":{\"$ifNull\":[\"$items\",[]]},\"as\":\"i\",\"cond\":{\"$ne\":[\"$$i.group\",true]}}},\"invIds\":{\"$setUnion\":[{\"$filter\":{\"input\":{\"$map\":{\"input\":{\"$filter\":{\"input\":{\"$ifNull\":[\"$items\",[]]},\"as\":\"i\",\"cond\":{\"$ne\":[\"$$i.group\",true]}}},\"as\":\"i\",\"in\":{\"$ifNull\":[\"$$i.inventory\",null]}}},\"as\":\"x\",\"cond\":{\"$ne\":[\"$$x\",null]}}},[]]},\"linkIds\":{\"$setUnion\":[{\"$ifNull\":[\"$linkedDocuments\",[]]},{\"$ifNull\":[\"$linkedInvoices\",[]]}]},\"customerKey\":\"$billedTo.uniqueKey\"}},{\"$lookup\":{\"from\":\"invoices\",\"localField\":\"linkIds\",\"foreignField\":\"_id\",\"let\":{\"cur\":\"$currency\"},\"pipeline\":[{\"$match\":{\"billType\":\"INVOICE\",\"isRemoved\":false,\"isHardRemoved\":false,\"status\":{\"$nin\":[\"DRAFT\",\"CANCELED\"]}}},{\"$project\":{\"_id\":0,\"li\":{\"$let\":{\"vars\":{\"r\":{\"$cond\":[{\"$eq\":[\"$currency\",\"$$cur\"]},1,{\"$ifNull\":[{\"$getField\":{\"field\":\"$$cur\",\"input\":\"$conversionRates\"}},1]}]}},\"in\":{\"$map\":{\"input\":{\"$filter\":{\"input\":{\"$ifNull\":[\"$items\",[]]},\"as\":\"i\",\"cond\":{\"$ne\":[\"$$i.group\",true]}}},\"as\":\"i\",\"in\":{\"k\":{\"$cond\":[{\"$ne\":[{\"$ifNull\":[\"$$i.inventory\",null]},null]},{\"$concat\":[\"I:\",{\"$toString\":\"$$i.inventory\"}]},{\"$cond\":[{\"$ne\":[{\"$ifNull\":[\"$$i.sku\",\"\"]},\"\"]},{\"$concat\":[\"S:\",{\"$ifNull\":[\"$$i.sku\",\"\"]}]},{\"$concat\":[\"N:\",{\"$ifNull\":[\"$$i.name\",\"\"]}]}]}]},\"q\":{\"$ifNull\":[\"$$i.quantity\",0]},\"g\":{\"$multiply\":[{\"$ifNull\":[\"$$i.amount\",0]},\"$$r\"]},\"t\":{\"$multiply\":[{\"$ifNull\":[\"$$i.igst\",0]},\"$$r\"]},\"v\":{\"$multiply\":[{\"$ifNull\":[\"$$i.total\",0]},\"$$r\"]}}}}}}}}],\"as\":\"invs\"}},{\"$lookup\":{\"from\":\"inventories\",\"localField\":\"invIds\",\"foreignField\":\"_id\",\"pipeline\":[{\"$project\":{\"_id\":1,\"category\":1}}],\"as\":\"cats\"}},{\"$addFields\":{\"invLi\":{\"$reduce\":{\"input\":\"$invs\",\"initialValue\":[],\"in\":{\"$concatArrays\":[\"$$value\",\"$$this.li\"]}}},\"soKeys\":{\"$map\":{\"input\":\"$items\",\"as\":\"i\",\"in\":{\"k\":{\"$cond\":[{\"$ne\":[{\"$ifNull\":[\"$$i.inventory\",null]},null]},{\"$concat\":[\"I:\",{\"$toString\":\"$$i.inventory\"}]},{\"$cond\":[{\"$ne\":[{\"$ifNull\":[\"$$i.sku\",\"\"]},\"\"]},{\"$concat\":[\"S:\",{\"$ifNull\":[\"$$i.sku\",\"\"]}]},{\"$concat\":[\"N:\",{\"$ifNull\":[\"$$i.name\",\"\"]}]}]}]},\"q\":{\"$ifNull\":[\"$$i.quantity\",0]}}}}}},{\"$unwind\":\"$items\"},{\"$addFields\":{\"key\":{\"$cond\":[{\"$ne\":[{\"$ifNull\":[\"$items.inventory\",null]},null]},{\"$concat\":[\"I:\",{\"$toString\":\"$items.inventory\"}]},{\"$cond\":[{\"$ne\":[{\"$ifNull\":[\"$items.sku\",\"\"]},\"\"]},{\"$concat\":[\"S:\",{\"$ifNull\":[\"$items.sku\",\"\"]}]},{\"$concat\":[\"N:\",{\"$ifNull\":[\"$items.name\",\"\"]}]}]}]}}},{\"$addFields\":{\"m\":{\"$filter\":{\"input\":\"$invLi\",\"as\":\"x\",\"cond\":{\"$eq\":[\"$$x.k\",\"$key\"]}}},\"peers\":{\"$filter\":{\"input\":\"$soKeys\",\"as\":\"p\",\"cond\":{\"$eq\":[\"$$p.k\",\"$key\"]}}},\"catRaw\":{\"$let\":{\"vars\":{\"hit\":{\"$first\":{\"$filter\":{\"input\":\"$cats\",\"as\":\"c\",\"cond\":{\"$eq\":[\"$$c._id\",{\"$ifNull\":[\"$items.inventory\",null]}]}}}}},\"in\":{\"$ifNull\":[\"$$hit.category\",null]}}}}},{\"$addFields\":{\"share\":{\"$let\":{\"vars\":{\"pq\":{\"$sum\":\"$peers.q\"},\"pn\":{\"$size\":\"$peers\"}},\"in\":{\"$cond\":[{\"$gt\":[\"$$pq\",0]},{\"$divide\":[{\"$ifNull\":[\"$items.quantity\",0]},\"$$pq\"]},{\"$cond\":[{\"$gt\":[\"$$pn\",0]},{\"$divide\":[1,\"$$pn\"]},1]}]}}}}},{\"$addFields\":{\"iq\":{\"$multiply\":[{\"$sum\":\"$m.q\"},\"$share\"]},\"ig\":{\"$multiply\":[{\"$sum\":\"$m.g\"},\"$share\"]},\"it\":{\"$multiply\":[{\"$sum\":\"$m.t\"},\"$share\"]},\"iv\":{\"$multiply\":[{\"$sum\":\"$m.v\"},\"$share\"]},\"sq\":{\"$ifNull\":[\"$items.quantity\",0]},\"sg\":{\"$ifNull\":[\"$items.amount\",0]},\"st\":{\"$ifNull\":[\"$items.igst\",0]},\"sv\":{\"$ifNull\":[\"$items.total\",0]},\"sub\":{\"$ifNull\":[\"$items.subTotal\",0]},\"dAmt\":{\"$cond\":[{\"$eq\":[\"$items.discount.discountType\",\"PERCENTAGE\"]},{\"$divide\":[{\"$multiply\":[{\"$ifNull\":[\"$items.subTotal\",0]},{\"$ifNull\":[\"$items.discount.amount\",0]}]},100]},{\"$ifNull\":[\"$items.discount.amount\",0]}]}}},{\"$project\":{\"_id\":0,\"Customer\":{\"$ifNull\":[\"$customerKey\",\"\"]},\"Customer Name\":\"$customer\",\"SO Number\":\"$soNumber\",\"Custom PO No\":{\"$ifNull\":[\"$vf.r_str_001\",\"\"]},\"Sales Person\":{\"$ifNull\":[\"$vf.r_str_002\",\"\"]},\"PO Date\":{\"$convert\":{\"input\":\"$vf.r_date_001\",\"to\":\"date\",\"onError\":null,\"onNull\":null}},\"SO Date\":\"$soDate\",\"Currency\":\"$currency\",\"Category\":{\"$let\":{\"vars\":{\"c\":{\"$ifNull\":[\"$catRaw\",\"\"]}},\"in\":{\"$ifNull\":[{\"$getField\":{\"field\":\"$$c\",\"input\":{\"$literal\":{\"finishedGoods\":\"Finished Goods\",\"rawMaterials\":\"Raw Materials\",\"subAssemblies\":\"Sub-assemblies / Semi-finished\",\"partsComponents\":\"Parts / Components\",\"tradingGoods\":\"Trading Goods\",\"consumables\":\"Consumables (MRO)\",\"packaging\":\"Packaging Material\",\"spares\":\"Spares / Aftermarket\",\"scrap\":\"Scrap\",\"byProducts\":\"By-Products\",\"samples\":\"Samples / Promotional Items\",\"service\":\"Service\",\"subcontracting\":\"Subcontracting Service\",\"capitalGoods\":\"Capital Goods / Assets\",\"charges\":\"Charges / Fees\",\"digital\":\"Digital / Subscription\"}}}},\"$$c\"]}}},\"SKU\":{\"$ifNull\":[\"$items.sku\",\"\"]},\"Item Name\":{\"$ifNull\":[\"$items.name\",\"\"]},\"Qty\":\"$sq\",\"Unit\":{\"$ifNull\":[\"$items.unit\",\"\"]},\"Rate\":{\"$ifNull\":[\"$items.rate\",0]},\"Discount %\":{\"$round\":[{\"$cond\":[{\"$eq\":[\"$items.discount.discountType\",\"PERCENTAGE\"]},{\"$ifNull\":[\"$items.discount.amount\",0]},{\"$cond\":[{\"$gt\":[\"$sub\",0]},{\"$multiply\":[{\"$divide\":[\"$dAmt\",\"$sub\"]},100]},0]}]},2]},\"Discount Amount\":{\"$round\":[\"$dAmt\",2]},\"Gross Value\":{\"$round\":[\"$sg\",2]},\"Tax Value\":{\"$round\":[\"$st\",2]},\"Total Value\":{\"$round\":[\"$sv\",2]},\"Invoiced Qty\":{\"$round\":[\"$iq\",4]},\"Invoiced Gross Value\":{\"$round\":[\"$ig\",2]},\"Invoiced Tax Value\":{\"$round\":[\"$it\",2]},\"Invoiced Total Value\":{\"$round\":[\"$iv\",2]},\"Qty Balance\":{\"$round\":[{\"$subtract\":[\"$sq\",\"$iq\"]},4]},\"Gross Balance\":{\"$round\":[{\"$subtract\":[\"$sg\",\"$ig\"]},2]},\"Tax Balance\":{\"$round\":[{\"$subtract\":[\"$st\",\"$it\"]},2]},\"Balance Value\":{\"$round\":[{\"$subtract\":[\"$sv\",\"$iv\"]},2]},\"Estimate\":{\"$ifNull\":[\"$vf.r_num_001\",null]}}},{\"$sort\":{\"SO Date\":1,\"SO Number\":1}},{\"$limit\":5000}]",
+        "collection": "invoices"
+      }
+    ]
+  },
+  "dimension_mappings": null,
+  "id": 5017,
+  "legacy_query": null,
+  "parameter_mappings": [],
+  "can_manage_db": false,
+  "display": "table",
+  "archived_directly": false,
+  "entity_id": "v8A1cbfAIrvSNlXQylLC7",
+  "param_fields": {},
+  "collection_preview": true,
+  "last-edit-info": {
+    "id": 47,
+    "email": "jeet.soni@refrens.com",
+    "first_name": "Jeet",
+    "last_name": "Soni",
+    "timestamp": "2026-08-20T14:09:33.266272Z"
+  },
+  "visualization_settings": {
+    "table.pivot_column": "Currency",
+    "table.cell_column": "Qty"
+  },
+  "collection": {
+    "metabase.collections.models.collection.root/is-root?": true,
+    "authority_level": null,
+    "name": "Our analytics",
+    "is_personal": false,
+    "id": "root",
+    "is_remote_synced": false,
+    "can_write": true
+  },
+  "metabase_version": "v0.63.14 (8429d62)",
+  "parameters": [],
+  "dashboard_id": null,
+  "created_at": "2026-08-20T14:09:33.172494Z",
+  "parameter_usage_count": 0,
+  "public_uuid": "588d90b0-fe99-4fad-97f7-709dbdcf400a",
+  "can_delete": false
+}

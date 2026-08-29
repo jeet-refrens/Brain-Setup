@@ -1,0 +1,10 @@
+[
+  {
+    "$match": {
+      "createdAt": { "$gte": ISODate("2026-08-12T00:00:00Z") },
+      "isRemoved": { "$ne": true }
+    }
+  },
+  { "$group": { "_id": "$billType", "documents": { "$sum": 1 } } },
+  { "$sort": { "documents": -1 } }
+]

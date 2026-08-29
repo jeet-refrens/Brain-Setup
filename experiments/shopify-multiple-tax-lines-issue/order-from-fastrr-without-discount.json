@@ -1,0 +1,747 @@
+{
+  "order": {
+    "id": 6732760350902,
+    "admin_graphql_api_id": "gid://shopify/Order/6732760350902",
+    "app_id": 334380892161,
+    "browser_ip": null,
+    "buyer_accepts_marketing": true,
+    "cancel_reason": null,
+    "cancelled_at": null,
+    "cart_token": null,
+    "checkout_id": null,
+    "checkout_token": null,
+    "client_details": null,
+    "closed_at": null,
+    "company": null,
+    "confirmation_number": "8KFMEMY0L",
+    "confirmed": true,
+    "contact_email": "waqarwill323@gmail.com",
+    "created_at": "2026-08-20T18:50:21+05:30",
+    "currency": "INR",
+    "current_subtotal_price": "1998.00",
+    "current_subtotal_price_set": {
+      "shop_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      }
+    },
+    "current_total_additional_fees_set": null,
+    "current_total_discounts": "0.00",
+    "current_total_discounts_set": {
+      "shop_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      }
+    },
+    "current_total_duties_set": null,
+    "current_total_price": "1998.00",
+    "current_total_price_set": {
+      "shop_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      }
+    },
+    "current_total_tax": "95.14",
+    "current_total_tax_set": {
+      "shop_money": {
+        "amount": "95.14",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "95.14",
+        "currency_code": "INR"
+      }
+    },
+    "customer_locale": null,
+    "device_id": null,
+    "discount_codes": [],
+    "duties_included": false,
+    "email": "waqarwill323@gmail.com",
+    "estimated_taxes": false,
+    "financial_status": "partially_paid",
+    "fulfillment_status": "fulfilled",
+    "landing_site": null,
+    "landing_site_ref": null,
+    "location_id": null,
+    "merchant_business_entity_id": "21537947830",
+    "merchant_of_record_app_id": null,
+    "name": "#INVHA1777",
+    "note": null,
+    "note_attributes": [
+      {
+        "name": "additional_charge",
+        "value": "0.0"
+      },
+      {
+        "name": "user_agent",
+        "value": "Mozilla/5.0 (iPhone; CPU iPhone OS 26_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/23G83 Instagram 443.0.0.33.78 (iPhone18,2; iOS 26_6_1; en_GB; en-GB; scale=3.00; 1320x2868; IABMV/1; 1043399932) Safari/604.1"
+      },
+      {
+        "name": "utm_source",
+        "value": "facebook"
+      },
+      {
+        "name": "utm_medium",
+        "value": "paid"
+      },
+      {
+        "name": "utm_campaign",
+        "value": "120252363558110359"
+      },
+      {
+        "name": "utm_term",
+        "value": "120252363558120359"
+      },
+      {
+        "name": "utm_content",
+        "value": "120252363558100359"
+      },
+      {
+        "name": "Razorpay_txn_id",
+        "value": "order_TS2Qu7F1ymAT2R"
+      },
+      {
+        "name": "shopifyCartToken",
+        "value": "hWNFrnIM8wwD9UDVWkQLiPUi?key=2b9d8b355d33b330a019a19e2c6a5983"
+      },
+      {
+        "name": "landing_page_url",
+        "value": "https://hiddenapple.in/products/first-move-syndrome-tee?variant=45224097677494"
+      },
+      {
+        "name": "ipv4_address",
+        "value": "103.211.132.13"
+      }
+    ],
+    "number": 777,
+    "order_number": 1777,
+    "order_status_url": "https://hiddenapple.in/71999291574/orders/cc2b4826e23a6375ee90bbea77fda61b/authenticate?key=b060b29bb604bccb2011bfe0b0f72907",
+    "original_total_additional_fees_set": null,
+    "original_total_duties_set": null,
+    "payment_gateway_names": [
+      "Cash on Delivery (COD)",
+      "Razorpay"
+    ],
+    "phone": "+916291120044",
+    "po_number": null,
+    "presentment_currency": "INR",
+    "processed_at": "2026-08-20T18:50:21+05:30",
+    "reference": null,
+    "referring_site": null,
+    "source_identifier": "6a86fec3f71edd73a80bc875",
+    "source_name": "334380892161",
+    "source_url": null,
+    "subtotal_price": "1998.00",
+    "subtotal_price_set": {
+      "shop_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      }
+    },
+    "tags": "fastrr, low, PPCOD, SR_STANDARD, Standard",
+    "tax_exempt": false,
+    "tax_lines": [
+      {
+        "price": "95.14",
+        "rate": 0.05,
+        "title": "IGST",
+        "price_set": {
+          "shop_money": {
+            "amount": "95.14",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "95.14",
+            "currency_code": "INR"
+          }
+        },
+        "channel_liable": false
+      }
+    ],
+    "taxes_included": true,
+    "test": false,
+    "token": "cc2b4826e23a6375ee90bbea77fda61b",
+    "total_cash_rounding_payment_adjustment_set": {
+      "shop_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_cash_rounding_refund_adjustment_set": {
+      "shop_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_discounts": "0.00",
+    "total_discounts_set": {
+      "shop_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_line_items_price": "1998.00",
+    "total_line_items_price_set": {
+      "shop_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_outstanding": "1949.00",
+    "total_price": "1998.00",
+    "total_price_set": {
+      "shop_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "1998.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_shipping_price_set": {
+      "shop_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "0.00",
+        "currency_code": "INR"
+      }
+    },
+    "total_tax": "95.14",
+    "total_tax_set": {
+      "shop_money": {
+        "amount": "95.14",
+        "currency_code": "INR"
+      },
+      "presentment_money": {
+        "amount": "95.14",
+        "currency_code": "INR"
+      }
+    },
+    "total_tip_received": "0.00",
+    "total_weight": 0,
+    "updated_at": "2026-08-21T13:04:25+05:30",
+    "user_id": null,
+    "billing_address": {
+      "first_name": "Waqar",
+      "address1": "36B/1D Kabitirtha Sarani Watgunge Street",
+      "phone": "6291120044",
+      "city": "Kolkata",
+      "zip": "700023",
+      "province": "West Bengal",
+      "country": "India",
+      "last_name": "ahmed",
+      "address2": "Opp. Merlin Riverview Apartment",
+      "company": null,
+      "latitude": 22.5446719,
+      "longitude": 88.322957,
+      "name": "Waqar ahmed",
+      "country_code": "IN",
+      "province_code": "WB"
+    },
+    "customer": {
+      "id": 9488446488758,
+      "created_at": "2026-08-20T18:50:21+05:30",
+      "updated_at": "2026-08-20T18:50:21+05:30",
+      "first_name": "Waqar",
+      "last_name": "ahmed",
+      "state": "disabled",
+      "note": null,
+      "verified_email": true,
+      "multipass_identifier": null,
+      "tax_exempt": false,
+      "email_marketing_consent": {
+        "state": "not_subscribed",
+        "opt_in_level": "single_opt_in",
+        "consent_updated_at": null
+      },
+      "sms_marketing_consent": {
+        "state": "not_subscribed",
+        "opt_in_level": "single_opt_in",
+        "consent_updated_at": null,
+        "consent_collected_from": null
+      },
+      "tags": "",
+      "email": "waqarwill323@gmail.com",
+      "phone": "+916291120044",
+      "currency": "INR",
+      "tax_exemptions": [],
+      "admin_graphql_api_id": "gid://shopify/Customer/9488446488758",
+      "default_address": {
+        "id": 10948527030454,
+        "customer_id": 9488446488758,
+        "first_name": "Waqar",
+        "last_name": "ahmed",
+        "company": null,
+        "address1": "36B/1D Kabitirtha Sarani Watgunge Street",
+        "address2": "Opp. Merlin Riverview Apartment",
+        "city": "Kolkata",
+        "province": "West Bengal",
+        "country": "India",
+        "zip": "700023",
+        "phone": "6291120044",
+        "name": "Waqar ahmed",
+        "province_code": "WB",
+        "country_code": "IN",
+        "country_name": "India",
+        "default": true
+      }
+    },
+    "discount_applications": [],
+    "fulfillments": [
+      {
+        "id": 6181110415542,
+        "admin_graphql_api_id": "gid://shopify/Fulfillment/6181110415542",
+        "created_at": "2026-08-21T13:04:25+05:30",
+        "location_id": 80026042550,
+        "name": "#INVHA1777.1",
+        "order_id": 6732760350902,
+        "origin_address": {
+          "address1": "vpo mangla",
+          "address2": "near tehsildar office",
+          "city": "Chamba",
+          "zip": "176310",
+          "province_code": "HP",
+          "country_code": "IN"
+        },
+        "receipt": {
+
+        },
+        "service": "manual",
+        "shipment_status": null,
+        "status": "success",
+        "tracking_company": "DTDC",
+        "tracking_number": "7X118346583",
+        "tracking_numbers": [
+          "7X118346583"
+        ],
+        "tracking_url": "https://www.dtdc.com/track-your-shipment/?awb=7X118346583",
+        "tracking_urls": [
+          "https://www.dtdc.com/track-your-shipment/?awb=7X118346583"
+        ],
+        "updated_at": "2026-08-21T13:04:25+05:30",
+        "line_items": [
+          {
+            "id": 16068459561142,
+            "admin_graphql_api_id": "gid://shopify/LineItem/16068459561142",
+            "attributed_staffs": [],
+            "current_quantity": 1,
+            "fulfillable_quantity": 0,
+            "fulfillment_service": "manual",
+            "fulfillment_status": "fulfilled",
+            "gift_card": false,
+            "grams": 0,
+            "name": "Lucky Streak Tee - L",
+            "price": "999.00",
+            "price_set": {
+              "shop_money": {
+                "amount": "999.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "999.00",
+                "currency_code": "INR"
+              }
+            },
+            "product_exists": true,
+            "product_id": 8821906800822,
+            "properties": [],
+            "quantity": 1,
+            "requires_shipping": true,
+            "sku": null,
+            "taxable": true,
+            "title": "Lucky Streak Tee",
+            "total_discount": "0.00",
+            "total_discount_set": {
+              "shop_money": {
+                "amount": "0.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "0.00",
+                "currency_code": "INR"
+              }
+            },
+            "variant_id": 45224097415350,
+            "variant_inventory_management": "shopify",
+            "variant_title": "L",
+            "vendor": "My Store",
+            "tax_lines": [
+              {
+                "channel_liable": false,
+                "price": "23.79",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "23.79",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "23.79",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              },
+              {
+                "channel_liable": false,
+                "price": "23.79",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "23.79",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "23.79",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              }
+            ],
+            "duties": [],
+            "discount_allocations": []
+          },
+          {
+            "id": 16068459593910,
+            "admin_graphql_api_id": "gid://shopify/LineItem/16068459593910",
+            "attributed_staffs": [],
+            "current_quantity": 1,
+            "fulfillable_quantity": 0,
+            "fulfillment_service": "manual",
+            "fulfillment_status": "fulfilled",
+            "gift_card": false,
+            "grams": 0,
+            "name": "Missionary Mindset Tee - L",
+            "price": "999.00",
+            "price_set": {
+              "shop_money": {
+                "amount": "999.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "999.00",
+                "currency_code": "INR"
+              }
+            },
+            "product_exists": true,
+            "product_id": 8821905293494,
+            "properties": [],
+            "quantity": 1,
+            "requires_shipping": true,
+            "sku": null,
+            "taxable": true,
+            "title": "Missionary Mindset Tee",
+            "total_discount": "0.00",
+            "total_discount_set": {
+              "shop_money": {
+                "amount": "0.00",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "0.00",
+                "currency_code": "INR"
+              }
+            },
+            "variant_id": 45224094466230,
+            "variant_inventory_management": "shopify",
+            "variant_title": "L",
+            "vendor": "My Store",
+            "tax_lines": [
+              {
+                "channel_liable": false,
+                "price": "23.78",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "23.78",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "23.78",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              },
+              {
+                "channel_liable": false,
+                "price": "23.78",
+                "price_set": {
+                  "shop_money": {
+                    "amount": "23.78",
+                    "currency_code": "INR"
+                  },
+                  "presentment_money": {
+                    "amount": "23.78",
+                    "currency_code": "INR"
+                  }
+                },
+                "rate": 0.05,
+                "title": "IGST"
+              }
+            ],
+            "duties": [],
+            "discount_allocations": []
+          }
+        ]
+      }
+    ],
+    "line_items": [
+      {
+        "id": 16068459561142,
+        "admin_graphql_api_id": "gid://shopify/LineItem/16068459561142",
+        "attributed_staffs": [],
+        "current_quantity": 1,
+        "fulfillable_quantity": 0,
+        "fulfillment_service": "manual",
+        "fulfillment_status": "fulfilled",
+        "gift_card": false,
+        "grams": 0,
+        "name": "Lucky Streak Tee - L",
+        "price": "999.00",
+        "price_set": {
+          "shop_money": {
+            "amount": "999.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "999.00",
+            "currency_code": "INR"
+          }
+        },
+        "product_exists": true,
+        "product_id": 8821906800822,
+        "properties": [],
+        "quantity": 1,
+        "requires_shipping": true,
+        "sku": null,
+        "taxable": true,
+        "title": "Lucky Streak Tee",
+        "total_discount": "0.00",
+        "total_discount_set": {
+          "shop_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          }
+        },
+        "variant_id": 45224097415350,
+        "variant_inventory_management": "shopify",
+        "variant_title": "L",
+        "vendor": "My Store",
+        "tax_lines": [
+          {
+            "channel_liable": false,
+            "price": "23.79",
+            "price_set": {
+              "shop_money": {
+                "amount": "23.79",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "23.79",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          },
+          {
+            "channel_liable": false,
+            "price": "23.79",
+            "price_set": {
+              "shop_money": {
+                "amount": "23.79",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "23.79",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          }
+        ],
+        "duties": [],
+        "discount_allocations": []
+      },
+      {
+        "id": 16068459593910,
+        "admin_graphql_api_id": "gid://shopify/LineItem/16068459593910",
+        "attributed_staffs": [],
+        "current_quantity": 1,
+        "fulfillable_quantity": 0,
+        "fulfillment_service": "manual",
+        "fulfillment_status": "fulfilled",
+        "gift_card": false,
+        "grams": 0,
+        "name": "Missionary Mindset Tee - L",
+        "price": "999.00",
+        "price_set": {
+          "shop_money": {
+            "amount": "999.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "999.00",
+            "currency_code": "INR"
+          }
+        },
+        "product_exists": true,
+        "product_id": 8821905293494,
+        "properties": [],
+        "quantity": 1,
+        "requires_shipping": true,
+        "sku": null,
+        "taxable": true,
+        "title": "Missionary Mindset Tee",
+        "total_discount": "0.00",
+        "total_discount_set": {
+          "shop_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          }
+        },
+        "variant_id": 45224094466230,
+        "variant_inventory_management": "shopify",
+        "variant_title": "L",
+        "vendor": "My Store",
+        "tax_lines": [
+          {
+            "channel_liable": false,
+            "price": "23.78",
+            "price_set": {
+              "shop_money": {
+                "amount": "23.78",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "23.78",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          },
+          {
+            "channel_liable": false,
+            "price": "23.78",
+            "price_set": {
+              "shop_money": {
+                "amount": "23.78",
+                "currency_code": "INR"
+              },
+              "presentment_money": {
+                "amount": "23.78",
+                "currency_code": "INR"
+              }
+            },
+            "rate": 0.05,
+            "title": "IGST"
+          }
+        ],
+        "duties": [],
+        "discount_allocations": []
+      }
+    ],
+    "payment_terms": null,
+    "refunds": [],
+    "shipping_address": {
+      "first_name": "Waqar",
+      "address1": "36B/1D Kabitirtha Sarani Watgunge Street",
+      "phone": "6291120044",
+      "city": "Kolkata",
+      "zip": "700023",
+      "province": "West Bengal",
+      "country": "India",
+      "last_name": "ahmed",
+      "address2": "Opp. Merlin Riverview Apartment",
+      "company": null,
+      "latitude": 22.5446719,
+      "longitude": 88.322957,
+      "name": "Waqar ahmed",
+      "country_code": "IN",
+      "province_code": "WB"
+    },
+    "shipping_lines": [
+      {
+        "id": 5597709566134,
+        "carrier_identifier": null,
+        "code": "SR_STANDARD",
+        "discounted_price": "0.00",
+        "discounted_price_set": {
+          "shop_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          }
+        },
+        "is_removed": false,
+        "phone": null,
+        "price": "0.00",
+        "price_set": {
+          "shop_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          },
+          "presentment_money": {
+            "amount": "0.00",
+            "currency_code": "INR"
+          }
+        },
+        "requested_fulfillment_service_id": null,
+        "source": null,
+        "title": "Standard (COD)",
+        "tax_lines": [],
+        "discount_allocations": []
+      }
+    ]
+  }
+}

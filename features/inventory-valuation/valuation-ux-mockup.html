@@ -1,0 +1,2327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inventory Valuation — Proposed UX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/*
+ * Refrens / disco design tokens — the real source of truth (refrens/disco@master), imported
+ * from the Claude Design project (tokens.css). Primary violet #7D3BDF, neutral scale, 8px cards
+ * / 4px controls, Inter. The legacy Jupiter aliases (--j-*) are re-pointed onto these so the whole
+ * app renders from one palette.
+ */
+:root {
+  /* Colors · Primary (violet) */
+  --color-primary-25: #fbfaff;
+  --color-primary-50: #f7f3fd;
+  --color-primary-100: #ede4fb;
+  --color-primary-200: #ddccf7;
+  --color-primary-300: #b48dec;
+  --color-primary-400: #8f56e3;
+  --color-primary-500: #7d3bdf;
+  --color-primary-600: #6932bb;
+  --color-primary-700: #552898;
+  --color-primary-800: #3f1e70;
+  --color-primary-900: #281347;
+
+  /* Colors · Secondary (magenta) */
+  --color-secondary-50: #fdf0f7;
+  --color-secondary-400: #ec3c99;
+  --color-secondary-500: #e6007b;
+  --color-secondary-600: #c10067;
+
+  /* Colors · Neutral */
+  --color-neutral-25: #fdfdfd;
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f3f4f5;
+  --color-neutral-200: #e8eaed;
+  --color-neutral-300: #ccd0d5;
+  --color-neutral-400: #9097a0;
+  --color-neutral-500: #696f77;
+  --color-neutral-600: #585d64;
+  --color-neutral-700: #404750;
+  --color-neutral-800: #343b44;
+  --color-neutral-900: #24282f;
+
+  /* Colors · Green (success) */
+  --color-green-50: #eefef4;
+  --color-green-100: #def5e8;
+  --color-green-200: #c1ecd4;
+  --color-green-500: #12b759;
+  --color-green-700: #0c7c3d;
+
+  /* Colors · Red (danger) */
+  --color-red-50: #ffebeb;
+  --color-red-200: #ffb0ad;
+  --color-red-500: #c94541;
+  --color-red-600: #9f2b28;
+
+  /* Colors · Blue (info) */
+  --color-blue-50: #f0f7ff;
+  --color-blue-700: #0153ad;
+
+  /* Colors · Yellow (warning) */
+  --color-yellow-50: #fffaf2;
+  --color-yellow-100: #fef2e0;
+  --color-yellow-200: #fee7c6;
+  --color-yellow-800: #7d5211;
+
+  /* Radii — cards use hg (8px), controls use lg (4px) */
+  --radii-sm: 1px;
+  --radii-md: 2px;
+  --radii-lg: 4px;
+  --radii-hg: 8px;
+
+  /* Typography */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(36, 40, 47, 0.08), 0 1px 2px rgba(36, 40, 47, 0.04);
+  --shadow-md: 0 4px 12px rgba(36, 40, 47, 0.08);
+  --shadow-lg: 0 12px 32px rgba(36, 40, 47, 0.12);
+
+  /* -------- Legacy Jupiter aliases, re-pointed onto disco tokens -------- */
+  --j-bg: var(--color-neutral-50);
+  --j-surface: #ffffff;
+  --j-border: var(--color-neutral-300);
+  --j-border-soft: var(--color-neutral-200);
+  --j-border-tab: var(--color-neutral-200);
+  --j-text: var(--color-neutral-700);
+  --j-text-dark: var(--color-neutral-900);
+  --j-text-col: var(--color-neutral-500);
+  --j-text-muted: var(--color-neutral-500);
+  --j-brand: var(--color-primary-500);
+  --j-brand-hover: var(--color-primary-600);
+  --j-chip-bg: var(--color-primary-50);
+  --j-chip-border: var(--color-primary-100);
+  --j-chip-text: var(--color-primary-900);
+  --j-success: var(--color-green-500);
+  --j-success-bg: var(--color-green-50);
+  --j-success-text: var(--color-green-700);
+  --j-warning: var(--color-yellow-800);
+  --j-warning-bg: var(--color-yellow-50);
+  --j-error: var(--color-red-500);
+  --j-error-bg: var(--color-red-50);
+  --j-error-text: var(--color-red-600);
+  --j-shadow: var(--shadow-md);
+
+  font-family: var(--font-sans);
+  color: var(--color-neutral-900);
+  background: var(--color-neutral-50);
+  font-size: 14px;
+  letter-spacing: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+input,
+select {
+  background: var(--j-surface);
+  border: 1px solid var(--j-border);
+  border-radius: var(--radii-lg);
+  box-sizing: border-box;
+  color: var(--j-text);
+  min-height: 40px;
+  padding: 8px 12px;
+  width: 100%;
+}
+
+input:focus,
+select:focus {
+  border-color: var(--j-brand);
+  outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+code {
+  background: var(--j-chip-bg);
+  border: 1px solid var(--j-chip-border);
+  border-radius: var(--radii-lg);
+  color: var(--j-chip-text);
+  font-size: 0.85em;
+  padding: 1px 5px;
+}
+
+pre {
+  background: var(--color-neutral-25);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radii-hg);
+  overflow-x: auto;
+  padding: 12px;
+}
+
+/* ============================================================
+   App shell — 240px sidebar + top header + scrolling main
+   ============================================================ */
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--color-neutral-50);
+}
+
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: #fff;
+  border-right: 1px solid var(--color-neutral-200);
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 12px 20px;
+  border-bottom: 1px solid var(--color-neutral-100);
+  margin-bottom: 16px;
+  text-decoration: none;
+}
+
+.sidebar-brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--color-primary-500);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.sidebar-brand-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-neutral-900);
+  letter-spacing: -0.1px;
+  line-height: 18px;
+}
+
+.sidebar-brand-sub {
+  font-size: 11px;
+  color: var(--color-neutral-500);
+  line-height: 14px;
+}
+
+.sidebar-brand-text {
+  min-width: 0;
+}
+
+.sidebar-brand-name,
+.sidebar-brand-sub {
+  display: block;
+}
+
+.sidebar-section-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-neutral-500);
+  font-weight: 500;
+  padding: 0 12px 6px;
+}
+
+.sidebar-nav {
+  margin-bottom: 16px;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radii-lg);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--color-neutral-700);
+  margin-bottom: 2px;
+}
+
+.sidebar-link:hover {
+  background: var(--color-neutral-50);
+}
+
+.sidebar-link.active {
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+}
+
+.sidebar-link svg {
+  flex-shrink: 0;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--color-neutral-100);
+}
+
+.sidebar-reset {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font: 500 12px var(--font-sans);
+  padding: 8px 12px;
+  border-radius: var(--radii-lg);
+  border: 1px solid var(--color-neutral-300);
+  background: #fff;
+  color: var(--color-neutral-700);
+  cursor: pointer;
+}
+
+.sidebar-reset:hover:not(:disabled) {
+  background: var(--color-neutral-50);
+  border-color: var(--color-neutral-400);
+}
+
+.sidebar-reset:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.app-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.app-topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 32px;
+  background: #fff;
+  border-bottom: 1px solid var(--color-neutral-200);
+}
+
+.topbar-search {
+  flex: 1;
+  max-width: 360px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radii-lg);
+  padding: 8px 12px;
+  background: var(--color-neutral-25);
+}
+
+.topbar-search svg {
+  flex-shrink: 0;
+}
+
+/* Reset the global full-width input chrome inside the search pill */
+.topbar-search input {
+  flex: 1;
+  min-height: auto;
+  width: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font: 400 13px var(--font-sans);
+  color: var(--color-neutral-800);
+}
+
+.topbar-search input:focus {
+  border: none;
+}
+
+.topbar-spacer {
+  flex: 1;
+}
+
+.topbar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.main-scroll {
+  flex: 1;
+  padding: 32px;
+  box-sizing: border-box;
+}
+
+/* ---- Page frame ---- */
+
+.page {
+  display: grid;
+  gap: 16px;
+}
+
+.breadcrumbs {
+  align-items: center;
+  color: var(--color-neutral-500);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 13px;
+  gap: 6px;
+}
+
+.breadcrumbs a {
+  color: var(--color-neutral-500);
+  text-decoration: none;
+}
+
+.breadcrumbs a:hover {
+  color: var(--j-brand);
+}
+
+.breadcrumbs [aria-current='page'] {
+  color: var(--color-neutral-900);
+  font-weight: 500;
+}
+
+.crumb-sep {
+  color: var(--color-neutral-300);
+}
+
+.page-head {
+  align-items: flex-start;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.page-head-main {
+  max-width: 760px;
+}
+
+.page-title {
+  color: var(--color-neutral-900);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 32px;
+  margin: 0 0 8px;
+}
+
+.what-happens {
+  color: var(--color-neutral-500);
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
+
+.page-head-action {
+  flex-shrink: 0;
+}
+
+.page-body {
+  display: grid;
+  gap: 16px;
+}
+
+.eyebrow {
+  color: var(--color-neutral-500);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.muted {
+  color: var(--color-neutral-500);
+}
+
+.compact {
+  font-size: 12px;
+  margin-bottom: 0;
+}
+
+/* ---- Panels / cards ---- */
+
+.hero-panel,
+.panel {
+  background: var(--j-surface);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radii-hg);
+  padding: 20px;
+}
+
+.section-header {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.stack {
+  display: grid;
+  gap: 16px;
+}
+
+.callout .section-header {
+  align-items: flex-start;
+}
+
+.walkthrough-panel {
+  border-left: 3px solid var(--j-brand);
+}
+
+.dashboard-status .section-header {
+  align-items: flex-start;
+}
+
+.empty-dashboard {
+  display: grid;
+  gap: 8px;
+}
+
+.empty-dashboard h2 {
+  margin-bottom: 0;
+}
+
+/* ---- Buttons ---- */
+
+.btn {
+  align-items: center;
+  border: 1px solid var(--j-border);
+  border-radius: var(--radii-lg);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 14px;
+  font-weight: 500;
+  gap: 8px;
+  height: 40px;
+  justify-content: center;
+  padding: 0 16px;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn-primary {
+  background: var(--j-brand);
+  border-color: var(--j-brand);
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--j-brand-hover);
+  border-color: var(--j-brand-hover);
+}
+
+.btn-secondary {
+  background: var(--j-surface);
+  color: var(--color-neutral-800);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--color-neutral-50);
+  border-color: var(--color-neutral-400);
+}
+
+.btn-danger {
+  background: var(--color-red-500);
+  border-color: var(--color-red-500);
+  color: #fff;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: var(--color-red-600);
+  border-color: var(--color-red-600);
+}
+
+/* Small bordered button — used for the Inspect action inside run tables */
+.btn-sm {
+  height: 30px;
+  padding: 0 12px;
+  font-size: 12px;
+  gap: 6px;
+}
+
+a.btn {
+  text-decoration: none;
+}
+
+.button-row {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.link-btn {
+  color: var(--j-brand);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.link-btn:hover {
+  color: var(--j-brand-hover);
+}
+
+/* ---- Tables ---- */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--color-neutral-100);
+  font-size: 13px;
+  height: 40px;
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+th {
+  color: var(--color-neutral-500);
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: none;
+}
+
+td {
+  color: var(--color-neutral-700);
+}
+
+.run-row:hover {
+  background: var(--color-neutral-25);
+}
+
+.data-table {
+  display: grid;
+  gap: 12px;
+}
+
+.data-table-controls,
+.data-table-pagination {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.data-table-filter {
+  max-width: 320px;
+  width: 100%;
+}
+
+.data-table-meta {
+  align-items: center;
+  color: var(--color-neutral-500);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 13px;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.data-table-size {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.data-table-size select {
+  min-height: 32px;
+  padding: 4px 8px;
+  width: 80px;
+}
+
+.data-table-scroll {
+  overflow-x: auto;
+}
+
+.data-table-sort {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-weight: 500;
+  gap: 6px;
+  min-height: 32px;
+  padding: 0;
+  text-align: left;
+}
+
+.data-table-sort:hover {
+  color: var(--j-brand);
+}
+
+.data-table-pagination {
+  color: var(--color-neutral-500);
+  font-size: 13px;
+  justify-content: flex-end;
+}
+
+/* Bare mode — clean design table used inside the run workspace tabs: uppercase 11px
+   headers on a neutral-25 fill, roomy cells, hover highlight, no filter/pager chrome. */
+.data-table.bare {
+  gap: 0;
+}
+
+.data-table.bare th {
+  background: var(--color-neutral-25);
+  border-bottom: 1px solid var(--color-neutral-200);
+  color: var(--color-neutral-500);
+  font-size: 11px;
+  font-weight: 500;
+  height: auto;
+  letter-spacing: 0.05em;
+  padding: 10px 16px;
+  text-transform: uppercase;
+}
+
+.data-table.bare .data-table-sort {
+  color: var(--color-neutral-500);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.data-table.bare td {
+  border-bottom: 1px solid var(--color-neutral-100);
+  color: var(--color-neutral-700);
+  height: auto;
+  padding: 12px 16px;
+}
+
+.data-table.bare tbody tr:hover {
+  background: var(--color-neutral-25);
+}
+
+/* Cell utilities for the run tables */
+.col-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.col-mono {
+  font-family: var(--font-mono);
+}
+
+.col-actions {
+  text-align: right;
+}
+
+.col-strong {
+  font-weight: 500;
+  color: var(--color-neutral-900);
+}
+
+/* ---- Card data table (list pages): card wrapper + header (title/filter/action) + pager footer ---- */
+.data-table.card {
+  background: #fff;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radii-hg);
+  gap: 0;
+  overflow: hidden;
+}
+
+.data-table-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 20px 16px;
+  flex-wrap: wrap;
+}
+
+.data-table-head-title h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-neutral-900);
+}
+
+.data-table-head-title p {
+  font-size: 13px;
+  color: var(--color-neutral-500);
+  margin: 4px 0 0;
+}
+
+.data-table-head-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.data-table-head-filter {
+  width: 220px;
+  min-height: auto;
+  border: 1px solid var(--color-neutral-300);
+  border-radius: var(--radii-lg);
+  padding: 8px 12px;
+  font: 400 13px var(--font-sans);
+  color: var(--color-neutral-900);
+}
+
+.data-table.card th {
+  background: var(--color-neutral-25);
+  border-top: 1px solid var(--color-neutral-100);
+  border-bottom: 1px solid var(--color-neutral-200);
+  color: var(--color-neutral-500);
+  font-size: 11px;
+  font-weight: 500;
+  height: auto;
+  letter-spacing: 0.05em;
+  padding: 10px 20px;
+  text-transform: uppercase;
+}
+
+.data-table.card .data-table-sort {
+  color: var(--color-neutral-500);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.data-table.card td {
+  border-bottom: 1px solid var(--color-neutral-100);
+  color: var(--color-neutral-700);
+  height: auto;
+  padding: 14px 20px;
+}
+
+.data-table.card tbody tr:hover {
+  background: var(--color-neutral-25);
+}
+
+.data-table-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 20px;
+  flex-wrap: wrap;
+}
+
+.data-table-foot-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.data-table-range {
+  font-size: 12px;
+  color: var(--color-neutral-500);
+}
+
+.data-table-rows {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-neutral-500);
+}
+
+.data-table-rows select {
+  min-height: auto;
+  width: auto;
+  padding: 4px 8px;
+  font: 400 12px var(--font-sans);
+  border-radius: var(--radii-lg);
+}
+
+.data-table-pager {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.data-table-pager span {
+  font-size: 12px;
+  color: var(--color-neutral-500);
+}
+
+.data-table-pager button {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radii-lg);
+  border: 1px solid var(--color-neutral-300);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-neutral-700);
+}
+
+.data-table-pager button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Full-width primary button used as a table header action / modal trigger */
+.btn-block {
+  width: 100%;
+}
+
+/* ---- List page header (title + description + primary action) ---- */
+.list-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.list-head-text {
+  max-width: 640px;
+}
+
+/* ---- Nav "link card" (e.g. Post inventory transactions) ---- */
+.link-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  background: #fff;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radii-hg);
+  text-decoration: none;
+  color: var(--color-neutral-900);
+  margin-top: 16px;
+}
+
+.link-card:hover {
+  border-color: var(--color-neutral-300);
+  box-shadow: var(--shadow-sm);
+}
+
+.link-card-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-neutral-900);
+}
+
+.link-card-sub {
+  display: block;
+  font-size: 13px;
+  color: var(--color-neutral-500);
+  margin-top: 2px;
+}
+
+.link-card-arrow {
+  color: var(--color-primary-500);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.num-pos {
+  color: var(--color-green-700);
+  font-weight: 500;
+}
+
+.num-neg {
+  color: var(--color-red-600);
+  font-weight: 500;
+}
+
+.icon-btn {
+  align-items: center;
+  background: var(--j-surface);
+  border: 1px solid var(--j-border);
+  border-radius: var(--radii-lg);
+  color: var(--color-neutral-700);
+  cursor: pointer;
+  display: inline-flex;
+  height: 32px;
+  justify-content: center;
+  padding: 0;
+  width: 32px;
+}
+
+.icon-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.icon-btn:hover:not(:disabled) {
+  border-color: var(--color-neutral-400);
+}
+
+/* ---- Tags / badges ---- */
+
+.badge {
+  border-radius: var(--radii-lg);
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px 8px;
+}
+
+.badge-success {
+  background: var(--j-success-bg);
+  color: var(--j-success-text);
+}
+
+.badge-warning {
+  background: var(--color-yellow-50);
+  color: var(--color-yellow-800);
+}
+
+.badge-neutral {
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-600);
+}
+
+/* ---- State pill (dot + label) ---- */
+
+.state-pill {
+  align-items: center;
+  border-radius: var(--radii-md);
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 500;
+  gap: 6px;
+  padding: 3px 8px;
+}
+
+.state-pill-dot {
+  border-radius: 50%;
+  height: 6px;
+  width: 6px;
+}
+
+.state-pill.tone-green {
+  background: var(--color-green-50);
+  color: var(--color-green-700);
+}
+.state-pill.tone-green .state-pill-dot {
+  background: var(--color-green-500);
+}
+.state-pill.tone-yellow {
+  background: var(--color-yellow-50);
+  color: var(--color-yellow-800);
+}
+.state-pill.tone-yellow .state-pill-dot {
+  background: #faa423;
+}
+.state-pill.tone-blue {
+  background: var(--color-blue-50);
+  color: var(--color-blue-700);
+}
+.state-pill.tone-blue .state-pill-dot {
+  background: #017afe;
+}
+.state-pill.tone-neutral {
+  background: var(--color-neutral-100);
+  color: var(--color-neutral-600);
+}
+.state-pill.tone-neutral .state-pill-dot {
+  background: var(--color-neutral-400);
+}
+.state-pill.tone-primary {
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+}
+.state-pill.tone-primary .state-pill-dot {
+  background: var(--color-primary-500);
+}
+
+/* ---- Tabs (underline style) ---- */
+
+.tabs {
+  align-items: flex-start;
+  border-bottom: 1px solid var(--color-neutral-200);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--color-neutral-600);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: -1px;
+  padding: 0 0 10px;
+}
+
+.tab:hover {
+  color: var(--color-neutral-900);
+}
+
+.tab.active {
+  color: var(--color-primary-600);
+  border-bottom-color: var(--color-primary-500);
+}
+
+/* ---- Workspace sub-nav (same underline pattern, page-level) ---- */
+
+.workspace-nav {
+  border-bottom: 1px solid var(--color-neutral-200);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.workspace-nav-link {
+  color: var(--color-neutral-600);
+  border-bottom: 2px solid transparent;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: -1px;
+  padding: 0 0 10px;
+  text-decoration: none;
+}
+
+.workspace-nav-link:hover {
+  color: var(--color-neutral-900);
+}
+
+.workspace-nav-link.active {
+  color: var(--color-primary-600);
+  border-bottom-color: var(--color-primary-500);
+}
+
+/* ---- Forms ---- */
+
+label {
+  color: var(--color-neutral-600);
+  display: grid;
+  font-size: 13px;
+  font-weight: 500;
+  gap: 6px;
+}
+
+.form-panel {
+  background: var(--j-surface);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radii-hg);
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+}
+
+.form-panel h3 {
+  margin-bottom: 0;
+}
+
+.field-row {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.checkbox-col {
+  align-content: end;
+  display: grid;
+  gap: 8px;
+}
+
+.checkbox-row {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: var(--j-brand);
+  min-height: 0;
+  width: auto;
+}
+
+.workbench {
+  overflow: visible;
+}
+
+.workbench-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* ---- Dashboard pack list ---- */
+
+.pack-list {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.pack-list-card {
+  background: var(--j-surface);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radii-hg);
+  color: var(--color-neutral-700);
+  display: grid;
+  gap: 8px;
+  padding: 20px;
+  text-decoration: none;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.pack-list-card:hover {
+  border-color: var(--j-chip-border);
+  box-shadow: var(--j-shadow);
+}
+
+.pack-list-head {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.pack-list-head h2 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.pack-list-card p {
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.pack-list-cta {
+  color: var(--j-brand);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ---- Pack page scenarios ---- */
+
+.scenario-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.scenario-card {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 32px 1fr;
+}
+
+.scenario-card-body {
+  display: grid;
+  gap: 8px;
+}
+
+.scenario-card p {
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.scenario-index {
+  align-items: center;
+  background: var(--j-chip-bg);
+  border: 1px solid var(--j-chip-border);
+  border-radius: var(--radii-hg);
+  color: var(--j-chip-text);
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 600;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+/* ---- Run controls / ceremony ---- */
+
+.run-control {
+  align-items: end;
+  display: flex;
+  gap: 10px;
+}
+
+.run-control-method {
+  min-width: 110px;
+}
+
+.ceremony-action {
+  flex-shrink: 0;
+}
+
+.summary-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 16px;
+}
+
+.summary-cell {
+  background: var(--color-neutral-25);
+  border: 1px solid var(--color-neutral-100);
+  border-radius: var(--radii-lg);
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+}
+
+.summary-label {
+  color: var(--color-neutral-500);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.summary-value {
+  color: var(--color-neutral-900);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* ---- Step indicator ---- */
+
+.step-indicator {
+  align-items: center;
+  background: var(--j-surface);
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radii-hg);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  list-style: none;
+  margin: 0;
+  padding: 14px 20px;
+}
+
+.step {
+  align-items: center;
+  color: var(--color-neutral-500);
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 500;
+  gap: 8px;
+}
+
+.step-dot {
+  align-items: center;
+  background: var(--color-neutral-100);
+  border-radius: 999px;
+  color: var(--color-neutral-600);
+  display: inline-flex;
+  font-size: 12px;
+  height: 22px;
+  justify-content: center;
+  width: 22px;
+}
+
+.step-active {
+  color: var(--color-neutral-900);
+}
+
+.step-active .step-dot {
+  background: var(--color-primary-500);
+  color: #fff;
+}
+
+.step-done {
+  color: var(--color-neutral-900);
+}
+
+.step-done .step-dot {
+  background: var(--color-green-50);
+  color: var(--color-green-700);
+}
+
+/* ---- Next step CTA ---- */
+
+.next-step {
+  margin-top: 4px;
+}
+
+.next-step-link {
+  align-items: center;
+  background: var(--j-surface);
+  border: 1px solid var(--color-neutral-200);
+  border-left: 3px solid var(--j-brand);
+  border-radius: var(--radii-hg);
+  color: var(--color-neutral-700);
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  padding: 14px 20px;
+  text-decoration: none;
+}
+
+.next-step-link:hover {
+  border-color: var(--j-chip-border);
+  border-left-color: var(--j-brand);
+  box-shadow: var(--j-shadow);
+}
+
+.next-step-label {
+  color: var(--color-neutral-500);
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.next-step-title {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.next-step-hint {
+  color: var(--color-neutral-500);
+  display: block;
+  font-size: 13px;
+}
+
+.next-step-arrow {
+  color: var(--j-brand);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* ---- Feedback ---- */
+
+.error,
+.warning {
+  color: var(--j-error-text);
+}
+
+p.error {
+  background: var(--j-error-bg);
+  border-radius: var(--radii-hg);
+  padding: 10px 14px;
+}
+
+.notice {
+  background: var(--color-green-50);
+  border-radius: var(--radii-hg);
+  color: var(--color-green-700);
+  padding: 10px 14px;
+}
+
+.run-warning,
+.warning-strip {
+  background: var(--color-yellow-50);
+  border: 1px solid var(--color-yellow-200);
+  border-radius: var(--radii-hg);
+  color: var(--color-yellow-800);
+  font-size: 13px;
+  margin: 8px 0 0;
+  padding: 8px 12px;
+}
+
+.delta-down {
+  color: var(--color-green-700);
+  font-weight: 600;
+}
+
+.delta-up {
+  color: var(--color-red-600);
+  font-weight: 600;
+}
+
+/* ============================================================
+   Modal (confirm & post, reset DB) — centered overlay card
+   ============================================================ */
+
+@keyframes ivOverlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ivModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes ivDrawerIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(36, 40, 47, 0.45);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: ivOverlayIn 0.15s ease;
+}
+
+.modal-card {
+  background: #fff;
+  border-radius: var(--radii-hg);
+  box-shadow: var(--shadow-lg);
+  width: 560px;
+  max-width: 100%;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  animation: ivModalIn 0.15s ease;
+}
+
+.modal-card.modal-sm {
+  width: 420px;
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-neutral-100);
+}
+
+.modal-head h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-neutral-900);
+}
+
+.modal-close {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radii-lg);
+  border: none;
+  background: transparent;
+  color: var(--color-neutral-500);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.modal-close:hover {
+  background: var(--color-neutral-100);
+}
+
+.modal-body {
+  padding: 24px;
+}
+
+.modal-body p {
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--color-neutral-700);
+}
+
+.modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 1px solid var(--color-neutral-100);
+}
+
+/* Reset modal: warning icon + copy, no header/footer dividers */
+.modal-plain {
+  padding: 24px;
+}
+
+.modal-warn-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.modal-warn-row svg {
+  flex-shrink: 0;
+}
+
+.modal-warn-row h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  color: var(--color-neutral-900);
+}
+
+.modal-warn-row p {
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--color-neutral-500);
+  margin: 0;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ---- Run-detail specific bits ---- */
+
+.rd-card {
+  background: #fff;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: var(--radii-hg);
+  padding: 20px;
+}
+
+.rd-summary-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.rd-summary-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 10px;
+  color: var(--color-neutral-900);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.rd-warnings {
+  font-size: 13px;
+  color: var(--color-yellow-800);
+  background: var(--color-yellow-50);
+  border: 1px solid var(--color-yellow-200);
+  border-radius: var(--radii-lg);
+  padding: 8px 12px;
+  margin: 0;
+}
+
+.rd-title {
+  font-size: 28px;
+  line-height: 36px;
+  letter-spacing: -0.25px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  color: var(--color-neutral-900);
+}
+
+.rd-lede {
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--color-neutral-500);
+  margin: 0;
+}
+
+.rd-head {
+  max-width: 760px;
+}
+
+.rd-workspace-title {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: var(--color-neutral-900);
+}
+
+.rd-workspace-sub {
+  font-size: 12px;
+  color: var(--color-neutral-500);
+  margin: 0 0 16px;
+}
+
+.crdr-dr {
+  color: var(--color-blue-700);
+  font-weight: 600;
+}
+
+.crdr-cr {
+  color: var(--color-secondary-600);
+  font-weight: 600;
+}
+
+/* ============================================================
+   Math Drawer (audit) — overlay + right slide-in
+   ============================================================ */
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(36, 40, 47, 0.3);
+  z-index: 1000;
+  animation: ivOverlayIn 0.15s ease;
+}
+
+.audit-drawer {
+  background: #fff;
+  bottom: 0;
+  box-shadow: var(--shadow-lg);
+  overflow-y: auto;
+  padding: 24px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: min(460px, 100vw);
+  z-index: 1001;
+  animation: ivDrawerIn 0.18s ease;
+}
+
+.audit-drawer-head {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.audit-drawer-head h2 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--color-neutral-900);
+}
+
+.audit-entry {
+  border-top: 1px solid var(--color-neutral-100);
+  padding-top: 16px;
+  margin-top: 16px;
+}
+
+.audit-entry h4 {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-neutral-500);
+  margin: 0 0 6px;
+}
+
+.audit-entry pre {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-neutral-700);
+  margin: 0 0 12px;
+}
+
+.formula {
+  color: var(--color-primary-600);
+  font-weight: 600;
+}
+
+/* ---- Contract trace / misc views ---- */
+
+.contract-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.contract-pane {
+  background: var(--color-neutral-25);
+  border: 1px solid var(--color-neutral-100);
+  border-radius: var(--radii-hg);
+  padding: 16px;
+}
+
+.contract-pane h3 {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.contract-pane p {
+  color: var(--color-neutral-500);
+  font-size: 13px;
+  line-height: 20px;
+  margin-bottom: 0;
+}
+
+.contract-pane pre {
+  background: #fff;
+  font-size: 12px;
+  line-height: 1.5;
+  max-height: 360px;
+}
+
+.workspace {
+  overflow-x: auto;
+}
+
+.shockwave-empty {
+  padding: 16px;
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 860px) {
+  .sidebar {
+    position: static;
+    height: auto;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+  }
+
+  .sidebar-brand {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding: 0;
+  }
+
+  .app-layout {
+    flex-direction: column;
+  }
+
+  .sidebar-section-label {
+    display: none;
+  }
+
+  .sidebar-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 0;
+    order: 3;
+    width: 100%;
+  }
+
+  .sidebar-footer {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .main-scroll,
+  .app-topbar {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-head {
+    flex-direction: column;
+  }
+
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+
+  .contract-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---- Additive styles for the proposed screens (built on the app tokens above) ---- */
+.proposed-tag{background:var(--color-primary-50);color:var(--color-primary-700);font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:var(--radii-md);margin-left:auto;}
+.metric-3{display:grid;gap:12px;grid-template-columns:repeat(3,minmax(0,1fr));}
+.metric-card{background:#fff;border:1px solid var(--color-neutral-200);border-radius:var(--radii-hg);padding:18px 20px;display:grid;gap:6px;}
+.metric-label{font-size:12px;color:var(--color-neutral-500);font-weight:500;display:flex;align-items:center;gap:6px;}
+.metric-value{font-size:26px;font-weight:600;color:var(--color-neutral-900);letter-spacing:-.3px;}
+.metric-sub{font-size:12px;color:var(--color-neutral-500);}
+.dash-status{display:flex;align-items:center;gap:14px;border-radius:var(--radii-hg);padding:12px 16px;border:1px solid transparent;}
+.dash-status .ds-text{font-size:13.5px;font-weight:500;}
+.dash-status .ds-spacer{flex:1;}
+.ds-green{background:var(--color-green-50);border-color:var(--color-green-200);color:var(--color-green-700);}
+.ds-amber{background:var(--color-yellow-50);border-color:var(--color-yellow-200);color:var(--color-yellow-800);}
+.ds-red{background:var(--color-red-50);border-color:var(--color-red-200);color:var(--color-red-600);}
+.ds-icon{width:20px;height:20px;flex-shrink:0;}
+.footnote{font-size:12px;color:var(--color-neutral-500);display:flex;align-items:center;gap:8px;padding-top:2px;}
+.footnote .dot{width:4px;height:4px;border-radius:50%;background:var(--color-neutral-300);}
+.layer-chip{display:inline-block;background:var(--color-primary-50);color:var(--color-primary-700);border-radius:var(--radii-md);padding:1px 6px;font-size:11px;font-weight:500;margin-left:4px;font-variant-numeric:tabular-nums;}
+.invoice-margin{background:linear-gradient(100deg,var(--color-primary-500),var(--color-primary-600));color:#fff;border-radius:var(--radii-hg);padding:16px 18px;display:flex;align-items:center;gap:14px;}
+.invoice-margin .im-big{font-size:22px;font-weight:600;}
+.invoice-margin .im-label{font-size:12px;opacity:.85;}
+.invoice-margin .im-badge{background:rgba(255,255,255,.2);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:600;margin-left:auto;}
+.month-post{border:1px solid var(--color-neutral-200);border-radius:var(--radii-hg);overflow:hidden;margin-bottom:14px;}
+.month-post-head{display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--color-neutral-25);border-bottom:1px solid var(--color-neutral-100);}
+.month-post-head h4{margin:0;font-size:14px;font-weight:600;color:var(--color-neutral-900);}
+.month-post-head .mp-ref{font-size:11px;font-family:var(--font-mono);color:var(--color-neutral-500);}
+.paywall-wrap{position:relative;}
+.paywall-blur{filter:blur(3px);opacity:.55;pointer-events:none;user-select:none;}
+.paywall-lock{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;}
+.paywall-card{background:#fff;border:1px solid var(--color-neutral-200);border-radius:var(--radii-hg);box-shadow:var(--shadow-lg);padding:28px 32px;max-width:420px;text-align:center;display:grid;gap:10px;justify-items:center;}
+.paywall-card .pw-icon{width:40px;height:40px;border-radius:10px;background:var(--color-primary-50);display:flex;align-items:center;justify-content:center;color:var(--color-primary-600);}
+.paywall-card h3{margin:0;font-size:17px;font-weight:600;color:var(--color-neutral-900);}
+.paywall-card p{margin:0;font-size:13px;color:var(--color-neutral-500);line-height:20px;}
+.seg{display:inline-flex;background:var(--color-neutral-100);border-radius:var(--radii-lg);padding:3px;gap:2px;}
+.seg button{border:none;background:transparent;padding:6px 12px;border-radius:var(--radii-md);font-size:12px;font-weight:500;color:var(--color-neutral-600);cursor:pointer;}
+.seg button.on{background:#fff;color:var(--color-primary-700);box-shadow:var(--shadow-sm);}
+.screen{display:none;}
+.screen.active{display:block;}
+.diff-pos{color:var(--color-red-600);font-weight:600;}
+.diff-neg{color:var(--color-green-700);font-weight:600;}
+.mini-note{font-size:12.5px;color:var(--color-neutral-500);line-height:19px;}
+.sidebar-link.proposed.active{background:var(--color-primary-50);color:var(--color-primary-700);}
+.demo-banner{background:var(--color-neutral-900);color:#fff;font-size:12px;padding:7px 16px;text-align:center;letter-spacing:.01em;}
+.demo-banner b{font-weight:600;}
+.clickable-rows tbody tr{cursor:pointer;}
+.layer-block{display:inline-flex;flex-direction:column;gap:2px;background:var(--color-neutral-25);border:1px solid var(--color-neutral-200);border-radius:var(--radii-lg);padding:8px 14px;font-size:13px;font-weight:600;color:var(--color-neutral-900);font-variant-numeric:tabular-nums;}
+.layer-block .lb-src{font-size:11px;font-weight:400;color:var(--color-neutral-500);}
+.cogs-subrow td{background:var(--color-primary-25);border-bottom:1px solid var(--color-neutral-100);padding:0!important;}
+.cogs-explain{display:flex;align-items:flex-start;gap:8px;padding:10px 20px 12px 44px;font-size:12.5px;color:var(--color-neutral-700);line-height:19px;}
+.cogs-explain svg{color:var(--color-primary-500);flex-shrink:0;margin-top:2px;}
+.alloc-chip{display:inline-block;background:var(--color-primary-50);color:var(--color-primary-700);border-radius:var(--radii-md);padding:1px 7px;font-weight:600;font-variant-numeric:tabular-nums;}
+.book-month{margin-bottom:16px;}
+.book-month .section-header{margin-bottom:4px;}
+.bm-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--color-neutral-500);margin:16px 0 8px;}
+.month-post.posted .month-post-head{background:var(--color-green-50);border-bottom-color:var(--color-green-200);}
+.month-post.pending .month-post-head{background:var(--color-primary-50);border-bottom-color:var(--color-primary-100);}
+.month-post.reverse .month-post-head{background:var(--color-neutral-50);}
+.month-post.reverse td,.month-post.reverse th{color:var(--color-neutral-400);}
+.month-post.reverse .col-strong{color:var(--color-neutral-500);}
+.locked-note{font-size:11px;color:var(--color-green-700);display:inline-flex;align-items:center;gap:5px;}
+.change-badge{display:flex;align-items:flex-start;gap:8px;background:var(--color-yellow-50);color:var(--color-yellow-800);border:1px solid var(--color-yellow-200);border-radius:var(--radii-lg);padding:10px 12px;font-size:12.5px;font-weight:500;line-height:18px;margin:0 0 8px;}
+.change-badge svg{flex-shrink:0;margin-top:1px;}
+.flow-list{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:6px;}
+.flow-list li{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--color-neutral-700);}
+.flow-list .fl-amt{margin-left:auto;font-variant-numeric:tabular-nums;font-weight:500;color:var(--color-neutral-900);}
+.flow-list .fl-dot{width:5px;height:5px;border-radius:50%;background:var(--color-primary-400);flex-shrink:0;}
+.voucher-total td{border-top:2px solid var(--color-neutral-200);border-bottom:none;font-weight:600;color:var(--color-neutral-900);}
+.months-table tbody tr{cursor:pointer;}
+.months-table tbody tr.sel{background:var(--color-primary-25);}
+.months-table tbody tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--color-primary-500);}
+.change-note{font-size:12.5px;color:var(--color-yellow-800);background:var(--color-yellow-50);border:1px solid var(--color-yellow-200);border-radius:var(--radii-lg);padding:8px 12px;margin:0 0 14px;line-height:18px;}
+.ok-note{font-size:12.5px;color:var(--color-green-700);background:var(--color-green-50);border-radius:var(--radii-lg);padding:8px 12px;margin:0 0 14px;}
+.new-note{font-size:12.5px;color:var(--color-primary-700);background:var(--color-primary-50);border-radius:var(--radii-lg);padding:8px 12px;margin:0 0 14px;}
+.voucher-panel h2{font-size:16px;font-weight:600;margin:0 0 2px;}
+</style>
+</head>
+<body>
+<div class="demo-banner">Proposed UX mockup &mdash; <b>frontend only, no backend</b>. New screens shown alongside the existing app shell; existing screens are unchanged.</div>
+<div class="app-layout">
+
+  <!-- Sidebar (matches the real app shell) -->
+  <aside class="sidebar">
+    <a class="sidebar-brand" href="#">
+      <span class="sidebar-brand-mark">IV</span>
+      <span class="sidebar-brand-text">
+        <span class="sidebar-brand-name">Inventory Valuation</span>
+        <span class="sidebar-brand-sub">Bharat Traders</span>
+      </span>
+    </a>
+    <div class="sidebar-nav">
+      <div class="sidebar-section-label">Workspace</div>
+      <a class="sidebar-link" href="#" style="opacity:.65">Inventory</a>
+      <a class="sidebar-link" href="#" style="opacity:.65">Inventory Transactions</a>
+      <a class="sidebar-link" href="#" style="opacity:.65">Stock Movements</a>
+      <a class="sidebar-link" href="#" style="opacity:.65">Item Valuations</a>
+      <a class="sidebar-link" href="#" style="opacity:.65">Valuation Runs</a>
+    </div>
+    <div class="sidebar-nav">
+      <div class="sidebar-section-label">Valuation &middot; proposed</div>
+      <a class="sidebar-link proposed active" href="#" data-nav="dashboard"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Valuation Dashboard</a>
+      <a class="sidebar-link proposed" href="#" data-nav="post"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Post to Books</a>
+      <a class="sidebar-link proposed" href="#" data-nav="activation"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Enable Valuation</a>
+    </div>
+    <div class="sidebar-footer">
+      <button class="sidebar-reset">Reset demo</button>
+    </div>
+  </aside>
+
+  <div class="app-body">
+    <header class="app-topbar">
+      <div class="topbar-search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9097a0" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input placeholder="Search items, transactions, runs"></div>
+      <div class="topbar-spacer"></div>
+      <div class="topbar-avatar">VS</div>
+    </header>
+
+    <main class="main-scroll">
+
+      <!-- ============ SCREEN 1: VALUATION DASHBOARD ============ -->
+      <section class="screen active" id="screen-dashboard">
+        <div class="page">
+          <div class="breadcrumbs"><a href="#">Inventory</a><span class="crumb-sep">&rsaquo;</span><span aria-current="page">Valuation</span></div>
+          <div class="page-head">
+            <div class="page-head-main">
+              <h1 class="page-title">Valuation</h1>
+              <p class="what-happens">What your stock is worth and your true profit &mdash; recalculated automatically on every stock change. Posting to your books stays a separate, deliberate step.</p>
+            </div>
+            <div class="page-head-action">
+              <div class="seg" id="state-seg">
+                <button class="on" data-state="amber">Pending</button>
+                <button data-state="green">Up to date</button>
+                <button data-state="red">Books affected</button>
+                <button data-state="lock">Inventory plan</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="page-body" id="dash-body">
+            <!-- status strip -->
+            <div id="status-strip"></div>
+
+            <div class="metric-3">
+              <div class="metric-card"><span class="metric-label">Stock value <span class="muted" style="font-weight:400">&middot; balance sheet</span></span><span class="metric-value">&#8377;10,710</span><span class="metric-sub">Across 4 valued items</span></div>
+              <div class="metric-card"><span class="metric-label">COGS &middot; this month</span><span class="metric-value">&#8377;18,400</span><span class="metric-sub">Cost of what you sold in May</span></div>
+              <div class="metric-card"><span class="metric-label">Gross profit &middot; this month</span><span class="metric-value">&#8377;9,200 <span class="layer-chip" style="background:var(--color-green-50);color:var(--color-green-700)">33% margin</span></span><span class="metric-sub">Sales &#8377;27,600 &minus; COGS &#8377;18,400</span></div>
+            </div>
+
+            <div class="data-table card">
+              <div class="data-table-head">
+                <div class="data-table-head-title"><h3>Stock on hand</h3><p>Per-item value from the latest calculation.</p></div>
+                <div class="data-table-head-actions"><input class="data-table-head-filter" placeholder="Filter items"></div>
+              </div>
+              <div class="data-table-scroll">
+              <table class="clickable-rows">
+                <thead><tr><th>Item</th><th>Method</th><th class="col-num">On hand</th><th class="col-num">Unit cost</th><th class="col-num">Stock value</th><th>Last movement</th></tr></thead>
+                <tbody>
+                  <tr data-item="steel-bolt"><td class="col-strong">Steel Bolt <span class="muted">STL-BOLT</span></td><td><span class="badge badge-neutral">WAC</span></td><td class="col-num">10</td><td class="col-num">&#8377;50.00</td><td class="col-num col-strong">&#8377;500</td><td class="muted">INV-102 &middot; 6 May</td></tr>
+                  <tr data-item="copper-pipe"><td class="col-strong">Copper Pipe <span class="muted">CU-PIPE</span></td><td><span class="badge badge-neutral">FIFO</span></td><td class="col-num">40</td><td class="col-num">2 layers <span class="layer-chip">20@120</span><span class="layer-chip">20@128</span></td><td class="col-num col-strong">&#8377;4,960</td><td class="muted">BILL-014 &middot; 12 May</td></tr>
+                  <tr data-item="brass-valve"><td class="col-strong">Brass Valve <span class="muted">BR-VLV</span></td><td><span class="badge badge-neutral">WAC</span></td><td class="col-num">25</td><td class="col-num">&#8377;210.00</td><td class="col-num col-strong">&#8377;5,250</td><td class="muted">INV-118 &middot; 14 May</td></tr>
+                  <tr data-item="steel-sheet"><td class="col-strong">Steel Sheet <span class="muted">STL-SHT</span></td><td><span class="badge badge-neutral">WAC</span></td><td class="col-num">8</td><td class="col-num"><span class="badge badge-warning">cost missing</span></td><td class="col-num muted">&mdash;</td><td class="muted">BILL-016 &middot; 15 May</td></tr>
+                </tbody>
+              </table>
+              </div>
+            </div>
+
+            <div class="footnote"><span>Live operational value, from inventory.</span><span class="dot"></span><span>Posted to books through: <b style="color:var(--color-neutral-700)">30 April 2026</b></span></div>
+
+            <div class="invoice-margin">
+              <div><div class="im-label">Owner hook &mdash; shown right on the invoice</div><div class="im-big">INV-118 earned you &#8377;3,120</div></div>
+              <span class="im-badge">42% margin</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SCREEN 2: POST TO BOOKS (month table + one voucher per month) ============ -->
+      <section class="screen" id="screen-post">
+        <div class="page">
+          <div class="breadcrumbs"><a href="#">Valuation</a><span class="crumb-sep">&rsaquo;</span><span aria-current="page">Post to books</span></div>
+          <div class="page-head">
+            <div class="page-head-main">
+              <h1 class="page-title">Post to books</h1>
+              <p class="what-happens">Each month posts as one voucher. When a month&rsquo;s transactions change, that month&rsquo;s voucher is reversed and re-posted with the latest figures &mdash; no other month is touched.</p>
+            </div>
+            <div class="page-head-action"><button class="btn btn-primary">Push updates &middot; 2 months</button></div>
+          </div>
+          <div class="page-body">
+            <div class="data-table card">
+              <div class="data-table-head"><div class="data-table-head-title"><h3>Monthly vouchers</h3><p>What&rsquo;s in your books, and what&rsquo;s waiting to push.</p></div></div>
+              <div class="data-table-scroll">
+                <table class="months-table">
+                  <thead><tr><th>Month</th><th>Status</th><th class="col-num">In books</th><th class="col-num">To push</th></tr></thead>
+                  <tbody id="months-rows"></tbody>
+                </table>
+              </div>
+            </div>
+            <div id="voucher-detail"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SCREEN 5: ITEM DETAIL (show your math) — JS-rendered per item ============ -->
+      <section class="screen" id="screen-item">
+        <div class="page">
+          <div class="breadcrumbs"><a href="#" data-back="dashboard">Valuation</a><span class="crumb-sep">&rsaquo;</span><span aria-current="page" id="item-crumb">Item</span></div>
+          <div class="page-head">
+            <div class="page-head-main">
+              <h1 class="page-title" id="item-title">Item</h1>
+              <p class="what-happens">Every stock movement for this item, with running quantity and value &mdash; and for each sale, exactly which stock it consumed and what it cost you.</p>
+            </div>
+          </div>
+          <div class="page-body">
+            <div class="summary-grid" style="grid-template-columns:repeat(4,minmax(0,1fr))" id="item-summary"></div>
+            <div class="panel" id="item-costbasis"></div>
+            <div class="data-table card">
+              <div class="data-table-head"><div class="data-table-head-title"><h3>Movement history</h3><p>Running quantity and value after every transaction.</p></div></div>
+              <div class="data-table-scroll">
+                <table>
+                  <thead><tr><th>Date</th><th>Document</th><th>Type</th><th class="col-num">Qty</th><th class="col-num">Unit cost</th><th class="col-num">Value change</th><th class="col-num">Running qty</th><th class="col-num">Running value</th></tr></thead>
+                  <tbody id="item-movements"></tbody>
+                </table>
+              </div>
+            </div>
+            <p class="mini-note" id="item-note"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SCREEN 4: ENABLE VALUATION (ACTIVATION) ============ -->
+      <section class="screen" id="screen-activation">
+        <div class="page">
+          <div class="breadcrumbs"><a href="#">Settings</a><span class="crumb-sep">&rsaquo;</span><a href="#">Inventory</a><span class="crumb-sep">&rsaquo;</span><span aria-current="page">Enable Valuation</span></div>
+          <div class="page-head"><div class="page-head-main"><h1 class="page-title">Enable Inventory Valuation</h1><p class="what-happens">Track what your stock is worth and see COGS on every sale &mdash; automatically. One decision to start; nothing posts to your books until you choose to.</p></div></div>
+          <div class="page-body" style="max-width:620px">
+            <div class="form-panel">
+              <label>Default valuation method
+                <select><option>Weighted Average (WAC) &mdash; Recommended</option><option>FIFO</option></select>
+              </label>
+              <div class="field-row">
+                <label>Default Sales ledger<select><option>Sales A/c</option></select></label>
+                <label>Default Purchase ledger<select><option>Purchase A/c</option></select></label>
+              </div>
+              <label>Default Inventory ledger<select><option>Stock In Hand A/c</option></select></label>
+            </div>
+
+            <div class="panel">
+              <div class="section-header"><div><h2 style="margin-bottom:4px">Based on your current stock</h2><p class="compact muted">247 items ready &middot; opening stock value <b style="color:var(--color-neutral-800)">&#8377;4,73,200</b></p></div><span class="state-pill tone-yellow"><span class="state-pill-dot"></span>12 items missing cost</span></div>
+              <p class="mini-note" style="margin:12px 0 14px">Missing costs don&rsquo;t block activation &mdash; fix them any time, before or after enabling.</p>
+              <div class="button-row"><button class="btn btn-secondary">&#8595; Download item costs (CSV)</button><button class="btn btn-secondary">&#8593; Upload updated costs (CSV)</button></div>
+            </div>
+
+            <div class="panel">
+              <h2 style="margin-bottom:4px">Opening balance entry</h2>
+              <p class="compact muted" style="margin-bottom:14px">One journal entry establishes your stock as an asset. Amounts are computed &mdash; you only confirm the accounts.</p>
+              <table>
+                <tbody>
+                  <tr><td class="col-strong">Stock in Hand <span class="crdr-dr">DR</span></td><td class="col-num col-strong">&#8377;4,73,200</td></tr>
+                  <tr><td class="col-strong">Inventory Adjustment A/c <span class="crdr-cr">CR</span> <span class="muted">(default &middot; editable)</span></td><td class="col-num col-strong">&#8377;4,73,200</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="button-row"><button class="btn btn-primary">Enable Inventory Valuation</button></div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script>
+(function(){
+  var links=document.querySelectorAll('.sidebar-link.proposed');
+  var screens={dashboard:'screen-dashboard',post:'screen-post',activation:'screen-activation',item:'screen-item'};
+  function showScreen(k){ Object.keys(screens).forEach(function(s){ var el=document.getElementById(screens[s]); if(el) el.classList.toggle('active', s===k); }); links.forEach(function(x){ x.classList.toggle('active', x.getAttribute('data-nav')===k); }); window.scrollTo(0,0); }
+  links.forEach(function(l){ l.addEventListener('click',function(e){ e.preventDefault(); showScreen(l.getAttribute('data-nav')); }); });
+  // Dashboard item rows drill into that item's detail; breadcrumb goes back.
+  document.querySelectorAll('#screen-dashboard .clickable-rows tbody tr').forEach(function(tr){ tr.addEventListener('click',function(){ renderItem(tr.getAttribute('data-item')); showScreen('item'); }); });
+  document.querySelectorAll('[data-back]').forEach(function(a){ a.addEventListener('click',function(e){ e.preventDefault(); showScreen(a.getAttribute('data-back')); }); });
+
+  // Dashboard status-strip states
+  var strip=document.getElementById('status-strip');
+  var body=document.getElementById('dash-body');
+  var ICON={ check:'<svg class="ds-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>', clock:'<svg class="ds-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>', bolt:'<svg class="ds-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg>', lock:'<svg class="pw-lock" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>' };
+  function renderState(s){
+    var pw=document.querySelector('.paywall-lock'); if(pw){ pw.remove(); body.classList.remove('paywall-blur'); body.parentElement.classList.remove('paywall-wrap'); }
+    if(s==='green'){ strip.innerHTML='<div class="dash-status ds-green">'+ICON.check+'<span class="ds-text">Your books are up to date &mdash; posted through 31 May 2026.</span></div>'; }
+    else if(s==='amber'){ strip.innerHTML='<div class="dash-status ds-amber">'+ICON.clock+'<span class="ds-text">12 stock changes since your last posting.</span><span class="ds-spacer"></span><button class="btn btn-primary btn-sm" style="height:32px" data-goto="post">Review &amp; post to books</button></div>'; }
+    else if(s==='red'){ strip.innerHTML='<div class="dash-status ds-red">'+ICON.bolt+'<span class="ds-text">A backdated edit changed an already-posted batch &mdash; a correction is pending.</span><span class="ds-spacer"></span><button class="btn btn-primary btn-sm" style="height:32px" data-goto="post">Review &amp; post</button></div>'; }
+    else if(s==='lock'){
+      strip.innerHTML='';
+      var wrap=body.parentElement; wrap.classList.add('paywall-wrap'); body.classList.add('paywall-blur');
+      var lock=document.createElement('div'); lock.className='paywall-lock';
+      lock.innerHTML='<div class="paywall-card"><span class="pw-icon">'+ICON.lock+'</span><h3>See your stock value &amp; true profit</h3><p>Live inventory valuation, COGS and gross margin post to your books on Accounting plans. Your valuation method is already being tracked &mdash; upgrade to unlock the dashboard.</p><button class="btn btn-primary">Upgrade to Accounting</button></div>';
+      wrap.appendChild(lock);
+    }
+    var g=strip.querySelector('[data-goto]'); if(g){ g.addEventListener('click',function(){ document.querySelector('.sidebar-link.proposed[data-nav="'+g.getAttribute('data-goto')+'"]').click(); }); }
+  }
+  var seg=document.getElementById('state-seg');
+  seg.querySelectorAll('button').forEach(function(b){ b.addEventListener('click',function(){ seg.querySelectorAll('button').forEach(function(x){x.classList.remove('on');}); b.classList.add('on'); renderState(b.getAttribute('data-state')); }); });
+  renderState('amber');
+
+  var INR=function(n){ return '₹'+Math.round(n).toLocaleString('en-IN'); };
+
+  // ---- Item detail: same layout for FIFO and WAC, rendered per item ----
+  var CHEV='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6" transform="rotate(90 12 12)"/></svg>';
+  var ITEMS={
+    'steel-bolt':{ name:'Steel Bolt', sku:'STL-BOLT', method:'WAC', onHand:10, stockValue:500, unitCost:50,
+      basis:{sub:'Perpetual moving average', blocks:[{avg:50, qty:10}]},
+      movements:[
+        {date:'5 Apr',doc:'BILL-001',type:'purchase',qty:100,unitCost:50,vc:5000,rq:100,rv:5000},
+        {date:'22 Apr',doc:'INV-101',type:'sale',qty:-60,vc:-3000,rq:40,rv:2000,cogs:{amt:3000,ex:'60 units at the moving average <span class="alloc-chip">₹50.00</span> = ₹3,000.'}},
+        {date:'6 May',doc:'INV-102',type:'sale',qty:-30,vc:-1500,rq:10,rv:500,cogs:{amt:1500,ex:'30 units at the moving average <span class="alloc-chip">₹50.00</span> = ₹1,500.'}}
+      ], note:'Under WAC every sale is costed at the running moving average; a purchase at a new price re-blends it.' },
+    'copper-pipe':{ name:'Copper Pipe', sku:'CU-PIPE', method:'FIFO', onHand:40, stockValue:4960, unitCost:124,
+      basis:{sub:'Open layers, oldest first', blocks:[{qty:20,cost:120,src:'BILL-009 · 3 Apr'},{qty:20,cost:128,src:'BILL-014 · 12 May'}]},
+      movements:[
+        {date:'3 Apr',doc:'BILL-009',type:'purchase',qty:30,unitCost:120,vc:3600,rq:30,rv:3600},
+        {date:'22 Apr',doc:'INV-110',type:'sale',qty:-10,vc:-1200,rq:20,rv:2400,cogs:{amt:1200,ex:'consumed the oldest stock first: <span class="alloc-chip">10 units @ ₹120</span> <span class="muted">from the BILL-009 layer</span> = ₹1,200.'}},
+        {date:'12 May',doc:'BILL-014',type:'purchase',qty:20,unitCost:128,vc:2560,rq:40,rv:4960}
+      ], note:'Under FIFO each purchase is its own cost layer; a sale consumes the oldest layers first.' },
+    'brass-valve':{ name:'Brass Valve', sku:'BR-VLV', method:'WAC', onHand:25, stockValue:5250, unitCost:210,
+      basis:{sub:'Perpetual moving average', blocks:[{avg:210, qty:25}]},
+      movements:[
+        {date:'10 Apr',doc:'BILL-005',type:'purchase',qty:30,unitCost:200,vc:6000,rq:30,rv:6000},
+        {date:'28 Apr',doc:'BILL-011',type:'purchase',qty:10,unitCost:240,vc:2400,rq:40,rv:8400},
+        {date:'14 May',doc:'INV-118',type:'sale',qty:-15,vc:-3150,rq:25,rv:5250,cogs:{amt:3150,ex:'15 units at the moving average <span class="alloc-chip">₹210.00</span> = ₹3,150.'}}
+      ], note:'The second purchase at ₹240 re-blended the average from ₹200 to ₹210; the sale used ₹210.' },
+    'steel-sheet':{ name:'Steel Sheet', sku:'STL-SHT', method:'WAC', onHand:8, stockValue:null, unitCost:null,
+      basis:{missing:true, sub:'Not valued yet'},
+      movements:[
+        {date:'15 May',doc:'BILL-016',type:'purchase',qty:8,unitCost:null,vc:null,rq:8,rv:null}
+      ], note:'A cost price is needed before this item can be valued and posted. It shows in stock, but not in your books yet.' }
+  };
+
+  function basisBlocks(it){
+    if(it.basis.missing) return '<span class="layer-block" style="background:var(--color-yellow-50);border-color:var(--color-yellow-200)"><span class="badge badge-warning">Cost price not set</span><span class="lb-src">add a cost to value this item</span></span>';
+    return it.basis.blocks.map(function(b){
+      if(b.avg!=null) return '<span class="layer-block">₹'+b.avg.toFixed(2)+' / unit <span class="lb-src">moving average · '+b.qty+' on hand</span></span>';
+      return '<span class="layer-block">'+b.qty+' units @ ₹'+b.cost+' <span class="lb-src">from '+b.src+'</span></span>';
+    }).join('');
+  }
+  function movRow(m){
+    var pill=m.type==='purchase'?'<span class="state-pill tone-green"><span class="state-pill-dot"></span>Purchase</span>':'<span class="state-pill tone-blue"><span class="state-pill-dot"></span>Sale</span>';
+    var qcls=m.qty>=0?'num-pos':'num-neg', qstr=(m.qty>=0?'+':'−')+Math.abs(m.qty);
+    var unit=m.unitCost==null?(m.type==='sale'?'<span class="muted">COGS</span>':'<span class="badge badge-warning">cost missing</span>'):'₹'+m.unitCost.toFixed(2);
+    var vc=m.vc==null?'<span class="muted">—</span>':(m.vc>=0?'<span class="num-pos">+'+INR(m.vc)+'</span>':'<span class="num-neg">−'+INR(Math.abs(m.vc))+'</span>');
+    var rv=m.rv==null?'<span class="muted">—</span>':INR(m.rv);
+    var row='<tr><td class="muted">'+m.date+'</td><td class="col-mono">'+m.doc+'</td><td>'+pill+'</td><td class="col-num '+qcls+'">'+qstr+'</td><td class="col-num">'+unit+'</td><td class="col-num">'+vc+'</td><td class="col-num">'+m.rq+'</td><td class="col-num col-strong">'+rv+'</td></tr>';
+    if(m.cogs) row+='<tr class="cogs-subrow"><td></td><td colspan="7"><div class="cogs-explain">'+CHEV+'<span><b>This sale cost you '+INR(m.cogs.amt)+'.</b> '+m.cogs.ex+'</span></div></td></tr>';
+    return row;
+  }
+  function renderItem(id){
+    var it=ITEMS[id]; if(!it) return;
+    document.getElementById('item-crumb').textContent=it.name;
+    document.getElementById('item-title').innerHTML=it.name+' <span class="badge badge-neutral" style="font-size:13px;vertical-align:middle">'+it.method+'</span>';
+    document.getElementById('item-summary').innerHTML=
+      '<div class="summary-cell"><span class="summary-label">On hand</span><span class="summary-value">'+it.onHand+'</span></div>'+
+      '<div class="summary-cell"><span class="summary-label">Stock value</span><span class="summary-value">'+(it.stockValue==null?'<span class="muted">—</span>':INR(it.stockValue))+'</span></div>'+
+      '<div class="summary-cell"><span class="summary-label">Method</span><span class="summary-value">'+it.method+'</span></div>'+
+      '<div class="summary-cell"><span class="summary-label">Unit cost</span><span class="summary-value">'+(it.unitCost==null?'<span class="badge badge-warning" style="font-size:11px">missing</span>':'₹'+it.unitCost.toFixed(2))+'</span></div>';
+    document.getElementById('item-costbasis').innerHTML='<div class="section-header"><h2 style="margin-bottom:0">Cost basis</h2><span class="muted compact">'+it.basis.sub+'</span></div><div class="button-row" style="margin-top:12px">'+basisBlocks(it)+'</div>';
+    document.getElementById('item-movements').innerHTML=it.movements.map(movRow).join('');
+    document.getElementById('item-note').textContent=it.note;
+  }
+
+  // ---- Post to Books: month table + one voucher per month ----
+  function total(lines){ return lines.filter(function(l){return l[1]==='dr';}).reduce(function(s,l){return s+l[2];},0); }
+  var MONTHS=[
+    { key:'2026-03', label:'March 2026', ref:'IVAL-bharat-202603', status:'ok',
+      inBooks:[['Stock in Hand','dr',4000,'Capitalised purchases'],['Purchases','cr',4000,''],['COGS','dr',2200,'Consumption'],['Stock in Hand','cr',2200,'']],
+      toPush:null },
+    { key:'2026-04', label:'April 2026', ref:'IVAL-bharat-202604', status:'update', trigger:'BILL-001 edited ₹50 → ₹55',
+      inBooks:[['Stock in Hand','dr',5000,'Capitalised purchases'],['Purchases','cr',5000,''],['COGS','dr',3000,'Consumption'],['Stock in Hand','cr',3000,'']],
+      toPush:[['Stock in Hand','dr',5500,'at corrected ₹55'],['Purchases','cr',5500,''],['COGS','dr',3300,'corrected consumption'],['Stock in Hand','cr',3300,'']] },
+    { key:'2026-05', label:'May 2026', ref:'IVAL-bharat-202605', status:'new',
+      inBooks:null,
+      toPush:[['Stock in Hand','dr',3400,'net of the month'],['COGS','dr',6800,'sales 7,400 − return 600'],['Inventory Adjustment','dr',300,'wastage (no party)'],['Purchases','cr',9900,'capitalised inflows'],['Vendor A/c · Mehta','cr',600,'vendor-tagged gain']] }
+  ];
+  var STATUS={ ok:['tone-green','Up to date'], update:['tone-yellow','Update pending'], new:['tone-neutral','Not pushed'] };
+  var selectedMonth=null;
+
+  function voucherTable(lines){
+    var rows=lines.map(function(l){
+      var tag=l[1]==='dr'?'<span class="crdr-dr">DR</span>':'<span class="crdr-cr">CR</span>';
+      return '<tr><td class="col-strong">'+l[0]+'</td><td>'+tag+'</td><td class="col-num">'+INR(l[2])+'</td><td class="muted">'+(l[3]||'&nbsp;')+'</td></tr>';
+    }).join('');
+    var t=total(lines);
+    rows+='<tr class="voucher-total"><td>Total</td><td></td><td class="col-num">'+INR(t)+' = '+INR(t)+'</td><td class="muted">balances</td></tr>';
+    return '<table><thead><tr><th>Ledger</th><th>Dr / Cr</th><th class="col-num">Amount</th><th>Note</th></tr></thead><tbody>'+rows+'</tbody></table>';
+  }
+
+  function renderDetail(m, view){
+    var el=document.getElementById('voucher-detail'); if(!el) return;
+    var both=m.inBooks&&m.toPush;
+    view = view || (m.toPush ? 'push' : 'books');
+    var lines = view==='push' ? m.toPush : m.inBooks;
+    var toggle = both ? '<div class="seg" id="voucher-toggle"><button data-v="books"'+(view==='books'?' class="on"':'')+'>In books</button><button data-v="push"'+(view==='push'?' class="on"':'')+'>To push</button></div>' : '';
+    var note='';
+    if(view==='push' && m.status==='update') note='<p class="change-note">Pushing <b>reverses the current voucher</b> and re-posts this updated one. Changed by: '+m.trigger+'.</p>';
+    else if(view==='push' && m.status==='new') note='<p class="new-note">Not yet in your books — this posts as the month’s voucher.</p>';
+    else if(view==='books' && m.status==='ok') note='<p class="ok-note">In your books and up to date — nothing pending for this month.</p>';
+    else if(view==='books') note='<p class="ok-note">Currently in your books. The updated voucher under “To push” will replace it.</p>';
+    el.innerHTML='<div class="panel voucher-panel"><div class="section-header"><div><h2>'+m.label+' voucher</h2><p class="compact muted">'+m.ref+' · JOURNAL</p></div>'+toggle+'</div>'+note+(lines?voucherTable(lines):'<p class="muted compact">No voucher — nothing posted for this month yet.</p>')+'</div>';
+    var tg=document.getElementById('voucher-toggle');
+    if(tg){ tg.querySelectorAll('button').forEach(function(b){ b.addEventListener('click',function(){ renderDetail(m, b.getAttribute('data-v')); }); }); }
+  }
+
+  function renderMonths(){
+    var tb=document.getElementById('months-rows'); if(!tb) return;
+    tb.innerHTML=MONTHS.map(function(m){
+      var st=STATUS[m.status];
+      var inb=m.inBooks?INR(total(m.inBooks)):'<span class="muted">—</span>';
+      var push=m.toPush?INR(total(m.toPush)):'<span class="muted">—</span>';
+      if(m.status==='update') push='<span class="diff-pos">'+INR(total(m.toPush))+'</span>';
+      return '<tr data-key="'+m.key+'"><td class="col-strong">'+m.label+'</td><td><span class="state-pill '+st[0]+'"><span class="state-pill-dot"></span>'+st[1]+'</span></td><td class="col-num">'+inb+'</td><td class="col-num">'+push+'</td></tr>';
+    }).join('');
+    tb.querySelectorAll('tr').forEach(function(tr){ tr.addEventListener('click',function(){ selectMonth(tr.getAttribute('data-key')); }); });
+  }
+  function selectMonth(key){
+    selectedMonth=key;
+    document.querySelectorAll('#months-rows tr').forEach(function(tr){ tr.classList.toggle('sel', tr.getAttribute('data-key')===key); });
+    var m=MONTHS.filter(function(x){return x.key===key;})[0];
+    renderDetail(m);
+  }
+  renderMonths();
+  selectMonth('2026-04'); // default to a month with a pending change
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1043 @@
+[
+  {
+    "$match": {
+      "owner": ObjectId("6a8444b1b7fa0c0025af333e"),
+      "billType": "SALESORDER",
+      "isRemoved": false,
+      "isHardRemoved": false,
+      "isExpenditure": false,
+      "status": {
+        "$nin": [
+          "DRAFT",
+          "CANCELED"
+        ]
+      }
+    }
+  },
+  {
+    "$project": {
+      "customer": "$billedTo.name",
+      "soNumber": "$invoiceNumber",
+      "soDate": "$invoiceDate",
+      "currency": 1,
+      "vf": "$vendorFields",
+      "items": {
+        "$filter": {
+          "input": {
+            "$ifNull": [
+              "$items",
+              []
+            ]
+          },
+          "as": "i",
+          "cond": {
+            "$ne": [
+              "$$i.group",
+              true
+            ]
+          }
+        }
+      },
+      "invIds": {
+        "$setUnion": [
+          {
+            "$filter": {
+              "input": {
+                "$map": {
+                  "input": {
+                    "$filter": {
+                      "input": {
+                        "$ifNull": [
+                          "$items",
+                          []
+                        ]
+                      },
+                      "as": "i",
+                      "cond": {
+                        "$ne": [
+                          "$$i.group",
+                          true
+                        ]
+                      }
+                    }
+                  },
+                  "as": "i",
+                  "in": {
+                    "$ifNull": [
+                      "$$i.inventory",
+                      null
+                    ]
+                  }
+                }
+              },
+              "as": "x",
+              "cond": {
+                "$ne": [
+                  "$$x",
+                  null
+                ]
+              }
+            }
+          },
+          []
+        ]
+      },
+      "linkIds": {
+        "$setUnion": [
+          {
+            "$ifNull": [
+              "$linkedDocuments",
+              []
+            ]
+          },
+          {
+            "$ifNull": [
+              "$linkedInvoices",
+              []
+            ]
+          }
+        ]
+      },
+      "customerKey": "$billedTo.uniqueKey",
+      "custState": "$billedTo.state",
+      "custGstin": "$billedTo.gstin",
+      "tags": 1,
+      "clientId": "$client"
+    }
+  },
+  {
+    "$lookup": {
+      "from": "invoices",
+      "localField": "linkIds",
+      "foreignField": "_id",
+      "let": {
+        "cur": "$currency"
+      },
+      "pipeline": [
+        {
+          "$match": {
+            "billType": "INVOICE",
+            "isRemoved": false,
+            "isHardRemoved": false,
+            "status": {
+              "$nin": [
+                "DRAFT",
+                "CANCELED"
+              ]
+            }
+          }
+        },
+        {
+          "$project": {
+            "_id": 0,
+            "li": {
+              "$let": {
+                "vars": {
+                  "r": {
+                    "$cond": [
+                      {
+                        "$eq": [
+                          "$currency",
+                          "$$cur"
+                        ]
+                      },
+                      1,
+                      {
+                        "$ifNull": [
+                          {
+                            "$getField": {
+                              "field": "$$cur",
+                              "input": "$conversionRates"
+                            }
+                          },
+                          1
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "in": {
+                  "$map": {
+                    "input": {
+                      "$filter": {
+                        "input": {
+                          "$ifNull": [
+                            "$items",
+                            []
+                          ]
+                        },
+                        "as": "i",
+                        "cond": {
+                          "$ne": [
+                            "$$i.group",
+                            true
+                          ]
+                        }
+                      }
+                    },
+                    "as": "i",
+                    "in": {
+                      "k": {
+                        "$cond": [
+                          {
+                            "$ne": [
+                              {
+                                "$ifNull": [
+                                  "$$i.inventory",
+                                  null
+                                ]
+                              },
+                              null
+                            ]
+                          },
+                          {
+                            "$concat": [
+                              "I:",
+                              {
+                                "$toString": "$$i.inventory"
+                              }
+                            ]
+                          },
+                          {
+                            "$cond": [
+                              {
+                                "$ne": [
+                                  {
+                                    "$ifNull": [
+                                      "$$i.sku",
+                                      ""
+                                    ]
+                                  },
+                                  ""
+                                ]
+                              },
+                              {
+                                "$concat": [
+                                  "S:",
+                                  {
+                                    "$ifNull": [
+                                      "$$i.sku",
+                                      ""
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "$concat": [
+                                  "N:",
+                                  {
+                                    "$ifNull": [
+                                      "$$i.name",
+                                      ""
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "q": {
+                        "$ifNull": [
+                          "$$i.quantity",
+                          0
+                        ]
+                      },
+                      "g": {
+                        "$multiply": [
+                          {
+                            "$ifNull": [
+                              "$$i.amount",
+                              0
+                            ]
+                          },
+                          "$$r"
+                        ]
+                      },
+                      "t": {
+                        "$multiply": [
+                          {
+                            "$ifNull": [
+                              "$$i.igst",
+                              0
+                            ]
+                          },
+                          "$$r"
+                        ]
+                      },
+                      "v": {
+                        "$multiply": [
+                          {
+                            "$ifNull": [
+                              "$$i.total",
+                              0
+                            ]
+                          },
+                          "$$r"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "as": "invs"
+    }
+  },
+  {
+    "$lookup": {
+      "from": "inventories",
+      "localField": "invIds",
+      "foreignField": "_id",
+      "pipeline": [
+        {
+          "$project": {
+            "_id": 1,
+            "cat": "$vendorFields.r_str_001"
+          }
+        }
+      ],
+      "as": "cats"
+    }
+  },
+  {
+    "$lookup": {
+      "from": "clients",
+      "localField": "clientId",
+      "foreignField": "_id",
+      "pipeline": [
+        {
+          "$project": {
+            "_id": 0,
+            "uk": "$uniqueKey"
+          }
+        }
+      ],
+      "as": "cli"
+    }
+  },
+  {
+    "$lookup": {
+      "from": "businessconfigurations",
+      "as": "cfg",
+      "pipeline": [
+        {
+          "$match": {
+            "business": ObjectId("6a8444b1b7fa0c0025af333e")
+          }
+        },
+        {
+          "$project": {
+            "_id": 0,
+            "labels": {
+              "$map": {
+                "input": {
+                  "$ifNull": [
+                    "$labels",
+                    []
+                  ]
+                },
+                "as": "l",
+                "in": {
+                  "k": "$$l._id",
+                  "n": "$$l.name"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "$addFields": {
+      "invLi": {
+        "$reduce": {
+          "input": "$invs",
+          "initialValue": [],
+          "in": {
+            "$concatArrays": [
+              "$$value",
+              "$$this.li"
+            ]
+          }
+        }
+      },
+      "soKeys": {
+        "$map": {
+          "input": "$items",
+          "as": "i",
+          "in": {
+            "k": {
+              "$cond": [
+                {
+                  "$ne": [
+                    {
+                      "$ifNull": [
+                        "$$i.inventory",
+                        null
+                      ]
+                    },
+                    null
+                  ]
+                },
+                {
+                  "$concat": [
+                    "I:",
+                    {
+                      "$toString": "$$i.inventory"
+                    }
+                  ]
+                },
+                {
+                  "$cond": [
+                    {
+                      "$ne": [
+                        {
+                          "$ifNull": [
+                            "$$i.sku",
+                            ""
+                          ]
+                        },
+                        ""
+                      ]
+                    },
+                    {
+                      "$concat": [
+                        "S:",
+                        {
+                          "$ifNull": [
+                            "$$i.sku",
+                            ""
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "$concat": [
+                        "N:",
+                        {
+                          "$ifNull": [
+                            "$$i.name",
+                            ""
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "q": {
+              "$ifNull": [
+                "$$i.quantity",
+                0
+              ]
+            }
+          }
+        }
+      },
+      "tagNames": {
+        "$reduce": {
+          "input": {
+            "$map": {
+              "input": {
+                "$ifNull": [
+                  "$tags",
+                  []
+                ]
+              },
+              "as": "t",
+              "in": {
+                "$let": {
+                  "vars": {
+                    "hit": {
+                      "$first": {
+                        "$filter": {
+                          "input": {
+                            "$ifNull": [
+                              {
+                                "$arrayElemAt": [
+                                  "$cfg.labels",
+                                  0
+                                ]
+                              },
+                              []
+                            ]
+                          },
+                          "as": "l",
+                          "cond": {
+                            "$eq": [
+                              "$$l.k",
+                              "$$t"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "in": {
+                    "$ifNull": [
+                      "$$hit.n",
+                      "$$t"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "initialValue": "",
+          "in": {
+            "$cond": [
+              {
+                "$eq": [
+                  "$$value",
+                  ""
+                ]
+              },
+              "$$this",
+              {
+                "$concat": [
+                  "$$value",
+                  ", ",
+                  "$$this"
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "custKey": {
+        "$ifNull": [
+          {
+            "$arrayElemAt": [
+              "$cli.uk",
+              0
+            ]
+          },
+          "$customerKey"
+        ]
+      }
+    }
+  },
+  {
+    "$unwind": "$items"
+  },
+  {
+    "$addFields": {
+      "key": {
+        "$cond": [
+          {
+            "$ne": [
+              {
+                "$ifNull": [
+                  "$items.inventory",
+                  null
+                ]
+              },
+              null
+            ]
+          },
+          {
+            "$concat": [
+              "I:",
+              {
+                "$toString": "$items.inventory"
+              }
+            ]
+          },
+          {
+            "$cond": [
+              {
+                "$ne": [
+                  {
+                    "$ifNull": [
+                      "$items.sku",
+                      ""
+                    ]
+                  },
+                  ""
+                ]
+              },
+              {
+                "$concat": [
+                  "S:",
+                  {
+                    "$ifNull": [
+                      "$items.sku",
+                      ""
+                    ]
+                  }
+                ]
+              },
+              {
+                "$concat": [
+                  "N:",
+                  {
+                    "$ifNull": [
+                      "$items.name",
+                      ""
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "$addFields": {
+      "m": {
+        "$filter": {
+          "input": "$invLi",
+          "as": "x",
+          "cond": {
+            "$eq": [
+              "$$x.k",
+              "$key"
+            ]
+          }
+        }
+      },
+      "peers": {
+        "$filter": {
+          "input": "$soKeys",
+          "as": "p",
+          "cond": {
+            "$eq": [
+              "$$p.k",
+              "$key"
+            ]
+          }
+        }
+      },
+      "catRaw": {
+        "$let": {
+          "vars": {
+            "hit": {
+              "$first": {
+                "$filter": {
+                  "input": "$cats",
+                  "as": "c",
+                  "cond": {
+                    "$eq": [
+                      "$$c._id",
+                      {
+                        "$ifNull": [
+                          "$items.inventory",
+                          null
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "in": {
+            "$ifNull": [
+              "$$hit.cat",
+              null
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "$addFields": {
+      "share": {
+        "$let": {
+          "vars": {
+            "pq": {
+              "$sum": "$peers.q"
+            },
+            "pn": {
+              "$size": "$peers"
+            }
+          },
+          "in": {
+            "$cond": [
+              {
+                "$gt": [
+                  "$$pq",
+                  0
+                ]
+              },
+              {
+                "$divide": [
+                  {
+                    "$ifNull": [
+                      "$items.quantity",
+                      0
+                    ]
+                  },
+                  "$$pq"
+                ]
+              },
+              {
+                "$cond": [
+                  {
+                    "$gt": [
+                      "$$pn",
+                      0
+                    ]
+                  },
+                  {
+                    "$divide": [
+                      1,
+                      "$$pn"
+                    ]
+                  },
+                  1
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "$addFields": {
+      "iq": {
+        "$multiply": [
+          {
+            "$sum": "$m.q"
+          },
+          "$share"
+        ]
+      },
+      "ig": {
+        "$multiply": [
+          {
+            "$sum": "$m.g"
+          },
+          "$share"
+        ]
+      },
+      "it": {
+        "$multiply": [
+          {
+            "$sum": "$m.t"
+          },
+          "$share"
+        ]
+      },
+      "iv": {
+        "$multiply": [
+          {
+            "$sum": "$m.v"
+          },
+          "$share"
+        ]
+      },
+      "sq": {
+        "$ifNull": [
+          "$items.quantity",
+          0
+        ]
+      },
+      "sg": {
+        "$ifNull": [
+          "$items.amount",
+          0
+        ]
+      },
+      "st": {
+        "$ifNull": [
+          "$items.igst",
+          0
+        ]
+      },
+      "sv": {
+        "$ifNull": [
+          "$items.total",
+          0
+        ]
+      },
+      "sub": {
+        "$ifNull": [
+          "$items.subTotal",
+          0
+        ]
+      },
+      "dAmt": {
+        "$cond": [
+          {
+            "$eq": [
+              "$items.discount.discountType",
+              "PERCENTAGE"
+            ]
+          },
+          {
+            "$divide": [
+              {
+                "$multiply": [
+                  {
+                    "$ifNull": [
+                      "$items.subTotal",
+                      0
+                    ]
+                  },
+                  {
+                    "$ifNull": [
+                      "$items.discount.amount",
+                      0
+                    ]
+                  }
+                ]
+              },
+              100
+            ]
+          },
+          {
+            "$ifNull": [
+              "$items.discount.amount",
+              0
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "$project": {
+      "_id": 0,
+      "SO Number": "$soNumber",
+      "SO Date": "$soDate",
+      "Custom PO No": {
+        "$ifNull": [
+          "$vf.r_str_001",
+          ""
+        ]
+      },
+      "PO Date": {
+        "$convert": {
+          "input": "$vf.r_date_001",
+          "to": "date",
+          "onError": null,
+          "onNull": null
+        }
+      },
+      "Customer UniqueKey": {
+        "$ifNull": [
+          "$custKey",
+          ""
+        ]
+      },
+      "Customer Name": "$customer",
+      "Customer State": {
+        "$ifNull": [
+          "$custState",
+          ""
+        ]
+      },
+      "Customer GSTIN": {
+        "$ifNull": [
+          "$custGstin",
+          ""
+        ]
+      },
+      "Sales Person": {
+        "$ifNull": [
+          "$vf.r_str_002",
+          ""
+        ]
+      },
+      "Tags": {
+        "$ifNull": [
+          "$tagNames",
+          ""
+        ]
+      },
+      "Currency": "$currency",
+      "Category": {
+        "$ifNull": [
+          "$catRaw",
+          ""
+        ]
+      },
+      "SKU": {
+        "$ifNull": [
+          "$items.sku",
+          ""
+        ]
+      },
+      "Item Name": {
+        "$ifNull": [
+          "$items.name",
+          ""
+        ]
+      },
+      "Qty": "$sq",
+      "Unit": {
+        "$ifNull": [
+          "$items.unit",
+          ""
+        ]
+      },
+      "Rate": {
+        "$ifNull": [
+          "$items.rate",
+          0
+        ]
+      },
+      "Discount %": {
+        "$round": [
+          {
+            "$cond": [
+              {
+                "$eq": [
+                  "$items.discount.discountType",
+                  "PERCENTAGE"
+                ]
+              },
+              {
+                "$ifNull": [
+                  "$items.discount.amount",
+                  0
+                ]
+              },
+              {
+                "$cond": [
+                  {
+                    "$gt": [
+                      "$sub",
+                      0
+                    ]
+                  },
+                  {
+                    "$multiply": [
+                      {
+                        "$divide": [
+                          "$dAmt",
+                          "$sub"
+                        ]
+                      },
+                      100
+                    ]
+                  },
+                  0
+                ]
+              }
+            ]
+          },
+          2
+        ]
+      },
+      "Discount Amount": {
+        "$round": [
+          "$dAmt",
+          2
+        ]
+      },
+      "Gross Value": {
+        "$round": [
+          "$sg",
+          2
+        ]
+      },
+      "Tax Value": {
+        "$round": [
+          "$st",
+          2
+        ]
+      },
+      "Total Value": {
+        "$round": [
+          "$sv",
+          2
+        ]
+      },
+      "Invoiced Qty": {
+        "$round": [
+          "$iq",
+          4
+        ]
+      },
+      "Invoiced Gross Value": {
+        "$round": [
+          "$ig",
+          2
+        ]
+      },
+      "Invoiced Tax Value": {
+        "$round": [
+          "$it",
+          2
+        ]
+      },
+      "Invoiced Total Value": {
+        "$round": [
+          "$iv",
+          2
+        ]
+      },
+      "Qty Balance": {
+        "$round": [
+          {
+            "$subtract": [
+              "$sq",
+              "$iq"
+            ]
+          },
+          4
+        ]
+      },
+      "Gross Balance": {
+        "$round": [
+          {
+            "$subtract": [
+              "$sg",
+              "$ig"
+            ]
+          },
+          2
+        ]
+      },
+      "Tax Balance": {
+        "$round": [
+          {
+            "$subtract": [
+              "$st",
+              "$it"
+            ]
+          },
+          2
+        ]
+      },
+      "Balance Value": {
+        "$round": [
+          {
+            "$subtract": [
+              "$sv",
+              "$iv"
+            ]
+          },
+          2
+        ]
+      },
+      "Estimate": {
+        "$ifNull": [
+          "$vf.r_num_001",
+          null
+        ]
+      }
+    }
+  },
+  {
+    "$sort": {
+      "SO Date": 1,
+      "SO Number": 1
+    }
+  },
+  {
+    "$limit": 5000
+  }
+]
